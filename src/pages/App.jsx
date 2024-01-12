@@ -1,13 +1,11 @@
-import { Link, Outlet } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import Navbar from "../components/Navbar/Navbar";
 import Footer from "../components/Footer/Footer";
-import HomePage from "./HomePage";
-import AboutPage from "./AboutPage";
 
 function App() {
   return (
     <>
-      <nav>
+      <nav className="sticky top-0">
         <Navbar />
       </nav>
       <main>
