@@ -59,10 +59,10 @@ export default function HomePage() {
                 SMARTPHONES FOR <span className="font-bold">FUTURE</span>
               </h1>
             </div>
-            <span className="bg-[#212121] w-full h-[5px]"></span>
+            <span className="bg-black w-full h-[5px]"></span>
           </div>
           <Link
-            className="bg-[#212121] bg-[url('src/assets/images/homepage-iphone9.jpg')] w-[30rem] h-[30rem] bg-[length:100%] bg-center bg-no-repeat duration-[0.3s] transition-all hover:bg-[length:90%]"
+            className="bg-black bg-[url('src/assets/images/homepage-smartphone.png')] w-[40rem] h-[30rem] bg-[length:50%] bg-center bg-no-repeat duration-[0.3s] transition-all hover:bg-[length:40%] rounded-md"
             to=""
           ></Link>
         </section>

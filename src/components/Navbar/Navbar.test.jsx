@@ -13,17 +13,12 @@ beforeEach(() => {
 
 describe("Navbar Component", () => {
   it("Renders links correctly", () => {
-    expect(screen.getAllByRole("link")).toHaveLength(5);
+    expect(screen.getAllByRole("link")).toHaveLength(4);
   });
 
   it("Renders Home link with proper href", () => {
     const homeLink = screen.getByRole("link", { name: "Home" });
     expect(homeLink).toHaveAttribute("href", "/");
-  });
-
-  it("Renders About link with proper href", () => {
-    const aboutLink = screen.getByRole("link", { name: "About" });
-    expect(aboutLink).toHaveAttribute("href", "/about");
   });
 
   it("Renders Products link with proper href", () => {
