@@ -26,7 +26,7 @@ export default function HomePage() {
             </p>
             <Button title="SHOP NOW" bgColour="bg-[#4163FD]" width="w-[30%]" />
           </div>
-          <img src="src/assets/images/ux482-2.png" alt="ASUS Zenbook Duo UX482" />
+          <img src="src/assets/images/ux482-2.png" alt="ASUS Zenbook Duo UX482 laptop" />
         </section>
         <section className="grid grid-cols-2">
           <img src="src/assets/images/homepage-headphone.png" alt="Coloured headphone" />
@@ -63,8 +63,7 @@ export default function HomePage() {
           </div>
           <Link
             className="bg-black bg-[url('src/assets/images/homepage-smartphone.png')] w-[40rem] h-[30rem] bg-[length:50%] bg-center bg-no-repeat duration-[0.3s] transition-all hover:bg-[length:40%] rounded-md"
-            to=""
-          ></Link>
+            to=""></Link>
         </section>
       </div>
     </>
