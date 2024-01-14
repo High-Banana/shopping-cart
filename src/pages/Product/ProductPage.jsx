@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 import Card from "../../components/Card/Card";
 import { fetchApi } from "../../services/api/Fetch";
