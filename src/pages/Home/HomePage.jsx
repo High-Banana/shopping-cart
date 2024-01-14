@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import Button from "../../components/ui/Button";
-import { fetchApi } from "../../services/api/Fetch";
 import { Link } from "react-router-dom";
 
 export default function HomePage() {
@@ -63,7 +62,7 @@ export default function HomePage() {
             <span className="bg-[#212121] w-full h-[5px]"></span>
           </div>
           <Link
-            className="bg-[#212121] bg-[url('src/assets/images/homepage-iphone9.jpg')] w-96 h-96 bg-[length:100%] bg-center bg-no-repeat duration-[0.3s] transition-all hover:bg-[length:90%]"
+            className="bg-[#212121] bg-[url('src/assets/images/homepage-iphone9.jpg')] w-[30rem] h-[30rem] bg-[length:100%] bg-center bg-no-repeat duration-[0.3s] transition-all hover:bg-[length:90%]"
             to=""
           ></Link>
         </section>
