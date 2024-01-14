@@ -5,13 +5,13 @@ import Footer from "../components/Footer/Footer";
 function App() {
   return (
     <>
-      <nav className="sticky top-0">
+      <nav className="sticky top-0 z-10">
         <Navbar />
       </nav>
-      <main>
+      <main className="min-h-svh">
         <Outlet />
       </main>
-      <Footer />
+      <Footer className="bottom-0" />
     </>
   );
 }
