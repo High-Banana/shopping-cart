@@ -46,4 +46,4 @@ app.get("/api/products", async (req, res) => {
   res.send(await getAllProducts());
 });
 
-app.listen(5000, () => console.log("listening"));
+app.listen(process.env.PORT, () => console.log("listening"));
