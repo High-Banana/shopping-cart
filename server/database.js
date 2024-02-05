@@ -1,6 +1,9 @@
 import mysql from "mysql2";
 import dotenv from "dotenv";
 import { v4 as uuidv4 } from "uuid";
+import express from "express";
+
+const app = express();
 
 dotenv.config();
 
@@ -15,7 +18,7 @@ const database = mysql
 
 async function getAllProducts() {
   try {
-    const [products] = database.query("select * from products");
+    const [products] = await database.query("select * from products");
     return products;
   } catch (error) {
     return `An error occured: ${error}`;
@@ -38,3 +41,9 @@ async function addProduct(name, price, description) {
 
 // console.log(await getProduct("L"));
 // addProduct("I phone 9", 800, "Mobile phone for future");
+
+app.get("/api/products", async (req, res) => {
+  res.send(await getAllProducts());
+});
+
+app.listen(5000, () => console.log("listening"));

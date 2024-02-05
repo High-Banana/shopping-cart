@@ -1,13 +1,12 @@
+import axios from "axios";
+
 export async function fetchApi() {
-  try {
-    const response = await fetch("https://dummyjson.com/products/category/smartphones");
-    if (!response.ok) throw new Error(`HTTP Error! Status ${response.status}`);
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    console.log(error);
-  } finally {
-    console.log("Fetching finished");
-  }
+  return axios
+    .get("/api/products")
+    .then((response) => {
+      const data = response.data;
+      console.log(data);
+      return data;
+    })
+    .catch((error) => console.log(error));
 }
-// fetchApi();

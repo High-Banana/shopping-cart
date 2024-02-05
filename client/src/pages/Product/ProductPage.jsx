@@ -5,29 +5,22 @@ import { fetchApi } from "../../services/api/Fetch";
 import Loading from "../../components/Loading/Loading";
 
 export default function ProductPage() {
-  const [smartPhones, setSmartPhones] = useState([
-    {
-      id: null,
-      title: null,
-      imgSource: null,
-      description: null,
-    },
-  ]);
+  const [products, setProducts] = useState();
   const [isLoading, setIsLoading] = useState(true);
-
   useEffect(() => {
-    fetchApi().then((data) => {
-      const newProduct = data.products.map((product) => {
-        return { id: product.id, title: product.title, imgSource: product.images[0], description: product.description };
+    fetchApi()
+      .then((data) => {
+        setProducts(data);
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
       });
-      setSmartPhones(newProduct);
-      setIsLoading(false);
-    });
   }, []);
   return (
     <>
       <h1>Products</h1>
-      {isLoading ? <Loading /> : <Card smartPhoneDetails={smartPhones} />}
+      {isLoading ? <Loading /> : <Card products={products} />}
     </>
   );
 }
