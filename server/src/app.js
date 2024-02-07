@@ -7,6 +7,6 @@ const app = express();
 
 app.use("/db_images", imageRouter);
 
-app.use("/api", productRouter);
+app.use("/api/products", productRouter);
 
 export default app;

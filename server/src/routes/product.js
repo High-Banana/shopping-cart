@@ -3,7 +3,7 @@ import { getAllProducts } from "../database/queries.js";
 
 const router = express.Router();
 
-router.get("/products", async (req, res) => {
+router.get("/", async (req, res) => {
   res.send(await getAllProducts());
 });
 
