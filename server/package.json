@@ -5,7 +5,8 @@
   "main": "app.js",
   "type": "module",
   "scripts": {
-    "start": "node database.js"
+    "start": "node database.js",
+    "dev": "nodemon database.js"
   },
   "keywords": [],
   "author": "",
