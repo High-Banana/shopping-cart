@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export async function fetchApi() {
+export async function fetchAllProducts() {
   return axios
     .get("/api/products")
     .then((response) => {
