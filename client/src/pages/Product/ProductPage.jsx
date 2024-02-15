@@ -18,9 +18,15 @@ export default function ProductPage() {
       });
   }, []);
   return (
-    <>
-      <h1>Products</h1>
-      {isLoading ? <Loading /> : <Card products={products} />}
-    </>
+    <div className="mx-[50px]">
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <>
+          <h1 className="font-[700] text-[20px]">{products.length} items</h1>
+          <Card products={products} />
+        </>
+      )}
+    </div>
   );
 }
