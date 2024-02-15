@@ -1,8 +1,8 @@
 /* eslint-disable react/prop-types */
 import { Link } from "react-router-dom";
+import { IMAGE_SRC_PATH } from "../../services/constants";
 
 export default function Card({ products }) {
-  const BASE_URL = "http://localhost:5000";
   return (
     <div className="grid grid-cols-4 gap-[15px] items-center pb-[100px] pt-[20px]">
       {products.map((product) => {
@@ -10,7 +10,7 @@ export default function Card({ products }) {
           <div key={product.id} className="flex flex-col h-full transition duration-[0.3s] hover:translate-y-[-10px]">
             <Link to={`product/${product.id}`}>
               <img
-                src={`${BASE_URL}/db_images/${product.image}`}
+                src={`${IMAGE_SRC_PATH}/${product.image}`}
                 alt={product.product_name}
                 className="h-[300px] w-full object-contain"
               />

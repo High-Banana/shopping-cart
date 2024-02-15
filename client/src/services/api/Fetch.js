@@ -10,3 +10,13 @@ export async function fetchAllProducts() {
     })
     .catch((error) => console.log(error));
 }
+
+export async function fetchProductByID(productID) {
+  return axios
+    .get(`/api/products/product/${productID}`)
+    .then((response) => {
+      console.log(response);
+      return response.data;
+    })
+    .catch((error) => console.log(error));
+}
