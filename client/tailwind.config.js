@@ -5,5 +5,16 @@ export default {
   theme: {
     extend: {},
   },
-  plugins: [require("tailwind-scrollbar")({ nocompatible: true })],
+  plugins: [
+    require("tailwind-scrollbar")({ nocompatible: true }),
+    function ({ addComponents }) {
+      const newComponents = {
+        ".link-hover": {
+          "@apply duration-[0.3s] hover:scale-[1.09]": {},
+        },
+      };
+
+      addComponents(newComponents);
+    },
+  ],
 };
