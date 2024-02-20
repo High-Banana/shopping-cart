@@ -15,7 +15,7 @@ export default function Router() {
       children: [
         { path: "/", element: <HomePage /> },
         { path: "products", element: <ProductPage /> },
-        { path: "products/product/:productID", element: <SingleProduct /> },
+        { path: "products/:productType/:productID", element: <SingleProduct /> },
         { path: "cart", element: <Cart /> },
         { path: "*", element: <ErrorPage /> },
       ],
