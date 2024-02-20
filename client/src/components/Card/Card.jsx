@@ -8,7 +8,7 @@ export default function Card({ products }) {
       {products.map((product) => {
         return (
           <div key={product.id} className="flex flex-col h-full transition duration-[0.3s] hover:translate-y-[-10px]">
-            <Link to={`product/${product.id}`}>
+            <Link to={`${product.product_type}/${product.id}`}>
               <img
                 src={`${IMAGE_SRC_PATH}/${product.image}`}
                 alt={product.product_name}
