@@ -1,9 +1,11 @@
+/* eslint-disable react/prop-types */
 import { Link } from "react-router-dom";
 import { useCart } from "../../context/CartContext";
 import { CiShoppingCart } from "react-icons/ci";
 
 export default function Navbar() {
-  const { cartItems } = useCart();
+  const { cartItems, toggleOpenCart } = useCart();
+
   return (
     <div className="flex justify-between bg-black/75 text-white py-[20px] px-[100px] backdrop-blur-lg">
       <div className="flex gap-[30px] text-[20px] font-[500]">
@@ -15,12 +17,12 @@ export default function Navbar() {
         </Link>
       </div>
       <div className="flex gap-[30px] text-[20px] font-[500]">
-        <Link to="cart" className="flex items-start link-hover">
+        <button className="flex items-start link-hover" onClick={() => toggleOpenCart()}>
           <i className="text-[34px]">
             <CiShoppingCart />
           </i>
-          {cartItems.length != "0" ? <span className="text-[15px]">{cartItems.length}</span> : ""}
-        </Link>
+          {cartItems.length != "0" ? <span className="text-[15px]">{cartItems.length}</span> : null}
+        </button>
         <Link to="login" className="link-hover">
           Login
         </Link>

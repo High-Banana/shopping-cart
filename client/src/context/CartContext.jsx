@@ -6,6 +6,7 @@ const CartContext = createContext();
 
 export function CartProvider({ children }) {
   const [cartItems, setCartItems] = useState([]);
+  const [openCart, setOpenCart] = useState(false);
 
   useEffect(() => {
     console.log(cartItems);
@@ -15,9 +16,15 @@ export function CartProvider({ children }) {
     setCartItems([...cartItems, item]);
   }
 
+  function toggleOpenCart() {
+    setOpenCart(!openCart);
+  }
+
   const providerValues = {
     addToCart,
     cartItems,
+    openCart,
+    toggleOpenCart,
   };
 
   return <CartContext.Provider value={providerValues}>{children}</CartContext.Provider>;
