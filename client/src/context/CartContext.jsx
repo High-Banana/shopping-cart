@@ -7,6 +7,7 @@ const CartContext = createContext();
 export function CartProvider({ children }) {
   const [cartItems, setCartItems] = useState([]);
   const [openCart, setOpenCart] = useState(false);
+  const [fetchItem, setFetchItem] = useState(false);
 
   useEffect(() => {
     console.log(cartItems);
@@ -20,11 +21,17 @@ export function CartProvider({ children }) {
     setOpenCart(!openCart);
   }
 
+  function toggleFetchItem() {
+    setFetchItem(!fetchItem);
+  }
+
   const providerValues = {
     addToCart,
     cartItems,
     openCart,
     toggleOpenCart,
+    fetchItem,
+    toggleFetchItem,
   };
 
   return <CartContext.Provider value={providerValues}>{children}</CartContext.Provider>;
