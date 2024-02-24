@@ -8,13 +8,31 @@ export function CartProvider({ children }) {
   const [cartItems, setCartItems] = useState([]);
   const [openCart, setOpenCart] = useState(false);
   const [fetchItem, setFetchItem] = useState(false);
+  const [value, setValue] = useState();
 
   useEffect(() => {
     console.log(cartItems);
-  }, [cartItems]);
+  }, [cartItems, value]);
 
-  function addToCart(item) {
-    setCartItems([...cartItems, item]);
+  function addToCart(newItem) {
+    let isItemInCart = false;
+    const repeatedItem = cartItems.map((item) => {
+      if (item.id === newItem.id) {
+        isItemInCart = true;
+        // item.quantity += 1;
+        item.quantity += 1;
+        // setValue(item.quantity);
+      }
+      return item;
+    });
+
+    if (isItemInCart) setCartItems(repeatedItem);
+    else {
+      newItem.quantity = 1;
+      setCartItems([...cartItems, newItem]);
+      setValue(newItem.quantity);
+    }
+    console.log(cartItems);
   }
 
   function toggleOpenCart() {
@@ -32,6 +50,8 @@ export function CartProvider({ children }) {
     toggleOpenCart,
     fetchItem,
     toggleFetchItem,
+    value,
+    setValue,
   };
 
   return <CartContext.Provider value={providerValues}>{children}</CartContext.Provider>;

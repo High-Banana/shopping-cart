@@ -2,14 +2,17 @@ import { useEffect, useState } from "react";
 import { useCart } from "../../context/CartContext";
 import { Link } from "react-router-dom";
 import { IMAGE_SRC_PATH } from "../../services/constants";
+import { FaMinus } from "react-icons/fa";
+import { FaPlus } from "react-icons/fa";
 
 /* eslint-disable react/prop-types */
 export default function Cart() {
-  const { toggleOpenCart, cartItems, toggleFetchItem } = useCart();
+  const { toggleOpenCart, cartItems, toggleFetchItem, addToCart, value, setValue } = useCart();
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
     setTimeout(() => setIsVisible(true), 0);
+    console.log(cartItems);
   }, []);
 
   function handleClosingTransition() {
@@ -25,7 +28,7 @@ export default function Cart() {
           isVisible ? "bg-black bg-opacity-35" : ""
         }`}></div>
       <div
-        className={`right-0 fixed bg-white h-svh w-[35%] py-[50px] px-[30px] z-30 ease-in-out duration-500 ${
+        className={`right-0 fixed bg-white h-svh w-[40%] py-[50px] px-[30px] z-30 ease-in-out duration-500 ${
           isVisible ? "translate-x-0" : "translate-x-full"
         }`}>
         {cartItems.length > 0 ? (
@@ -35,21 +38,41 @@ export default function Cart() {
             </h1>
             {cartItems.map((item) => {
               return (
-                <Link
+                <div
                   key={item.id}
-                  to={`products/${item.product_type}/${item.id}`}
-                  onClick={() => {
-                    handleClosingTransition();
-                    toggleFetchItem();
-                  }}>
-                  <div className="flex items-center gap-[10px] bg-[#ececec] rounded-lg h-[120px] p-[7px]">
-                    <img src={`${IMAGE_SRC_PATH}/${item.image}`} className="w-[130px]" />
-                    <div className="flex flex-col gap-[20px]">
-                      <span className="font-semibold">{item.product_name}</span>
-                      <span className="text-[20px] font-bold">NPR {parseFloat(item.product_price).toLocaleString("en-US")}</span>
-                    </div>
+                  className="flex items-center gap-[10px] bg-[#ececec] rounded-lg h-[120px] p-[7px] hover:scale-[1.02] duration-300">
+                  <img src={`${IMAGE_SRC_PATH}/${item.image}`} className="w-[130px]" />
+                  <div className="grid grid-cols-[200px_1fr] grid-rows-2 gap-[20px]">
+                    <Link
+                      to={`products/${item.product_type}/${item.id}`}
+                      onClick={() => {
+                        handleClosingTransition();
+                        toggleFetchItem();
+                      }}>
+                      <span className="font-semibold col-start-1">{item.product_name}</span>
+                    </Link>
+                    <span className="text-[20px] font-bold row-start-2">
+                      NPR {parseFloat(item.product_price).toLocaleString("en-US")}
+                    </span>
+                    <span className="col-start-2 row-start-2 flex gap-[5px] items-center">
+                      <button className="text-[14px]">{<FaMinus />}</button>
+                      <input
+                        className="w-[35px] h-[20px] py-[10px] px-[3px] bg-transparent border-[2px] border-black"
+                        maxLength="3"
+                        type="number"
+                        onChange={(e) => setValue(e.target.value)}
+                        value={item.quantity}></input>
+                      <button
+                        className="text-[14px]"
+                        onClick={() => {
+                          addToCart(item);
+                          setValue(value + 1);
+                        }}>
+                        {<FaPlus />}
+                      </button>
+                    </span>
                   </div>
-                </Link>
+                </div>
               );
             })}
           </div>
