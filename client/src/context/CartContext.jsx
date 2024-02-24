@@ -28,7 +28,6 @@ export function CartProvider({ children }) {
       newItem.quantity = 1;
       setCartItems([...cartItems, newItem]);
     }
-    console.log(cartItems);
   }
 
   function removeFromCart(itemToRemove = cartItems, type = "decreaseQuantity") {

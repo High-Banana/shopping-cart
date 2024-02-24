@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 import { useCart } from "../../context/CartContext";
 import { Link } from "react-router-dom";
@@ -13,7 +14,6 @@ export default function Cart() {
 
   useEffect(() => {
     setTimeout(() => setIsVisible(true), 0);
-    console.log(cartItems);
   }, []);
 
   function handleClosingTransition() {

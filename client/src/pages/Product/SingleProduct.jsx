@@ -24,7 +24,6 @@ export default function SingleProduct() {
 
   return (
     <>
-      <h1>Single Product - {productID}</h1>
       {isLoading ? (
         <Loading />
       ) : (
