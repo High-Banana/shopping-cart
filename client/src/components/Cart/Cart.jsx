@@ -7,7 +7,7 @@ import { FaPlus } from "react-icons/fa";
 
 /* eslint-disable react/prop-types */
 export default function Cart() {
-  const { toggleOpenCart, cartItems, toggleFetchItem, addToCart, value, setValue, getTotalItems } = useCart();
+  const { toggleOpenCart, cartItems, toggleFetchItem, addToCart, getTotalItems, removeFromCart } = useCart();
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
@@ -55,18 +55,19 @@ export default function Cart() {
                       NPR {parseFloat(item.product_price).toLocaleString("en-US")}
                     </span>
                     <span className="col-start-2 row-start-2 flex gap-[5px] items-center">
-                      <button className="text-[14px]">{<FaMinus />}</button>
+                      <button className="text-[14px]" onClick={() => removeFromCart(item)}>
+                        {<FaMinus />}
+                      </button>
                       <input
                         className="w-[35px] h-[20px] py-[10px] px-[3px] bg-transparent border-[2px] border-black"
                         maxLength="3"
                         type="number"
-                        onChange={(e) => setValue(e.target.value)}
+                        onChange={(e) => console.log(e.target.value)}
                         value={item.quantity}></input>
                       <button
                         className="text-[14px]"
                         onClick={() => {
                           addToCart(item);
-                          setValue(value + 1);
                         }}>
                         {<FaPlus />}
                       </button>
