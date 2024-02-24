@@ -35,6 +35,14 @@ export function CartProvider({ children }) {
     console.log(cartItems);
   }
 
+  function getTotalItems() {
+    let total = 0;
+    cartItems.map((item) => {
+      total += item.quantity;
+    });
+    return total;
+  }
+
   function toggleOpenCart() {
     setOpenCart(!openCart);
   }
@@ -52,6 +60,7 @@ export function CartProvider({ children }) {
     toggleFetchItem,
     value,
     setValue,
+    getTotalItems,
   };
 
   return <CartContext.Provider value={providerValues}>{children}</CartContext.Provider>;

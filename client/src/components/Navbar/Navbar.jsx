@@ -4,7 +4,7 @@ import { useCart } from "../../context/CartContext";
 import { CiShoppingCart } from "react-icons/ci";
 
 export default function Navbar() {
-  const { cartItems, toggleOpenCart } = useCart();
+  const { getTotalItems, toggleOpenCart } = useCart();
 
   return (
     <div className="flex justify-between bg-black/75 text-white py-[20px] px-[100px] backdrop-blur-lg">
@@ -21,7 +21,7 @@ export default function Navbar() {
           <i className="text-[34px]">
             <CiShoppingCart />
           </i>
-          {cartItems.length != "0" ? <span className="text-[15px]">{cartItems.length}</span> : null}
+          {getTotalItems() !== 0 ? <span className="text-[15px]">{getTotalItems()}</span> : null}
         </button>
         <Link to="login" className="link-hover">
           Login

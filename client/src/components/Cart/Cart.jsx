@@ -7,7 +7,7 @@ import { FaPlus } from "react-icons/fa";
 
 /* eslint-disable react/prop-types */
 export default function Cart() {
-  const { toggleOpenCart, cartItems, toggleFetchItem, addToCart, value, setValue } = useCart();
+  const { toggleOpenCart, cartItems, toggleFetchItem, addToCart, value, setValue, getTotalItems } = useCart();
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
@@ -34,7 +34,7 @@ export default function Cart() {
         {cartItems.length > 0 ? (
           <div className="flex flex-col gap-[15px]">
             <h1 className="text-3xl mb-[20px]">
-              Total {cartItems.length > 1 ? "Items" : "Item"} - {cartItems.length}
+              Total {getTotalItems() > 1 ? "Items" : "Item"} - {getTotalItems()}
             </h1>
             {cartItems.map((item) => {
               return (
