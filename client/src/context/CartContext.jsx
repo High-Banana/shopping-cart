@@ -31,14 +31,16 @@ export function CartProvider({ children }) {
     console.log(cartItems);
   }
 
-  function removeFromCart(removeItem) {
-    const updatedItems = cartItems.map((item) => {
-      if (item.id === removeItem.id && removeItem.quantity > 1) {
-        item.quantity -= 1;
-      }
-      return item;
-    });
-    setCartItems(updatedItems);
+  function removeFromCart(itemToRemove = cartItems, type = "decreaseQuantity") {
+    if (type === "decreaseQuantity") {
+      const updatedItems = cartItems.map((item) => {
+        if (item.id === itemToRemove.id && itemToRemove.quantity > 1) {
+          item.quantity -= 1;
+        }
+        return item;
+      });
+      setCartItems(updatedItems);
+    } else if (type === "deleteItem") setCartItems(cartItems.filter((item) => item.id !== itemToRemove.id));
   }
 
   function getTotalItems() {

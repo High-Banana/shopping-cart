@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { IMAGE_SRC_PATH } from "../../services/constants";
 import { FaMinus } from "react-icons/fa";
 import { FaPlus } from "react-icons/fa";
+import { FaTrash } from "react-icons/fa";
 
 /* eslint-disable react/prop-types */
 export default function Cart() {
@@ -51,12 +52,19 @@ export default function Cart() {
                       }}>
                       <span className="font-semibold col-start-1">{item.product_name}</span>
                     </Link>
+                    <button
+                      className="justify-self-center"
+                      onClick={() => {
+                        removeFromCart(item, "deleteItem");
+                      }}>
+                      <FaTrash />
+                    </button>
                     <span className="text-[20px] font-bold row-start-2">
                       NPR {parseFloat(item.product_price).toLocaleString("en-US")}
                     </span>
                     <span className="col-start-2 row-start-2 flex gap-[5px] items-center">
                       <button className="text-[14px]" onClick={() => removeFromCart(item)}>
-                        {<FaMinus />}
+                        <FaMinus />
                       </button>
                       <input
                         className="w-[35px] h-[20px] py-[10px] px-[3px] bg-transparent border-[2px] border-black"
@@ -64,12 +72,8 @@ export default function Cart() {
                         type="number"
                         onChange={(e) => console.log(e.target.value)}
                         value={item.quantity}></input>
-                      <button
-                        className="text-[14px]"
-                        onClick={() => {
-                          addToCart(item);
-                        }}>
-                        {<FaPlus />}
+                      <button className="text-[14px]" onClick={() => addToCart(item)}>
+                        <FaPlus />
                       </button>
                     </span>
                   </div>
