@@ -1,12 +1,7 @@
-import { useEffect, useState } from "react";
 import Button from "../../components/ui/Button";
 import { Link } from "react-router-dom";
 
 export default function HomePage() {
-  const [image, setImage] = useState("");
-  useEffect(() => {
-    // fetchApi();
-  }, []);
   return (
     <>
       <div className="grid grid-rows-3 w-[100%] justify-center items-start">
@@ -24,7 +19,11 @@ export default function HomePage() {
               gives you a more comfortable typing experience, but cooling and audio performance are also enhanced. Hurry up and
               check it out!
             </p>
-            <Button title="SHOP NOW" bgColour="bg-[#4163FD]" width="w-[30%]" />
+            <div className="text-start">
+              <Link to="products">
+                <Button title="SHOP NOW" bgColour="bg-[#4163FD]" width="w-[30%]" />
+              </Link>
+            </div>
           </div>
           <img src="src/assets/images/ux482-2.png" alt="ASUS Zenbook Duo UX482 laptop" />
         </section>
@@ -46,7 +45,9 @@ export default function HomePage() {
               </p>
               <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi, ducimus?</p>
               <div className="text-center">
-                <Button title="QUICK BUY" bgColour="bg-[#FF5733]" width="w-[30%]" />
+                <Link to="products">
+                  <Button title="QUICK BUY" bgColour="bg-[#FF5733]" width="w-[30%]" />
+                </Link>
               </div>
             </div>
           </div>
@@ -63,7 +64,7 @@ export default function HomePage() {
           </div>
           <Link
             className="bg-black bg-[url('src/assets/images/homepage-smartphone.png')] w-[40rem] h-[30rem] bg-[length:50%] bg-center bg-no-repeat duration-[0.3s] transition-all hover:bg-[length:40%] rounded-md"
-            to=""></Link>
+            to="products"></Link>
         </section>
       </div>
     </>
