@@ -9,7 +9,7 @@ import { FaTrash } from "react-icons/fa";
 
 /* eslint-disable react/prop-types */
 export default function Cart() {
-  const { toggleOpenCart, cartItems, toggleFetchItem, addToCart, getTotalItems, removeFromCart } = useCart();
+  const { toggleOpenCart, cartItems, toggleFetchItem, addToCart, getTotalItems, removeFromCart, handleInputValue } = useCart();
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
@@ -68,9 +68,9 @@ export default function Cart() {
                       </button>
                       <input
                         className="w-[35px] h-[20px] py-[10px] px-[3px] bg-transparent border-[2px] border-black"
-                        maxLength="3"
                         type="number"
-                        onChange={(e) => console.log(e.target.value)}
+                        onChange={(e) => handleInputValue(e.target.value, item)}
+                        onFocus={(e) => e.target.select()}
                         value={item.quantity}></input>
                       <button className="text-[14px]" onClick={() => addToCart(item)}>
                         <FaPlus />

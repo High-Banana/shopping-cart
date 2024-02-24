@@ -30,7 +30,7 @@ export function CartProvider({ children }) {
     }
   }
 
-  function removeFromCart(itemToRemove = cartItems, type = "decreaseQuantity") {
+  function removeFromCart(itemToRemove, type = "decreaseQuantity") {
     if (type === "decreaseQuantity") {
       const updatedItems = cartItems.map((item) => {
         if (item.id === itemToRemove.id && itemToRemove.quantity > 1) {
@@ -50,6 +50,17 @@ export function CartProvider({ children }) {
     return total;
   }
 
+  function handleInputValue(value, product) {
+    if (value.length > 3) return console.log("Cannot enter more than 3 digits");
+    const productArray = cartItems.map((item) => {
+      if (item.id === product.id) {
+        item.quantity = Number(value) === 0 ? 1 : Number(value);
+      }
+      return item;
+    });
+    setCartItems(productArray);
+  }
+
   function toggleOpenCart() {
     setOpenCart(!openCart);
   }
@@ -67,6 +78,7 @@ export function CartProvider({ children }) {
     toggleFetchItem,
     getTotalItems,
     removeFromCart,
+    handleInputValue,
   };
 
   return <CartContext.Provider value={providerValues}>{children}</CartContext.Provider>;
