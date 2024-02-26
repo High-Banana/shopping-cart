@@ -21,7 +21,7 @@ export default function HomePage() {
             </p>
             <div className="text-start">
               <Link to="products">
-                <Button title="SHOP NOW" bgColour="bg-[#4163FD]" width="w-[30%]" />
+                <Button title="SHOP NOW" className="bg-[#4163FD] w-[30%]" />
               </Link>
             </div>
           </div>
@@ -46,7 +46,7 @@ export default function HomePage() {
               <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi, ducimus?</p>
               <div className="text-center">
                 <Link to="products">
-                  <Button title="QUICK BUY" bgColour="bg-[#FF5733]" width="w-[30%]" />
+                  <Button title="QUICK BUY" className="bg-[#FF5733] w-[30%]" />
                 </Link>
               </div>
             </div>

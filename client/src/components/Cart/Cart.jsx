@@ -90,7 +90,7 @@ export default function Cart() {
                 <span>Total</span>
               </div>
               <div className="text-center">
-                <Button title="Checkout" bgColour="bg-[#009027]" width="w-[100%]" />
+                <Button title="Checkout" className="bg-[#009027] w-[100%]" />
               </div>
             </div>
           </div>
