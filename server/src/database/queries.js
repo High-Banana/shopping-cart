@@ -24,11 +24,11 @@ async function addProduct(name, description, price, image, type) {
 }
 
 // addProduct(
-//   "Huawei MateBook X Pro",
-//   "The Huawei MateBook X Pro is our pick for the best laptop money can buy in 2018. This is a gorgeously-designed laptop with a stunning screen (albeit with a rather odd aspect ratio), and it comes packed with cutting edge components that allows it to perform brilliantly, and a battery life that runs rings around many of its rivals. It also has a very competitive price, giving you features, design and performance for quite a bit less money.",
-//   270000.0,
-//   "huawei-matebook-pro.jpg",
-//   "Laptop"
+//   "iPhone 14 Pro Max",
+//   "The iPhone 14 Pro Max, introduced in 2022, is a flagship device from Apple that boasts a multitude of advanced features. The phone comes with a 6.7-inch Super Retina XDR OLED display with a resolution of 1290 x 2796 pixels, offering vibrant and sharp visuals12. The display supports HDR10, Dolby Vision, and has a high brightness level of up to 2000 nits12. It also features ProMotion technology with adaptive refresh rates up to 120Hz2.\n Under the hood, the iPhone 14 Pro Max is powered by Apple’s A16 Bionic chip, which is built on a 4 nm process13. This hexa-core CPU includes two performance cores and four efficiency cores, providing a balance of power and energy efficiency3. The phone also features a 5-core GPU and a 16-core Neural Engine for advanced machine learning tasks3.\n In terms of storage, the iPhone 14 Pro Max offers several options: 128GB, 256GB, 512GB, and 1TB12. However, it does not support expandable storage via a card slot1. \n The iPhone 14 Pro Max stands out in the camera department. It features a triple camera setup on the rear, including a 48 MP main camera with sensor-shift OIS, a 12 MP ultra-wide camera, and a 12 MP telephoto camera12. The phone also features a 12 MP front camera for selfies1. The camera system supports 4K video recording, HDR, and has a Photonic Engine for enhanced image processing2.",
+//   214300.0,
+//   "iphone-15-pro-max.jpg",
+//   "Mobile"
 // );
 
 export { getAllProducts, getProductByID, addProduct };
