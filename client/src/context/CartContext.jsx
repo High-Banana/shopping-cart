@@ -8,9 +8,12 @@ export function CartProvider({ children }) {
   const [cartItems, setCartItems] = useState([]);
   const [openCart, setOpenCart] = useState(false);
   const [fetchItem, setFetchItem] = useState(false);
+  const [totalPrice, setTotalPrice] = useState(0);
 
   useEffect(() => {
     console.log(cartItems);
+    setTotalPrice(calculateTotalPrice());
+    console.log(totalPrice);
   }, [cartItems]);
 
   function addToCart(newItem) {
@@ -50,6 +53,16 @@ export function CartProvider({ children }) {
     return total;
   }
 
+  function calculateTotalPrice() {
+    return cartItems
+      .reduce((total, currentValue) => {
+        let price = parseFloat(currentValue.product_price);
+        price *= currentValue.quantity;
+        return total + price;
+      }, 0)
+      .toLocaleString();
+  }
+
   function handleInputValue(value, product) {
     if (value.length > 3) return console.log("Cannot enter more than 3 digits");
     const productArray = cartItems.map((item) => {
@@ -79,6 +92,7 @@ export function CartProvider({ children }) {
     getTotalItems,
     removeFromCart,
     handleInputValue,
+    totalPrice,
   };
 
   return <CartContext.Provider value={providerValues}>{children}</CartContext.Provider>;

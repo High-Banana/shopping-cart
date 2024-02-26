@@ -35,7 +35,7 @@ export default function SingleProduct() {
             <h1 className="text-3xl font-[500]">{singleProduct.product_name}</h1>
             <p className="text-[#3e3e3e] text-[15px] overflow-auto scrollbar-none">{singleProduct.product_description}</p>
             <div className="flex justify-between items-center">
-              <span className="font-[700] text-2xl">NPR {parseFloat(singleProduct.product_price).toLocaleString("en-US")}</span>
+              <span className="font-[700] text-2xl">NPR {parseFloat(singleProduct.product_price).toLocaleString()}</span>
               <Button title="Add to cart" className="bg-[#E20D0D]" onClick={() => addToCart(singleProduct)} />
             </div>
           </div>

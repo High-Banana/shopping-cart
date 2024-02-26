@@ -11,7 +11,8 @@ import Button from "../ui/Button";
 
 /* eslint-disable react/prop-types */
 export default function Cart() {
-  const { toggleOpenCart, cartItems, toggleFetchItem, addToCart, getTotalItems, removeFromCart, handleInputValue } = useCart();
+  const { toggleOpenCart, cartItems, toggleFetchItem, addToCart, getTotalItems, removeFromCart, handleInputValue, totalPrice } =
+    useCart();
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
@@ -68,7 +69,7 @@ export default function Cart() {
                           <FaTrash />
                         </button>
                         <span className="text-[20px] font-bold row-start-2">
-                          NPR {parseFloat(item.product_price).toLocaleString("en-US")}
+                          NPR {parseFloat(item.product_price).toLocaleString()}
                         </span>
                         <span className="col-start-2 row-start-2 flex gap-[5px] items-center">
                           <button className="text-[14px]" aria-label="decrease quantity" onClick={() => removeFromCart(item)}>
@@ -92,7 +93,7 @@ export default function Cart() {
             </div>
             <div className="border-t border-[black] flex flex-col">
               <div className="flex">
-                <span>Total</span>
+                <span>Total ${totalPrice}</span>
               </div>
               <div className="text-center">
                 <Button title="Checkout" className="bg-[#009027] w-[100%]" />
