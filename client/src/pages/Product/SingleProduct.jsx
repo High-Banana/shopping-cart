@@ -11,7 +11,7 @@ export default function SingleProduct() {
   const { productID } = useParams();
   const [singleProduct, setSingleProduct] = useState();
   const [isLoading, setIsLoading] = useState(true);
-  const { addToCart, fetchItem } = useCart();
+  const { addToCart } = useCart();
 
   useEffect(() => {
     fetchProductByID(productID)
@@ -20,7 +20,7 @@ export default function SingleProduct() {
         setIsLoading(false);
       })
       .catch((error) => console.log(error));
-  }, [fetchItem]);
+  }, [productID]);
 
   return (
     <>

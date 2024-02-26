@@ -7,13 +7,9 @@ const CartContext = createContext();
 export function CartProvider({ children }) {
   const [cartItems, setCartItems] = useState([]);
   const [openCart, setOpenCart] = useState(false);
-  const [fetchItem, setFetchItem] = useState(false);
-  const [totalPrice, setTotalPrice] = useState(0);
 
   useEffect(() => {
     console.log(cartItems);
-    setTotalPrice(calculateTotalPrice());
-    console.log(totalPrice);
   }, [cartItems]);
 
   function addToCart(newItem) {
@@ -46,11 +42,9 @@ export function CartProvider({ children }) {
   }
 
   function getTotalItems() {
-    let total = 0;
-    cartItems.map((item) => {
-      total += item.quantity;
-    });
-    return total;
+    return cartItems.reduce((total, item) => {
+      return (total += item.quantity);
+    }, 0);
   }
 
   function calculateTotalPrice() {
@@ -78,21 +72,15 @@ export function CartProvider({ children }) {
     setOpenCart(!openCart);
   }
 
-  function toggleFetchItem() {
-    setFetchItem(!fetchItem);
-  }
-
   const providerValues = {
     addToCart,
     cartItems,
     openCart,
     toggleOpenCart,
-    fetchItem,
-    toggleFetchItem,
     getTotalItems,
     removeFromCart,
     handleInputValue,
-    totalPrice,
+    calculateTotalPrice,
   };
 
   return <CartContext.Provider value={providerValues}>{children}</CartContext.Provider>;

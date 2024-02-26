@@ -11,7 +11,7 @@ import Button from "../ui/Button";
 
 /* eslint-disable react/prop-types */
 export default function Cart() {
-  const { toggleOpenCart, cartItems, toggleFetchItem, addToCart, getTotalItems, removeFromCart, handleInputValue, totalPrice } =
+  const { toggleOpenCart, cartItems, addToCart, getTotalItems, removeFromCart, handleInputValue, calculateTotalPrice } =
     useCart();
   const [isVisible, setIsVisible] = useState(false);
 
@@ -52,12 +52,7 @@ export default function Cart() {
                       className="flex items-center gap-[10px] bg-[#ececec] rounded-lg h-[120px] p-[7px] hover:scale-[1.02] duration-300">
                       <img src={`${IMAGE_SRC_PATH}/${item.image}`} className="w-[130px]" />
                       <div className="grid grid-cols-[200px_1fr] grid-rows-2 gap-[20px]">
-                        <Link
-                          to={`products/${item.product_type}/${item.id}`}
-                          onClick={() => {
-                            handleClosingTransition();
-                            toggleFetchItem();
-                          }}>
+                        <Link to={`products/${item.product_type}/${item.id}`} onClick={() => handleClosingTransition()}>
                           <span className="font-semibold col-start-1">{item.product_name}</span>
                         </Link>
                         <button
@@ -93,7 +88,7 @@ export default function Cart() {
             </div>
             <div className="border-t border-[black] flex flex-col">
               <div className="flex">
-                <span>Total ${totalPrice}</span>
+                <span>Total: NPR {calculateTotalPrice()}</span>
               </div>
               <div className="text-center">
                 <Button title="Checkout" className="bg-[#009027] w-[100%]" />
