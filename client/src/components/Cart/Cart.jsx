@@ -87,8 +87,9 @@ export default function Cart() {
               </div>
             </div>
             <div className="border-t border-[black] flex flex-col">
-              <div className="flex">
-                <span>Total: NPR {calculateTotalPrice()}</span>
+              <div className="flex justify-between py-[10px] text-[18px]">
+                <span className="font-semibold">Total:</span>
+                <span className="font-bold">NPR {calculateTotalPrice()}</span>
               </div>
               <div className="text-center">
                 <Button title="Checkout" className="bg-[#009027] w-[100%]" />
