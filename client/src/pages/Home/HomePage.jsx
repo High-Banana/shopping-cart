@@ -1,5 +1,6 @@
-import Button from "../../components/ui/Button";
+import Button from "/src/components/ui/Button";
 import { Link } from "react-router-dom";
+import smartPhoneImage from "/src/assets/images/homepage-smartphone.png";
 
 export default function HomePage() {
   return (
@@ -63,7 +64,7 @@ export default function HomePage() {
             <span className="bg-black w-full h-[5px]"></span>
           </div>
           <Link
-            className="bg-black bg-[url('src/assets/images/homepage-smartphone.png')] w-[40rem] h-[30rem] bg-[length:50%] bg-center bg-no-repeat duration-[0.3s] transition-all hover:bg-[length:40%] rounded-md"
+            className={`bg-black bg-[url('${smartPhoneImage}')] w-[40rem] h-[30rem] bg-[length:50%] bg-center bg-no-repeat duration-[0.3s] transition-all hover:bg-[length:40%] rounded-md`}
             to="products"></Link>
         </section>
       </div>
