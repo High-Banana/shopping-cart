@@ -6,6 +6,7 @@ import { IMAGE_SRC_PATH } from "../../services/constants";
 import { FaMinus } from "react-icons/fa";
 import { FaPlus } from "react-icons/fa";
 import { FaTrash } from "react-icons/fa";
+import { RxCross1 } from "react-icons/rx";
 import Button from "../ui/Button";
 
 /* eslint-disable react/prop-types */
@@ -33,6 +34,9 @@ export default function Cart() {
         className={`right-0 fixed bg-white h-svh w-[40%] pt-[50px] pb-[20px] px-[30px] z-30 ease-in-out duration-500 ${
           isVisible ? "translate-x-0" : "translate-x-full"
         }`}>
+        <button className="absolute text-3xl right-[30px]" aria-label="close cart" onClick={() => handleClosingTransition()}>
+          <RxCross1 />
+        </button>
         {cartItems.length > 0 ? (
           <div className="flex flex-col min-h-full justify-between">
             <div className="flex flex-col gap-[20px]">
@@ -57,6 +61,7 @@ export default function Cart() {
                         </Link>
                         <button
                           className="justify-self-center"
+                          aria-label="delete item"
                           onClick={() => {
                             removeFromCart(item, "deleteItem");
                           }}>
@@ -66,7 +71,7 @@ export default function Cart() {
                           NPR {parseFloat(item.product_price).toLocaleString("en-US")}
                         </span>
                         <span className="col-start-2 row-start-2 flex gap-[5px] items-center">
-                          <button className="text-[14px]" onClick={() => removeFromCart(item)}>
+                          <button className="text-[14px]" aria-label="decrease quantity" onClick={() => removeFromCart(item)}>
                             <FaMinus />
                           </button>
                           <input
@@ -75,7 +80,7 @@ export default function Cart() {
                             onChange={(e) => handleInputValue(e.target.value, item)}
                             onFocus={(e) => e.target.select()}
                             value={item.quantity}></input>
-                          <button className="text-[14px]" onClick={() => addToCart(item)}>
+                          <button className="text-[14px]" aria-label="increase quantity" onClick={() => addToCart(item)}>
                             <FaPlus />
                           </button>
                         </span>
