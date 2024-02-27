@@ -37,11 +37,13 @@ export default function Cart() {
         className={`flex flex-col gap-8 right-0 fixed bg-white h-svh w-[40%] pt-[50px] pb-[20px] px-[30px] z-30 ease-in-out duration-500 ${
           isVisible ? "translate-x-0" : "translate-x-full"
         }`}>
-        <div className="flex justify-between">
-          <h1 className="text-3xl">
-            Total {getTotalItems() > 1 ? "Items" : "Item"} - {getTotalItems()}
-          </h1>
-          <button className="text-3xl" aria-label="close cart" onClick={() => handleClosingTransition()}>
+        <div className="flex">
+          {cartItems.length > 0 && (
+            <h1 className="text-3xl">
+              Total {getTotalItems() > 1 ? "Items" : "Item"} - {getTotalItems()}
+            </h1>
+          )}
+          <button className="text-3xl right-[30px] absolute" aria-label="close cart" onClick={() => handleClosingTransition()}>
             <RxCross1 />
           </button>
         </div>
