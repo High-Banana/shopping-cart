@@ -31,7 +31,7 @@ export default function SingleProduct() {
           <div className="max-h-[500px] flex items-center rounded-[10px]">
             <img
               src={`${IMAGE_SRC_PATH}/${singleProduct.image}`}
-              className="h-[650px] object-contain"
+              className="object-contain max-h-full"
               alt={singleProduct.product_name}
             />
           </div>
