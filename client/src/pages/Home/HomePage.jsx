@@ -20,7 +20,7 @@ export default function HomePage() {
               check it out!
             </p>
             <div className="text-start">
-              <Link to="products">
+              <Link to="products/Laptop/60c6c3f8-db0a-4119-bfa3-3b4f0a02316f">
                 <Button title="SHOP NOW" className="bg-[#4163FD] w-[30%]" />
               </Link>
             </div>
