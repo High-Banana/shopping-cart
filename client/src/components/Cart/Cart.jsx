@@ -16,11 +16,13 @@ export default function Cart() {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
+    document.body.style.overflow = "hidden";
     setTimeout(() => setIsVisible(true), 0);
   }, []);
 
   function handleClosingTransition() {
     setIsVisible(false);
+    document.body.style.overflow = "scroll";
     setTimeout(() => toggleOpenCart(), 400);
   }
 
