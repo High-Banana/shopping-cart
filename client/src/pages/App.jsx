@@ -3,6 +3,7 @@ import Navbar from "../components/Navbar/Navbar";
 import Footer from "../components/Footer/Footer";
 import { useCart } from "../context/CartContext";
 import Cart from "../components/Cart/Cart";
+import ScrollToTop from "../components/ScrollToTop";
 
 function App() {
   const { openCart } = useCart();
@@ -14,7 +15,9 @@ function App() {
         <Navbar />
       </nav>
       <main className="min-h-svh">
-        <Outlet />
+        <ScrollToTop>
+          <Outlet />
+        </ScrollToTop>
       </main>
       <Footer className="bottom-0" />
     </>
