@@ -6,9 +6,9 @@ import useFetch from "../../hooks/useFetch";
 import Error from "../../components/Error";
 
 export default function ProductPage() {
-  const [products, isLoading, error] = useFetch();
+  const { item: products, isLoading, errorState: error, fetchItems } = useFetch();
 
-  if (error) return <Error />;
+  if (error) return <Error errorDetail={error} onClickFunction={() => fetchItems()} />;
 
   return (
     <div className="mx-[50px]">

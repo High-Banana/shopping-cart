@@ -7,23 +7,20 @@ export default function useFetch(productID) {
   const [errorState, setErrorState] = useState();
 
   async function fetchItems(productID) {
-    console.log(productID);
-    if (productID !== undefined) return await fetchProductByID(productID);
-    else return await fetchAllProducts();
-  }
-
-  useEffect(() => {
-    fetchItems(productID)
+    setErrorState(undefined);
+    const products = productID === undefined ? fetchAllProducts() : fetchProductByID(productID);
+    console.log(products);
+    products
       .then((data) => {
         setItem(data);
         setIsLoading(false);
-        console.log(data);
       })
-      .catch((error) => {
-        setErrorState(error);
-        console.log(error);
-      });
+      .catch((error) => setErrorState(error));
+  }
+
+  useEffect(() => {
+    fetchItems(productID);
   }, [productID]);
 
-  return [item, isLoading, errorState];
+  return { item, isLoading, errorState, fetchItems };
 }

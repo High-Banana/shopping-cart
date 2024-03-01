@@ -6,12 +6,18 @@ import Button from "../../components/ui/Button";
 import { useCart } from "../../context/CartContext";
 import useFetch from "../../hooks/useFetch";
 import Error from "../../components/Error";
+import { useState } from "react";
 
 export default function SingleProduct() {
   const { productID } = useParams();
   const { addToCart } = useCart();
-  const [[product], isLoading, error] = useFetch(productID);
-  if (error) return <Error />;
+  const {
+    item: [product],
+    isLoading,
+    errorState: error,
+    fetchItems,
+  } = useFetch(productID);
+  if (error !== undefined) return <Error errorDetail={error} onClickFunction={() => fetchItems(productID)} />;
 
   return (
     <>
