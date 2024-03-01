@@ -1,23 +1,15 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useState } from "react";
 import Card from "../../components/Card/Card";
-import { fetchAllProducts } from "../../services/api/Fetch";
 import Loading from "../../components/Loading/Loading";
 import { Outlet } from "react-router-dom";
+import useFetch from "../../hooks/useFetch";
+import Error from "../../components/Error";
 
 export default function ProductPage() {
-  const [products, setProducts] = useState();
-  const [isLoading, setIsLoading] = useState(true);
-  useEffect(() => {
-    fetchAllProducts()
-      .then((data) => {
-        setProducts(data);
-        setIsLoading(false);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
+  const [products, isLoading, error] = useFetch();
+
+  if (error) return <Error />;
+
   return (
     <div className="mx-[50px]">
       {isLoading ? (
