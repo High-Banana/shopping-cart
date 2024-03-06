@@ -1,21 +1,24 @@
 import { v4 as uuidv4 } from "uuid";
 import database from "./db.js";
 
-async function getAllProducts() {
+async function getAllProducts(req, res, next) {
   try {
     const [products] = await database.query("select * from products");
-    return products;
+    if (products.length === 0) throw new Error("Products could not load");
+    res.send(products);
   } catch (error) {
-    return `An error occured: ${error}`;
+    next(`An error occured: ${error}`);
   }
 }
 
-async function getProductByID(productID) {
+async function getProductByID(req, res, next) {
+  const productID = req.params.productID;
   try {
     const [product] = await database.query("select * from products where id = ?", [productID]);
-    return product;
+    if (product.length === 0) throw new Error("Product not found");
+    else res.send(product);
   } catch (error) {
-    return `An error occured: ${error}`;
+    next(error);
   }
 }
 
