@@ -4,10 +4,10 @@ import database from "./db.js";
 async function getAllProducts(req, res, next) {
   try {
     const [products] = await database.query("select * from products");
-    if (products.length === 0) throw new Error("Products could not load");
+    if (products.length === 0) throw new Error("404 Error");
     res.send(products);
   } catch (error) {
-    next(`An error occured: ${error}`);
+    next(error);
   }
 }
 
@@ -15,7 +15,7 @@ async function getProductByID(req, res, next) {
   const productID = req.params.productID;
   try {
     const [product] = await database.query("select * from products where id = ?", [productID]);
-    if (product.length === 0) throw new Error("Product not found");
+    if (product.length === 0) throw new Error("404 Error");
     else res.send(product);
   } catch (error) {
     next(error);
