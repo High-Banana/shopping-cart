@@ -2,7 +2,7 @@
 import { Link } from "react-router-dom";
 import { IMAGE_SRC_PATH } from "../../services/constants";
 
-export default function Card({ products, sortState }) {
+export default function Card({ products, sortType }) {
   const sortMethods = {
     ascendingPrice: { method: (a, b) => parseFloat(a.product_price - b.product_price) },
     descendingPrice: { method: (a, b) => parseFloat(b.product_price - a.product_price) },
@@ -12,7 +12,7 @@ export default function Card({ products, sortState }) {
 
   return (
     <div className="grid grid-cols-4 gap-[15px] items-center pb-[100px] pt-[20px]">
-      {products.sort(sortMethods[sortState].method).map((product) => {
+      {products.sort(sortMethods[sortType].method).map((product) => {
         return (
           <div key={product.id} className="flex flex-col h-full transition duration-[0.3s] hover:translate-y-[-10px]">
             <Link to={`${product.product_type}/${product.id}`}>

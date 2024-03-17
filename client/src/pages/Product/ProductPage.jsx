@@ -7,7 +7,7 @@ import { useState } from "react";
 
 export default function ProductPage() {
   const { item: products, isLoading, errorState: error, fetchItems } = useFetch();
-  const [sortState, setSortState] = useState("ascendingPrice");
+  const [sortType, setSortType] = useState("ascendingPrice");
 
   if (error) return <Error errorDetail={error} onClickFunction={() => fetchItems()} />;
 
@@ -23,7 +23,7 @@ export default function ProductPage() {
               <span className="font-semibold">Sort by: </span>
               <select
                 className="bg-transparent font-bold p-1 bg-[#b5b5b5] hover:cursor-pointer"
-                onChange={(e) => setSortState(e.target.value)}>
+                onChange={(e) => setSortType(e.target.value)}>
                 <option value="ascendingPrice">Price High to Low</option>
                 <option value="descendingPrice">Price Low to High</option>
                 <option value="ascendingLetter">A - Z</option>
@@ -32,7 +32,7 @@ export default function ProductPage() {
               </select>
             </div>
           </div>
-          <Card products={products} sortState={sortState} />
+          <Card products={products} sortType={sortType} />
         </>
       )}
     </div>
