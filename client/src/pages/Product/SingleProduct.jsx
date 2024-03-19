@@ -6,12 +6,10 @@ import Button from "../../components/ui/Button";
 import { useCart } from "../../context/CartContext";
 import useFetch from "../../hooks/useFetch";
 import Error from "../../components/Error";
-import { IoMdArrowBack } from "react-icons/io";
-import { useNavigate } from "react-router-dom";
+import GoBackButton from "../../components/ui/GoBackButton";
 
 export default function SingleProduct() {
   const { productID } = useParams();
-  const navigate = useNavigate();
   const { addToCart } = useCart();
   const {
     items: [product],
@@ -27,9 +25,7 @@ export default function SingleProduct() {
         <Loading />
       ) : (
         <div className="flex flex-col gap-[20px]">
-          <button aria-label="Go back" onClick={() => navigate(-1)} className="ml-[30px] mt-[10px] w-[30px]">
-            <IoMdArrowBack className="hover:cursor-pointer text-5xl" />
-          </button>
+          <GoBackButton />
           <div className="grid grid-cols-[700px_1fr] mx-[10px] gap-[30px] px-[10px] py-[50px]">
             <div className="max-h-[500px] flex items-center rounded-[10px]">
               <img src={`${IMAGE_SRC_PATH}/${product.image}`} className="object-contain max-h-full" alt={product.product_name} />
