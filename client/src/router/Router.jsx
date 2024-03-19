@@ -16,11 +16,8 @@ export default function Router() {
         { path: "products", element: <ProductPage /> },
         { path: "products/:productType/:productID", element: <SingleProduct /> },
         { path: "*", element: <ErrorPage /> },
+        { path: "login", element: <LoginPage /> },
       ],
-    },
-    {
-      path: "login",
-      element: <LoginPage />,
     },
   ]);
 
