@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { fetchAllProducts, fetchProductByID } from "../services/api/Fetch";
 
 export default function useFetch(productID) {
-  const [item, setItem] = useState([]);
+  const [items, setItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [errorState, setErrorState] = useState();
 
@@ -12,7 +12,7 @@ export default function useFetch(productID) {
     console.log(products);
     products
       .then((data) => {
-        setItem(data);
+        setItems(data);
         setIsLoading(false);
       })
       .catch((error) => setErrorState(error));
@@ -22,5 +22,5 @@ export default function useFetch(productID) {
     fetchItems(productID);
   }, [productID]);
 
-  return { item, isLoading, errorState, fetchItems };
+  return { items, isLoading, errorState, fetchItems };
 }
