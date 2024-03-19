@@ -6,7 +6,6 @@ import Button from "../../components/ui/Button";
 import { useCart } from "../../context/CartContext";
 import useFetch from "../../hooks/useFetch";
 import Error from "../../components/Error";
-import { useState } from "react";
 
 export default function SingleProduct() {
   const { productID } = useParams();
