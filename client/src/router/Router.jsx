@@ -3,7 +3,7 @@ import HomePage from "../pages/Home/HomePage";
 import App from "../pages/App";
 import ErrorPage from "../pages/ErrorPage";
 import ProductPage from "../pages/Product/Main-page/ProductPage";
-import LoginPage from "../pages/LoginPage";
+import LoginPage from "../pages/LoginPage/LoginPage";
 import SingleProduct from "../pages/Product/SingleProduct";
 import { CartProvider } from "../context/CartContext";
 
