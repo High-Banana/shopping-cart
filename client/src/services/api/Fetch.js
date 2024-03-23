@@ -21,3 +21,13 @@ export async function fetchProductByID(productID) {
       return Promise.reject(error);
     });
 }
+
+export async function fetchRegisteredUsers() {
+  return axios
+    .get("/api/users")
+    .then((response) => {
+      console.log(response.data);
+      return response.data;
+    })
+    .catch((error) => Promise.reject(error));
+}
