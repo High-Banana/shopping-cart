@@ -14,7 +14,6 @@ export default function useForm(email, password) {
       .post("/api/users/login", { email, password })
       .then((response) => {
         if (response.status === 200) {
-          setIsLoading(false);
           setUser(response.data);
           console.log(response.data[0]);
         } else console.log("Login failed");
@@ -23,6 +22,7 @@ export default function useForm(email, password) {
         setInvalidMessage({ email: error.response.data, password: error.response.data });
         console.log(error.response.data);
       });
+    setIsLoading(false);
   }
 
   function handleSubmit(event) {
