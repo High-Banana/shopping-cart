@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { fetchRegisteredUsers } from "../services/api/Fetch";
 import axios from "axios";
 
 export default function useForm(email, password) {
@@ -10,7 +9,7 @@ export default function useForm(email, password) {
     password: "",
   });
 
-  async function fetchUser() {
+  async function loginUser() {
     axios
       .post("/api/users/login", { email, password })
       .then((response) => {
@@ -32,7 +31,7 @@ export default function useForm(email, password) {
       .then(() => {
         setInvalidMessage({ email: "", password: "" });
         setIsLoading(true);
-        fetchUser();
+        loginUser();
         console.log(user);
       })
       .catch((error) => {
