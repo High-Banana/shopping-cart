@@ -19,7 +19,9 @@ function App() {
           <Outlet />
         </ScrollToTop>
       </main>
-      <Footer className="bottom-0" />
+      <footer className="bottom-0">
+        <Footer />
+      </footer>
     </>
   );
 }
