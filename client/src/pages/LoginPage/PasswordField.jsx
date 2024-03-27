@@ -7,10 +7,12 @@ export default function PasswordField({ setPassword, invalidMessage }) {
 
   return (
     <div className="flex flex-col gap-[5px] relative">
-      <label htmlFor="password" className={`font-[700] text-[14px] uppercase ${invalidMessage.password && "text-[#ec3939]"}`}>
+      <label
+        htmlFor="password"
+        className={`font-[700] text-[12px] text-white uppercase ${invalidMessage.password && "text-[#f14747]"}`}>
         Password
         {invalidMessage.password && (
-          <span className="text-[#ec3939] font-semibold italic normal-case">
+          <span className="text-[#f14747] font-semibold italic normal-case">
             <span className="pr-1 pl-1">-</span>
             {invalidMessage.password}
           </span>
@@ -22,8 +24,8 @@ export default function PasswordField({ setPassword, invalidMessage }) {
         id="password"
         autoComplete="current-password"
         placeholder="********"
-        className={`h-[45px] px-3 rounded-md border border-black focus:outline-none focus:ring-2 focus:ring-black ease-in-out duration-300 ${
-          invalidMessage.password && "focus:ring-0 border-2 border-[red]"
+        className={`h-[40px] p-3 rounded-md border focus:outline-none transition ease-in-out duration-300 ${
+          invalidMessage.password ? "focus:ring-[none] border-[red] border-2" : "border-black focus:ring-white focus:ring-2"
         }`}></input>
 
       <PasswordToggle showPassword={showPassword} setShowPassword={setShowPassword} />
