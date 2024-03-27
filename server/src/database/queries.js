@@ -28,15 +28,9 @@ async function addProduct(name, description, price, image, type) {
 
 async function getRegisteredUsers(req, res, next) {
   const { email, password } = req.body;
-  try {
-    const [users] = await database.query("select * from users where email = ?", [email]);
-    if (users.length === 0) return res.status(401).json({ message: "User not found" });
-    else res.send(users);
-    return users;
-  } catch (error) {
-    next(error);
-    // console.log(error);
-  }
+  const [user] = await database.query("select * from users where email = ? AND password = ? LIMIT 1", [email, password]);
+  if (user.length === 0) res.status(401).send("Email or password is invalid.");
+  else res.send(user);
 }
 
 // addProduct(
