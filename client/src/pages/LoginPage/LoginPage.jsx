@@ -7,8 +7,7 @@ import SignUpForm from "./SignUpForm";
 // import { Link } from "react-router-dom";
 
 export default function LoginPage() {
-  const { handleSubmit, isLoading } = useFormContext();
-  const [openSignUp, setOpenSignUp] = useState(false);
+  const { handleSubmit, isLoading, toggleSignUpForm, openSignUp } = useFormContext();
 
   return (
     <>
@@ -29,7 +28,7 @@ export default function LoginPage() {
         </form>
         <span className="text-[14px] text-white">
           {openSignUp ? "Already have an account? " : "Don't have an account? "}
-          <button onClick={() => setOpenSignUp(!openSignUp)} className="text-[#4db4e7] font-semibold hover:underline">
+          <button onClick={toggleSignUpForm} className="text-[#4db4e7] font-semibold hover:underline">
             {openSignUp ? "Login here" : "Register here"}
           </button>
         </span>

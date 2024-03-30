@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable react-refresh/only-export-components */
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import useForm from "../hooks/useForm";
 import axios from "axios";
 
@@ -11,9 +11,22 @@ export function FormProvider({ children }) {
   const [password, setPassword] = useState("");
   const [userName, setUserName] = useState("");
   const { validateForm } = useForm(email, password, userName);
-  const [invalidMessage, setInvalidMessage] = useState({ email: "", password: "" });
+  const [invalidMessage, setInvalidMessage] = useState({ emailValue: "", passwordValue: "" });
   const [user, setUser] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [openSignUp, setOpenSignUp] = useState(false);
+
+  useEffect(() => {
+    setEmail("");
+    setPassword("");
+    setUserName("");
+    console.log(user);
+  }, [openSignUp, user]);
+
+  function toggleSignUpForm() {
+    setOpenSignUp(!openSignUp);
+    return openSignUp;
+  }
 
   async function loginUser() {
     axios
@@ -25,9 +38,15 @@ export function FormProvider({ children }) {
         } else console.log("Login failed");
       })
       .catch((error) => {
-        setInvalidMessage({ email: error.response.data, password: error.response.data });
+        setInvalidMessage({ emailValue: error.response.data, passwordValue: error.response.data });
         console.log(error.response.data);
       });
+    setIsLoading(false);
+  }
+
+  function registerUser() {
+    console.log("thanks for registering");
+    setUser([email, password, userName]);
     setIsLoading(false);
   }
 
@@ -35,19 +54,18 @@ export function FormProvider({ children }) {
     event.preventDefault();
     validateForm()
       .then(() => {
-        setInvalidMessage({ email: "", password: "" });
+        setInvalidMessage({ emailValue: "", passwordValue: "", username: "" });
         setIsLoading(true);
-        loginUser();
-        console.log(user);
+        openSignUp ? registerUser() : loginUser();
       })
       .catch((error) => {
         switch (error) {
           case "empty-email":
-            return setInvalidMessage({ email: "Please enter Email" });
+            return setInvalidMessage({ emailValue: "Please enter Email" });
           case "empty-password":
-            return setInvalidMessage({ password: "Please enter password" });
+            return setInvalidMessage({ passwordValue: "Please enter password" });
           case "empty-email-password":
-            return setInvalidMessage({ email: "Please enter Email", password: "Please enter Password" });
+            return setInvalidMessage({ emailValue: "Please enter Email", passwordValue: "Please enter Password" });
           case "empty-username":
             return setInvalidMessage({ username: "Please enter a username" });
           default:
@@ -66,7 +84,9 @@ export function FormProvider({ children }) {
     setUserName,
     invalidMessage,
     handleSubmit,
+    toggleSignUpForm,
     isLoading,
+    openSignUp,
   };
 
   return <FormContext.Provider value={providerValues}>{children}</FormContext.Provider>;
