@@ -20,8 +20,7 @@ export function FormProvider({ children }) {
     setEmail("");
     setPassword("");
     setUserName("");
-    console.log(user);
-  }, [openSignUp, user]);
+  }, [openSignUp]);
 
   function toggleSignUpForm() {
     setOpenSignUp(!openSignUp);
@@ -72,7 +71,6 @@ export function FormProvider({ children }) {
             alert(error);
         }
       });
-    console.log(invalidMessage);
   }
 
   const providerValues = {
