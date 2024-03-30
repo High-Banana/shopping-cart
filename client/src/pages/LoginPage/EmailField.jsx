@@ -1,5 +1,8 @@
+import { useFormContext } from "../../context/FormContext";
+
 /* eslint-disable react/prop-types */
-export default function EmailField({ setEmail, invalidMessage }) {
+export default function EmailField({ setEmail }) {
+  const { invalidMessage } = useFormContext();
   return (
     <div className="flex flex-col gap-[5px]">
       <label

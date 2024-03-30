@@ -9,7 +9,8 @@ const FormContext = createContext();
 export function FormProvider({ children }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { validateForm } = useForm(email, password);
+  const [userName, setUserName] = useState("");
+  const { validateForm } = useForm(email, password, userName);
   const [invalidMessage, setInvalidMessage] = useState({ email: "", password: "" });
   const [user, setUser] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -47,10 +48,13 @@ export function FormProvider({ children }) {
             return setInvalidMessage({ password: "Please enter password" });
           case "empty-email-password":
             return setInvalidMessage({ email: "Please enter Email", password: "Please enter Password" });
+          case "empty-username":
+            return setInvalidMessage({ username: "Please enter a username" });
           default:
             alert(error);
         }
       });
+    console.log(invalidMessage);
   }
 
   const providerValues = {
@@ -58,6 +62,8 @@ export function FormProvider({ children }) {
     setEmail,
     password,
     setPassword,
+    userName,
+    setUserName,
     invalidMessage,
     handleSubmit,
     isLoading,
