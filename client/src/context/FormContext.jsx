@@ -20,6 +20,7 @@ export function FormProvider({ children }) {
     setEmail("");
     setPassword("");
     setUserName("");
+    setInvalidMessage({ emailValue: "", passwordValue: "", username: "" });
   }, [openSignUp]);
 
   function toggleSignUpForm() {
