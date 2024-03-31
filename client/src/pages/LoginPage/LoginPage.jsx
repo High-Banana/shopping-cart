@@ -11,7 +11,7 @@ export default function LoginPage() {
   return (
     <>
       <GoBackButton />
-      <div className="flex flex-col w-[580px] my-[70px] mx-auto max-h-[400px] bg-black/75 p-8 gap-3 rounded-lg shadow-[2px_5px_15px_2px] shadow-[rgba(0, 0, 0, 0.35)]">
+      <div className="flex flex-col w-[580px] my-[70px] mx-auto max-h-[540px] bg-black/75 p-8 gap-3 rounded-lg shadow-[2px_5px_15px_2px] shadow-[rgba(0, 0, 0, 0.35)]">
         <form className="flex flex-col gap-[30px] w-full" onSubmit={handleSubmit} method="POST">
           {!openSignUp ? <LoginForm /> : <SignUpForm />}
           <Button
