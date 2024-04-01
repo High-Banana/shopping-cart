@@ -41,8 +41,22 @@ async function getRegisteredUsers(req, res, next) {
   const [user] = await database.query("select * from users where email = ? AND password = ? LIMIT 1", [email, password]);
   if (user.length === 0) res.status(401).send("Email or password is invalid.");
   else res.send(user);
+  return user;
+}
+
+async function registerUser(req, res, next) {
+  const { email, userName, password } = req.body;
+  console.log({ email, userName, password });
+  const [user] = await database.query("select * from users where email = ?", [email]);
+  if (user.length !== 0) return res.status(409).send("Email is already registered");
+  try {
+    await database.query("insert into users (userName, email, password) VALUES (?,?,?)", [userName, email, password]);
+    res.status(200).send("Ok");
+  } catch (error) {
+    next();
+  }
 }
 
 // addProduct("name", "description", 111, "iphone-15-pro-max.jpg", "Mobile");
 
-export { getAllProducts, getProductByID, addProduct, getRegisteredUsers };
+export { getAllProducts, getProductByID, addProduct, getRegisteredUsers, registerUser };
