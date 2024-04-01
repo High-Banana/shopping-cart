@@ -15,7 +15,7 @@ export default function ProductsList({ products, sortType }) {
       {products.sort(sortMethods[sortType].method).map((product) => {
         return (
           <div key={product.id} className="flex flex-col h-full transition duration-[0.3s] hover:translate-y-[-10px]">
-            <Link to={`${product.product_type}/${product.id}`}>
+            <Link to={`${product.product_type}/${product.uuid}`}>
               <img
                 src={`${IMAGE_SRC_PATH}/${product.image}`}
                 alt={product.product_name}
