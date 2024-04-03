@@ -13,7 +13,7 @@ export default function LoginPage() {
 
   useEffect(() => {
     if (user.length !== 0) {
-      navigate("/");
+      navigate(-1);
     }
   }, [user, navigate]);
 

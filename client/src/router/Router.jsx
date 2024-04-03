@@ -6,6 +6,7 @@ import ProductPage from "../pages/Product/Main-page/ProductPage";
 import LoginPage from "../pages/LoginPage/LoginPage";
 import SingleProduct from "../pages/Product/SingleProduct";
 import ContextProvider from "../context/ContextProvider";
+import Profile from "../pages/Profile/Profile";
 
 export default function Router() {
   const router = createBrowserRouter([
@@ -15,6 +16,7 @@ export default function Router() {
         { path: "/", element: <HomePage /> },
         { path: "products", element: <ProductPage /> },
         { path: "products/:productType/:productID", element: <SingleProduct /> },
+        { path: "/profile", element: <Profile /> },
         { path: "*", element: <ErrorPage /> },
         {
           path: "login",

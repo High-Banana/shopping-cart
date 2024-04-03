@@ -50,7 +50,12 @@ async function registerUser(req, res, next) {
   const [user] = await database.query("select * from users where email = ?", [email]);
   if (user.length !== 0) return res.status(409).send("Email is already registered");
   try {
-    await database.query("insert into users (userName, email, password) VALUES (?,?,?)", [userName, email, password]);
+    await database.query("insert into users (userName, email, password, isAdmin) VALUES (?,?,?,?)", [
+      userName,
+      email,
+      password,
+      false,
+    ]);
     res.status(200).send("Ok");
   } catch (error) {
     next();
