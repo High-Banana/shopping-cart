@@ -2,9 +2,11 @@
 import { Link } from "react-router-dom";
 import { useCart } from "../../context/CartContext";
 import { CiShoppingCart } from "react-icons/ci";
+import { useFormContext } from "../../context/FormContext";
 
 export default function Navbar() {
   const { getTotalItems, toggleOpenCart } = useCart();
+  const { user } = useFormContext();
 
   return (
     <div className="flex justify-between bg-black/75 text-white py-[20px] px-[100px] backdrop-blur-lg">
@@ -23,9 +25,13 @@ export default function Navbar() {
           </i>
           {getTotalItems() !== 0 ? <span className="text-[15px]">{getTotalItems()}</span> : null}
         </button>
-        <Link to="login" className="link-hover">
-          Login
-        </Link>
+        {user.length === 0 ? (
+          <Link to="login" className="link-hover">
+            Login
+          </Link>
+        ) : (
+          <Link to="profile">{user[0].userName}</Link>
+        )}
       </div>
     </div>
   );

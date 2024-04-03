@@ -3,10 +3,19 @@ import GoBackButton from "../../components/ui/GoBackButton";
 import LoginForm from "./LoginForm";
 import { useFormContext } from "../../context/FormContext";
 import SignUpForm from "./SignUpForm";
+import { useNavigate } from "react-router-dom";
 // import { Link } from "react-router-dom";
+import { useEffect } from "react";
 
 export default function LoginPage() {
-  const { handleSubmit, isLoading, toggleSignUpForm, openSignUp } = useFormContext();
+  const { handleSubmit, isLoading, toggleSignUpForm, openSignUp, user } = useFormContext();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (user.length !== 0) {
+      navigate("/");
+    }
+  }, [user, navigate]);
 
   return (
     <>

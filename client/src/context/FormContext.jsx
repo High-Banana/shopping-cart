@@ -23,6 +23,10 @@ export function FormProvider({ children }) {
     setInvalidMessage({ emailValue: "", passwordValue: "", userName: "" });
   }, [openSignUp]);
 
+  useEffect(() => {
+    console.log(user);
+  }, [user]);
+
   function toggleSignUpForm() {
     setOpenSignUp(!openSignUp);
     return openSignUp;
@@ -50,7 +54,7 @@ export function FormProvider({ children }) {
       .then((response) => {
         if (response.status === 200) {
           console.log("thanks for registering");
-          setUser([email, password, userName]);
+          setUser([{ email: email, userName: userName, password: password }]);
         } else console.log("Login failed");
       })
       .catch((error) => {
