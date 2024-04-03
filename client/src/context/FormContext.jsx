@@ -3,7 +3,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import useForm from "../hooks/useForm";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 
 const FormContext = createContext();
 
@@ -16,7 +15,6 @@ export function FormProvider({ children }) {
   const [invalidMessage, setInvalidMessage] = useState({ emailValue: "", passwordValue: "", userName: "" });
   const [user, setUser] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const navigate = useNavigate();
 
   useEffect(() => {
     setEmail("");
@@ -37,7 +35,6 @@ export function FormProvider({ children }) {
         if (response.status === 200) {
           setUser(response.data);
           console.log(response.data[0]);
-          navigate("/");
         } else console.log("Login failed");
       })
       .catch((error) => {
@@ -54,7 +51,6 @@ export function FormProvider({ children }) {
         if (response.status === 200) {
           console.log("thanks for registering");
           setUser([email, password, userName]);
-          navigate("/");
         } else console.log("Login failed");
       })
       .catch((error) => {
@@ -91,6 +87,7 @@ export function FormProvider({ children }) {
   }
 
   const providerValues = {
+    user,
     email,
     setEmail,
     password,
