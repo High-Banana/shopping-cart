@@ -1,11 +1,15 @@
+import { useState } from "react";
 import Button from "../../components/ui/Button";
 import { useFormContext } from "../../context/FormContext";
+import AddProductForm from "./AddProductForm";
 
 export default function Profile() {
   const { user } = useFormContext();
+  const [isFormOpen, setIsFormOpen] = useState(false);
+  console.log(user[0]);
   return (
-    <>
-      <h1>User Profile</h1>
+    <div className="relative">
+      <h1 className="font-semibold text-[22px] text-center">My Profile</h1>
       <div className="flex flex-col gap-[30px] bg-[#434343] p-[20px] mr-[50px] mt-[100px] justify-center items-center">
         <div className="w-[400px] flex justify-between">
           <div>
@@ -31,14 +35,22 @@ export default function Profile() {
         <div className="flex gap-[10px]">
           <Button
             title="Log Out"
-            className="bg-[red] py-[5px] px-[5px] border-2 border-transparent rounded-[5px] font-semibold hover:scale-[none] hover:bg-[#af1010]"
+            className="bg-[rgb(255,0,0)] py-[5px] px-[5px] border-2 border-transparent rounded-[3px] font-semibold hover:scale-[none] hover:bg-[rgb(255,0,0,0.7)]"
           />
           <Button
             title="Delete Account"
-            className="bg-transparent py-[5px] px-[5px] border-2 border-[red] rounded-[5px] font-semibold hover:scale-[none] hover:bg-[red]"
+            className="bg-transparent py-[5px] px-[5px] border-2 border-[red] rounded-[3px] font-semibold hover:scale-[none] hover:bg-[red]"
           />
+          {user[0].isAdmin !== 1 && (
+            <Button
+              title="Add product"
+              className="bg-[rgb(0,128,0)] py-[5px] px-[5px] border-2 border-transparent rounded-[3px] font-semibold hover:scale-[none] hover:bg-[rgb(0,128,0,0.5)]"
+              onClick={() => setIsFormOpen(true)}
+            />
+          )}
         </div>
       </div>
-    </>
+      {isFormOpen && <AddProductForm />}
+    </div>
   );
 }
