@@ -22,7 +22,7 @@ export default function Cart() {
 
   function handleClosingTransition() {
     setIsVisible(false);
-    document.body.style.overflow = "scroll";
+    document.body.style.overflow = "auto";
     setTimeout(() => toggleOpenCart(), 400);
   }
 
@@ -30,7 +30,7 @@ export default function Cart() {
     <>
       <div
         onClick={() => handleClosingTransition()}
-        className={`fixed w-screen min-h-screen backdrop-blur-[4px] z-20 transition-all duration-500 ${
+        className={`fixed w-screen min-h-screen backdrop-blur-sm z-20 transition-all duration-500 ${
           isVisible ? "bg-black bg-opacity-35" : ""
         }`}></div>
       <div
