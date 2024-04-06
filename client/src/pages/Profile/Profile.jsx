@@ -6,7 +6,7 @@ export default function Profile() {
   const { user, isFormOpen, setIsFormOpen } = useFormContext();
   console.log(user[0]);
   return (
-    <div className="relative">
+    <div className="relative min-h-[800px]">
       <h1 className="font-semibold text-[22px] text-center">My Profile</h1>
       <div className="flex flex-col gap-[30px] bg-[#434343] p-[20px] mr-[50px] mt-[100px] justify-center items-center">
         <div className="w-[400px] flex justify-between">

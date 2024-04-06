@@ -6,6 +6,8 @@ import { useFormContext } from "../../context/FormContext";
 import NameField from "./InputFields/NameField";
 import ImageField from "./InputFields/ImageField";
 import DescriptionField from "./InputFields/DescriptionField";
+import PriceField from "./InputFields/PriceField";
+import ProductTypeField from "./InputFields/ProductTypeField";
 
 export default function AddProductForm() {
   const { handleSubmit, handleFormClose, isVisible, setIsVisible } = useFormContext();
@@ -29,6 +31,8 @@ export default function AddProductForm() {
             <div className="flex flex-col gap-[20px] p-5">
               <NameField />
               <ImageField />
+              <PriceField />
+              <ProductTypeField />
               <DescriptionField />
             </div>
             <div className="flex gap-[10px] p-4 justify-end items-center bg-[#2f2f2f] rounded-[0_0_6px_6px]">

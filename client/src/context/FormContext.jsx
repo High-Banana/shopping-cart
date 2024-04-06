@@ -13,9 +13,14 @@ export function FormProvider({ children }) {
   const [productName, setProductName] = useState("");
   const [productImage, setProductImage] = useState("");
   const [productDescription, setProductDescription] = useState("");
+  const [productPrice, setProductPrice] = useState();
+  const [productType, setProductType] = useState("");
   const [openSignUp, setOpenSignUp] = useState(false);
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
+  const [invalidMessage, setInvalidMessage] = useState();
+  const [user, setUser] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const { validateUserForm, validateProductForm } = useForm({
     email,
     password,
@@ -24,10 +29,9 @@ export function FormProvider({ children }) {
     productName,
     productImage,
     productDescription,
+    productPrice,
+    productType,
   });
-  const [invalidMessage, setInvalidMessage] = useState();
-  const [user, setUser] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     setEmail("");
@@ -40,6 +44,8 @@ export function FormProvider({ children }) {
     setProductName("");
     setProductImage("");
     setProductDescription("");
+    setProductPrice();
+    setProductType("");
     setInvalidMessage({ productName: "", productImage: "", productDescription: "" });
   }, [isFormOpen]);
 
@@ -86,6 +92,20 @@ export function FormProvider({ children }) {
     setIsLoading(false);
   }
 
+  async function addProduct() {
+    axios
+      .post("/api/add-product", { productName, productImage, productDescription })
+      .then((response) => {
+        if (response.status === 200) {
+          console.log("worked");
+        } else console.log("failed");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    setIsLoading(false);
+  }
+
   function handleSubmit(event, formType) {
     event.preventDefault();
     if (formType === "userForm") {
@@ -104,7 +124,6 @@ export function FormProvider({ children }) {
             case "empty-email-password":
               return setInvalidMessage({ emailValue: "Please enter Email", passwordValue: "Please enter Password" });
             case "empty-username":
-              console.log("huh");
               return setInvalidMessage({ userName: "Please enter a username" });
             default:
               alert(error);
@@ -115,8 +134,9 @@ export function FormProvider({ children }) {
       validateProductForm()
         .then(() => {
           handleFormClose(event);
+          setIsLoading(true);
+          addProduct();
           setInvalidMessage({ productName: "", productImage: "", productDescription: "" });
-          console.log("good form");
         })
         .catch((error) => {
           console.log("bad form");
@@ -127,6 +147,10 @@ export function FormProvider({ children }) {
               return setInvalidMessage({ productImage: "Product image cannot be empty" });
             case "empty-productDescription":
               return setInvalidMessage({ productDescription: "Product description cannot be empty" });
+            case "empty-productPrice":
+              return setInvalidMessage({ productPrice: "Product price cannot be empty" });
+            case "empty-productType":
+              return setInvalidMessage({ productType: "Product type cannot be empty" });
           }
         });
     }
@@ -151,6 +175,10 @@ export function FormProvider({ children }) {
     setProductName,
     productImage,
     setProductImage,
+    productPrice,
+    setProductPrice,
+    productType,
+    setProductType,
     productDescription,
     setProductDescription,
     isFormOpen,

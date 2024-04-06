@@ -15,6 +15,8 @@ export default function useForm(inputValue) {
     return new Promise((resolve, reject) => {
       if (inputValue.productName === "") reject("empty-productName");
       else if (inputValue.productImage === "") reject("empty-productImage");
+      else if (isNaN(inputValue.productPrice)) reject("empty-productPrice");
+      else if (inputValue.productType === "") reject("empty-productType");
       else if (inputValue.productDescription === "") reject("empty-productDescription");
       else resolve();
     });
