@@ -41,7 +41,7 @@ export default function Profile() {
             title="Delete Account"
             className="bg-transparent py-[5px] px-[5px] border-2 border-[red] rounded-[3px] font-semibold hover:scale-[none] hover:bg-[red]"
           />
-          {user[0].isAdmin !== 1 && (
+          {user[0].isAdmin !== 0 && (
             <Button
               title="Add product"
               className="bg-[rgb(0,128,0)] py-[5px] px-[5px] border-2 border-transparent rounded-[3px] font-semibold hover:scale-[none] hover:bg-[rgb(0,128,0,0.5)]"
@@ -50,7 +50,7 @@ export default function Profile() {
           )}
         </div>
       </div>
-      {isFormOpen && <AddProductForm />}
+      {isFormOpen && <AddProductForm setIsFormOpen={setIsFormOpen} />}
     </div>
   );
 }

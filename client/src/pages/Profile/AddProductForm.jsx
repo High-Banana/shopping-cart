@@ -1,12 +1,29 @@
+/* eslint-disable react/prop-types */
+import { useEffect, useState } from "react";
 import Button from "../../components/ui/Button";
 
-export default function AddProductForm() {
-  console.log("add product form");
+export default function AddProductForm({ setIsFormOpen }) {
+  const [isVisible, setIsVisible] = useState(false);
+  useEffect(() => {
+    setIsVisible(true);
+  }, []);
+
+  function handleClosingTransition(event) {
+    event.preventDefault();
+    setIsVisible(false);
+    setTimeout(() => setIsFormOpen(false), 100);
+  }
+
   return (
-    <>
-      <div className="absolute min-h-screen w-[100%] top-0 bg-black bg-opacity-35"></div>
-      <div className="absolute flex justify-center items-center w-full h-screen top-0 left-0 right-0 bottom-0">
-        <div className="bg-[#434343] w-[440px] rounded-md">
+    <div className="absolute top-0 left-0 right-0 bottom-0 min-h-screen">
+      <div
+        onClick={() => handleClosingTransition()}
+        className="absolute top-0 left-0 right-0 bottom-0 bg-black bg-opacity-35 backdrop-blur-sm z-[1]"></div>
+      <div className={`absolute flex flex-col justify-center items-center right-0 left-0`}>
+        <div
+          className={`bg-[#434343] w-[440px] rounded-md z-[2] ${
+            isVisible ? "scale-100 duration-200" : "scale-75 duration-200 opacity-15"
+          }`}>
           <h2 className="text-white text-2xl font-bold text-center p-6">Add Product</h2>
           <form>
             <div className="p-5">
@@ -36,10 +53,11 @@ export default function AddProductForm() {
                 </div>
               </div>
             </div>
-            <div className="flex gap-[10px] p-4 justify-end items-center bg-[#2f2f2f] rounded-[0_0_6px_0]">
+            <div className="flex gap-[10px] p-4 justify-end items-center bg-[#2f2f2f] rounded-[0_0_6px_6px]">
               <Button
                 title="Cancel"
                 className="bg-transparent font-normal py-[7px] px-[28px] rounded-sm hover:scale-[none] hover:underline"
+                onClick={(event) => handleClosingTransition(event)}
               />
               <Button
                 title="Done"
@@ -49,6 +67,6 @@ export default function AddProductForm() {
           </form>
         </div>
       </div>
-    </>
+    </div>
   );
 }
