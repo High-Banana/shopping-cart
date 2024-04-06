@@ -10,9 +10,20 @@ export function FormProvider({ children }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [userName, setUserName] = useState("");
+  const [productName, setProductName] = useState("");
+  const [productImage, setProductImage] = useState("");
+  const [productDescription, setProductDescription] = useState("");
   const [openSignUp, setOpenSignUp] = useState(false);
-  const { validateForm } = useForm(email, password, userName, openSignUp);
-  const [invalidMessage, setInvalidMessage] = useState({ emailValue: "", passwordValue: "", userName: "" });
+  const { validateUserForm, validateProductForm } = useForm({
+    email,
+    password,
+    userName,
+    openSignUp,
+    productName,
+    productImage,
+    productDescription,
+  });
+  const [invalidMessage, setInvalidMessage] = useState();
   const [user, setUser] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -64,29 +75,49 @@ export function FormProvider({ children }) {
     setIsLoading(false);
   }
 
-  function handleSubmit(event) {
+  function handleSubmit(event, formType) {
     event.preventDefault();
-    validateForm()
-      .then(() => {
-        setInvalidMessage({ emailValue: "", passwordValue: "", userName: "" });
-        setIsLoading(true);
-        openSignUp ? registerUser() : loginUser();
-      })
-      .catch((error) => {
-        switch (error) {
-          case "empty-email":
-            return setInvalidMessage({ emailValue: "Please enter Email" });
-          case "empty-password":
-            return setInvalidMessage({ passwordValue: "Please enter password" });
-          case "empty-email-password":
-            return setInvalidMessage({ emailValue: "Please enter Email", passwordValue: "Please enter Password" });
-          case "empty-username":
-            console.log("huh");
-            return setInvalidMessage({ userName: "Please enter a username" });
-          default:
-            alert(error);
-        }
-      });
+    if (formType === "userForm") {
+      validateUserForm()
+        .then(() => {
+          setInvalidMessage({ emailValue: "", passwordValue: "", userName: "" });
+          setIsLoading(true);
+          openSignUp ? registerUser() : loginUser();
+        })
+        .catch((error) => {
+          switch (error) {
+            case "empty-email":
+              return setInvalidMessage({ emailValue: "Please enter Email" });
+            case "empty-password":
+              return setInvalidMessage({ passwordValue: "Please enter password" });
+            case "empty-email-password":
+              return setInvalidMessage({ emailValue: "Please enter Email", passwordValue: "Please enter Password" });
+            case "empty-username":
+              console.log("huh");
+              return setInvalidMessage({ userName: "Please enter a username" });
+            default:
+              alert(error);
+          }
+        });
+    } else if (formType === "productForm") {
+      console.log("product form");
+      validateProductForm()
+        .then(() => {
+          console.log("good form");
+        })
+        .catch((error) => {
+          console.log("bad form");
+          switch (error) {
+            case "empty-productName":
+              return setInvalidMessage({ productName: "Product name cannot be empty" });
+            case "empty-productImage":
+              return setInvalidMessage({ productImage: "Product image cannot be empty" });
+            case "empty-productDescription":
+              return setInvalidMessage({ productDescription: "Product description cannot be empty" });
+          }
+        });
+    }
+
     console.log(openSignUp);
   }
 
@@ -103,6 +134,12 @@ export function FormProvider({ children }) {
     toggleSignUpForm,
     isLoading,
     openSignUp,
+    productName,
+    setProductName,
+    productImage,
+    setProductImage,
+    productDescription,
+    setProductDescription,
   };
 
   return <FormContext.Provider value={providerValues}>{children}</FormContext.Provider>;
