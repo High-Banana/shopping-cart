@@ -1,28 +1,23 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/prop-types */
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Button from "../../components/ui/Button";
 import { useFormContext } from "../../context/FormContext";
 import NameField from "./InputFields/NameField";
 import ImageField from "./InputFields/ImageField";
 import DescriptionField from "./InputFields/DescriptionField";
 
-export default function AddProductForm({ setIsFormOpen }) {
-  const [isVisible, setIsVisible] = useState(false);
-  const { handleSubmit } = useFormContext();
+export default function AddProductForm() {
+  const { handleSubmit, handleFormClose, isVisible, setIsVisible } = useFormContext();
+
   useEffect(() => {
     setIsVisible(true);
   }, []);
 
-  function handleClosingTransition(event) {
-    event.preventDefault();
-    setIsVisible(false);
-    setTimeout(() => setIsFormOpen(false), 100);
-  }
-
   return (
     <div className="absolute top-0 left-0 right-0 bottom-0 min-h-screen">
       <div
-        onClick={(event) => handleClosingTransition(event)}
+        onClick={(event) => handleFormClose(event)}
         className="absolute top-0 left-0 right-0 bottom-0 bg-black bg-opacity-35 backdrop-blur-sm z-[1]"></div>
       <div className={`absolute flex flex-col justify-center items-center right-0 left-0 py-3`}>
         <div
@@ -40,7 +35,7 @@ export default function AddProductForm({ setIsFormOpen }) {
               <Button
                 title="Cancel"
                 className="bg-transparent font-normal py-[7px] px-[28px] rounded-sm hover:scale-[none] hover:underline"
-                onClick={(event) => handleClosingTransition(event)}
+                onClick={(event) => handleFormClose(event)}
               />
               <Button
                 title="Done"

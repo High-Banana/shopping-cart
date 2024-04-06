@@ -1,11 +1,9 @@
-import { useState } from "react";
 import Button from "../../components/ui/Button";
 import { useFormContext } from "../../context/FormContext";
 import AddProductForm from "./AddProductForm";
 
 export default function Profile() {
-  const { user } = useFormContext();
-  const [isFormOpen, setIsFormOpen] = useState(false);
+  const { user, isFormOpen, setIsFormOpen } = useFormContext();
   console.log(user[0]);
   return (
     <div className="relative">
@@ -50,7 +48,7 @@ export default function Profile() {
           )}
         </div>
       </div>
-      {isFormOpen && <AddProductForm setIsFormOpen={setIsFormOpen} />}
+      {isFormOpen && <AddProductForm />}
     </div>
   );
 }

@@ -14,6 +14,8 @@ export function FormProvider({ children }) {
   const [productImage, setProductImage] = useState("");
   const [productDescription, setProductDescription] = useState("");
   const [openSignUp, setOpenSignUp] = useState(false);
+  const [isFormOpen, setIsFormOpen] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
   const { validateUserForm, validateProductForm } = useForm({
     email,
     password,
@@ -35,12 +37,21 @@ export function FormProvider({ children }) {
   }, [openSignUp]);
 
   useEffect(() => {
-    console.log(user);
-  }, [user]);
+    setProductName("");
+    setProductImage("");
+    setProductDescription("");
+    setInvalidMessage({ productName: "", productImage: "", productDescription: "" });
+  }, [isFormOpen]);
 
   function toggleSignUpForm() {
     setOpenSignUp(!openSignUp);
     return openSignUp;
+  }
+
+  function handleFormClose(event) {
+    event.preventDefault();
+    setIsVisible(false);
+    setTimeout(() => setIsFormOpen(false), 100);
   }
 
   async function loginUser() {
@@ -103,6 +114,8 @@ export function FormProvider({ children }) {
       console.log("product form");
       validateProductForm()
         .then(() => {
+          handleFormClose(event);
+          setInvalidMessage({ productName: "", productImage: "", productDescription: "" });
           console.log("good form");
         })
         .catch((error) => {
@@ -140,6 +153,11 @@ export function FormProvider({ children }) {
     setProductImage,
     productDescription,
     setProductDescription,
+    isFormOpen,
+    setIsFormOpen,
+    handleFormClose,
+    setIsVisible,
+    isVisible,
   };
 
   return <FormContext.Provider value={providerValues}>{children}</FormContext.Provider>;
