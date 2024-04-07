@@ -15,6 +15,7 @@ export function FormProvider({ children }) {
   const [productDescription, setProductDescription] = useState("");
   const [productPrice, setProductPrice] = useState();
   const [productType, setProductType] = useState("");
+  const [productUUID, setProductUUID] = useState("");
   const [openSignUp, setOpenSignUp] = useState(false);
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
@@ -147,7 +148,7 @@ export function FormProvider({ children }) {
     formData.append("productType", productType);
 
     axios
-      .post("/api/products/edit-product", formData, { headers: { "Content-Type": "multipart/form-data" } })
+      .put(`/api/products/edit-product/${productUUID}`, formData, { headers: { "Content-Type": "multipart/form-data" } })
       .then((response) => {
         if (response.status === 200) {
           console.log("product added");
@@ -245,6 +246,7 @@ export function FormProvider({ children }) {
     handleFormClose,
     setIsVisible,
     isVisible,
+    setProductUUID,
   };
 
   return <FormContext.Provider value={providerValues}>{children}</FormContext.Provider>;

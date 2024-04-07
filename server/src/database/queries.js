@@ -38,6 +38,29 @@ async function addProduct(req, res, next) {
   );
 }
 
+async function updateProduct(req, res, next) {
+  const { productName, productDescription, productPrice, productType } = req.body;
+  const productId = req.params.productID;
+  let productImage;
+
+  if (req.file !== undefined) {
+    productImage = req.file.filename;
+  }
+
+  let sqlQuery = "update products set product_name = ? , product_description = ?, product_price = ?, product_type = ?";
+  const sqlValues = [productName, productDescription, productPrice, productType];
+
+  if (productImage !== undefined) {
+    sqlQuery += ", image = ?";
+    sqlValues.push(productImage);
+  }
+
+  sqlQuery += "where uuid = ?";
+  sqlValues.push(productId);
+
+  await database.query(sqlQuery, sqlValues);
+}
+
 async function getRegisteredUsers(req, res, next) {
   const { email, password } = req.body;
   const [user] = await database.query("select * from users where email = ? AND password = ? LIMIT 1", [email, password]);
@@ -66,4 +89,4 @@ async function registerUser(req, res, next) {
 
 // addProduct("name", "description", 111, "iphone-15-pro-max.jpg", "Mobile");
 
-export { getAllProducts, getProductByID, addProduct, getRegisteredUsers, registerUser };
+export { getAllProducts, getProductByID, addProduct, getRegisteredUsers, registerUser, updateProduct };

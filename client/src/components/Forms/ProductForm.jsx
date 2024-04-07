@@ -10,10 +10,11 @@ import PriceField from "../../pages/Profile/InputFields/PriceField";
 import ProductTypeField from "../../pages/Profile/InputFields/ProductTypeField";
 
 export default function ProductForm({ title = "Add Product", productInfo = "", action }) {
-  const { handleSubmit, handleFormClose, isVisible, setIsVisible } = useFormContext();
+  const { handleSubmit, handleFormClose, isVisible, setIsVisible, setProductUUID } = useFormContext();
 
   useEffect(() => {
     setIsVisible(true);
+    setProductUUID(productInfo.uuid);
     console.log(productInfo);
   }, []);
 
