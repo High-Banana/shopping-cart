@@ -1,8 +1,15 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/prop-types */
+import { useEffect, useRef } from "react";
 import { useFormContext } from "../../../context/FormContext";
 
-export default function PriceField({ title, productPrice }) {
+export default function PriceField({ action, productPrice }) {
   const { setProductPrice, invalidMessage } = useFormContext();
+  const inputRef = useRef();
+
+  useEffect(() => {
+    setProductPrice(inputRef.current.value);
+  }, []);
 
   return (
     <div className="flex flex-col gap-2 text-[#c9c9c9]">
@@ -17,10 +24,11 @@ export default function PriceField({ title, productPrice }) {
       </label>
       <input
         onChange={(event) => setProductPrice(parseFloat(event.target.value))}
+        ref={inputRef}
         type="number"
         name="productPrice"
         placeholder="Enter number only"
-        defaultValue={`${title === "Edit Product" ? `${productPrice}` : ""}`}
+        defaultValue={`${action === "edit" ? `${productPrice}` : ""}`}
         className="h-[40px] rounded-md p-3 focus:outline-none transition ease-in-out duration-300 bg-[#202020]"
       />
     </div>

@@ -52,7 +52,7 @@ export default function Profile() {
           )}
         </div>
       </div>
-      {isFormOpen && <ProductForm />}
+      {isFormOpen && <ProductForm action="add" />}
     </div>
   );
 }

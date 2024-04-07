@@ -92,6 +92,32 @@ export function FormProvider({ children }) {
     setIsLoading(false);
   }
 
+  // class Product {
+  //   constructor(productName, productImage, productDescription, productPrice, productType) {
+  //     this.formData = new FormData();
+  //     this.formData.append("productName", productName);
+  //     this.formData.append("productImage", productImage[0]);
+  //     this.formData.append("productDescription", productDescription);
+  //     this.formData.append("productPrice", productPrice);
+  //     this.formData.append("productType", productType);
+  //   }
+
+  //   productMethod(action) {
+  //     axios
+  //       .post(`/api/products/${action}-product`, this.formData, { headers: { "Content-Type": "multipart/form-data" } })
+  //       .then((response) => {
+  //         if (response.status === 200) {
+  //           console.log("product added");
+  //         } else console.log("failed");
+  //       })
+  //       .catch((error) => {
+  //         console.log(error);
+  //       });
+  //   }
+  // }
+
+  // const product = new Product("add", productName, productImage, productDescription, productPrice, productType);
+
   async function addProduct() {
     const formData = new FormData();
     formData.append("productName", productName);
@@ -103,7 +129,7 @@ export function FormProvider({ children }) {
       .post("/api/products/add-product", formData, { headers: { "Content-Type": "multipart/form-data" } })
       .then((response) => {
         if (response.status === 200) {
-          console.log(productImage);
+          console.log("product added");
         } else console.log("failed");
       })
       .catch((error) => {
@@ -112,7 +138,28 @@ export function FormProvider({ children }) {
     setIsLoading(false);
   }
 
-  function handleSubmit(event, formType) {
+  async function updateProduct() {
+    const formData = new FormData();
+    formData.append("productName", productName);
+    formData.append("productImage", productImage[0]);
+    formData.append("productDescription", productDescription);
+    formData.append("productPrice", productPrice);
+    formData.append("productType", productType);
+
+    axios
+      .post("/api/products/edit-product", formData, { headers: { "Content-Type": "multipart/form-data" } })
+      .then((response) => {
+        if (response.status === 200) {
+          console.log("product added");
+        } else console.log("failed");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    setIsLoading(false);
+  }
+
+  function handleSubmit(event, formType, action) {
     event.preventDefault();
     if (formType === "userForm") {
       validateUserForm()
@@ -137,31 +184,37 @@ export function FormProvider({ children }) {
         });
     } else if (formType === "productForm") {
       console.log("product form");
-      validateProductForm()
-        .then(() => {
-          handleFormClose(event);
-          setIsLoading(true);
-          addProduct();
-          setInvalidMessage({ productName: "", productImage: "", productDescription: "" });
-        })
-        .catch((error) => {
-          console.log("bad form");
-          switch (error) {
-            case "empty-productName":
-              return setInvalidMessage({ productName: "Product name cannot be empty" });
-            case "empty-productImage":
-              return setInvalidMessage({ productImage: "Product image cannot be empty" });
-            case "empty-productDescription":
-              return setInvalidMessage({ productDescription: "Product description cannot be empty" });
-            case "empty-productPrice":
-              return setInvalidMessage({ productPrice: "Product price cannot be empty" });
-            case "empty-productType":
-              return setInvalidMessage({ productType: "Product type cannot be empty" });
-          }
-        });
+      if (action === "add") {
+        validateProductForm()
+          .then(() => {
+            handleFormClose(event);
+            setIsLoading(true);
+            addProduct();
+            // product.productMethod(action);
+            // setIsLoading(false);
+            setInvalidMessage({ productName: "", productImage: "", productDescription: "" });
+          })
+          .catch((error) => {
+            console.log("bad form");
+            switch (error) {
+              case "empty-productName":
+                return setInvalidMessage({ productName: "Product name cannot be empty" });
+              case "empty-productImage":
+                return setInvalidMessage({ productImage: "Product image cannot be empty" });
+              case "empty-productDescription":
+                return setInvalidMessage({ productDescription: "Product description cannot be empty" });
+              case "empty-productPrice":
+                return setInvalidMessage({ productPrice: "Product price cannot be empty" });
+              case "empty-productType":
+                return setInvalidMessage({ productType: "Product type cannot be empty" });
+            }
+          });
+      } else if (action === "edit") {
+        console.log("im in edit");
+        console.log({ productName, productDescription, productPrice, productType, productImage });
+        updateProduct();
+      }
     }
-
-    console.log(openSignUp);
   }
 
   const providerValues = {

@@ -9,7 +9,7 @@ import DescriptionField from "../../pages/Profile/InputFields/DescriptionField";
 import PriceField from "../../pages/Profile/InputFields/PriceField";
 import ProductTypeField from "../../pages/Profile/InputFields/ProductTypeField";
 
-export default function ProductForm({ title = "Add Product", productInfo = "" }) {
+export default function ProductForm({ title = "Add Product", productInfo = "", action }) {
   const { handleSubmit, handleFormClose, isVisible, setIsVisible } = useFormContext();
 
   useEffect(() => {
@@ -28,13 +28,13 @@ export default function ProductForm({ title = "Add Product", productInfo = "" })
             isVisible ? "scale-100 duration-200" : "scale-75 duration-200 opacity-15"
           }`}>
           <h2 className="text-white text-2xl font-bold text-center p-6">{title}</h2>
-          <form onSubmit={(event) => handleSubmit(event, "productForm")}>
+          <form onSubmit={(event) => handleSubmit(event, "productForm", action)}>
             <div className="flex flex-col gap-[20px] p-5">
-              <NameField title={title} productName={productInfo.product_name} />
+              <NameField productName={productInfo.product_name} action={action} />
               <ImageField />
-              <PriceField title={title} productPrice={productInfo.product_price} />
-              <ProductTypeField title={title} productType={productInfo.product_type} />
-              <DescriptionField title={title} productDescription={productInfo.product_description} />
+              <PriceField productPrice={productInfo.product_price} action={action} />
+              <ProductTypeField productType={productInfo.product_type} action={action} />
+              <DescriptionField productDescription={productInfo.product_description} action={action} />
             </div>
             <div className="flex gap-[10px] p-4 justify-end items-center bg-[#2f2f2f] rounded-[0_0_6px_6px]">
               <Button

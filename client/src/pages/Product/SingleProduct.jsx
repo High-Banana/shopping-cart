@@ -96,7 +96,7 @@ export default function SingleProduct() {
               </div>
             </div>
           </div>
-          {isFormOpen && <ProductForm title="Edit Product" productInfo={product} />}
+          {isFormOpen && <ProductForm title="Edit Product" productInfo={product} action="edit" />}
         </div>
       )}
     </>

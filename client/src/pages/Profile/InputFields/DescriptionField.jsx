@@ -1,8 +1,15 @@
 /* eslint-disable react/prop-types */
+import { useEffect, useRef } from "react";
 import { useFormContext } from "../../../context/FormContext";
 
-export default function DescriptionField({ title, productDescription }) {
+export default function DescriptionField({ action, productDescription }) {
   const { setProductDescription, invalidMessage } = useFormContext();
+  const inputRef = useRef();
+
+  useEffect(() => {
+    setProductDescription(inputRef.current.value);
+  }, []);
+
   return (
     <div className="flex flex-col gap-2 text-[#c9c9c9]">
       <label className={`uppercase text-[12px] font-bold tracking-wide ${invalidMessage.productDescription && "text-[#f14747]"}`}>
@@ -16,10 +23,11 @@ export default function DescriptionField({ title, productDescription }) {
       </label>
       <textarea
         onChange={(event) => setProductDescription(event.target.value)}
+        ref={inputRef}
         type="text"
         name="productDescription"
         placeholder="Features about product"
-        defaultValue={`${title === "Edit Product" ? `${productDescription}` : ""}`}
+        defaultValue={`${action === "edit" ? `${productDescription}` : ""}`}
         className="h-[200px] rounded-md p-3 resize-none overflow-hidden focus:outline-none transition ease-in-out duration-300 bg-[#202020]"
       />
     </div>
