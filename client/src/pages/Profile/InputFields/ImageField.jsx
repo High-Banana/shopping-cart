@@ -17,7 +17,7 @@ export default function ImageField() {
       <input
         onChange={(event) => setProductImage(event.target.files)}
         type="file"
-        accept="image/*"
+        accept=".png, .jpg, .jpeg, .webp, .gif"
         name="image"
         className="h-[40px] rounded-md px-3 py-[6px] focus:outline-a transition ease-in-out duration-300 bg-[#202020] file:bg-transparent file:text-white file:border-none"
       />

@@ -13,13 +13,19 @@ export default function ProductTypeField() {
           </span>
         )}
       </label>
-      <input
+      <select
         onChange={(event) => setProductType(event.target.value)}
         type="text"
         name="productType"
         placeholder="Laptop"
-        className="h-[40px] rounded-md p-3 focus:outline-none transition ease-in-out duration-300 bg-[#202020]"
-      />
+        className="h-[40px] rounded-md px-3 focus:outline-none transition ease-in-out duration-300 bg-[#202020]">
+        <option value="Laptop">Laptop</option>
+        <option value="Mobile">Mobile</option>
+        <option value="Desktop">Desktop</option>
+        <option value="Mouse">Mouse</option>
+        <option value="Keyboard">Keyboard</option>
+        <option value="Headphone">Headphone</option>
+      </select>
     </div>
   );
 }

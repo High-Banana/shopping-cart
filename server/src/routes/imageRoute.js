@@ -14,6 +14,7 @@ const imageMimeTypes = {
   ".jpg": "image/jpeg",
   ".jpeg": "image/jpeg",
   ".gif": "image/gif",
+  ".webp": "image/webp",
 };
 
 router.get("/:imageName", (req, res) => {
