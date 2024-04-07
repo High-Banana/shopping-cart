@@ -1,6 +1,7 @@
+/* eslint-disable react/prop-types */
 import { useFormContext } from "../../../context/FormContext";
 
-export default function NameField() {
+export default function NameField({ title, productName }) {
   const { setProductName, invalidMessage } = useFormContext();
   return (
     <div className="flex flex-col gap-2 text-[#c9c9c9]">
@@ -18,6 +19,7 @@ export default function NameField() {
         type="text"
         name="productName"
         placeholder="Accer Nitro 5"
+        defaultValue={`${title === "Edit Product" ? `${productName}` : ""}`}
         className="h-[40px] rounded-md p-3 focus:outline-none transition ease-in-out duration-300 bg-[#202020]"
       />
     </div>

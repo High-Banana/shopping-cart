@@ -1,6 +1,7 @@
+/* eslint-disable react/prop-types */
 import { useFormContext } from "../../../context/FormContext";
 
-export default function PriceField() {
+export default function PriceField({ title, productPrice }) {
   const { setProductPrice, invalidMessage } = useFormContext();
 
   return (
@@ -19,6 +20,7 @@ export default function PriceField() {
         type="number"
         name="productPrice"
         placeholder="Enter number only"
+        defaultValue={`${title === "Edit Product" ? `${productPrice}` : ""}`}
         className="h-[40px] rounded-md p-3 focus:outline-none transition ease-in-out duration-300 bg-[#202020]"
       />
     </div>

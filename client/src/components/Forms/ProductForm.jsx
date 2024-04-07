@@ -1,19 +1,20 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/prop-types */
 import { useEffect } from "react";
-import Button from "../../components/ui/Button";
+import Button from "../ui/Button";
 import { useFormContext } from "../../context/FormContext";
-import NameField from "./InputFields/NameField";
-import ImageField from "./InputFields/ImageField";
-import DescriptionField from "./InputFields/DescriptionField";
-import PriceField from "./InputFields/PriceField";
-import ProductTypeField from "./InputFields/ProductTypeField";
+import NameField from "../../pages/Profile/InputFields/NameField";
+import ImageField from "../../pages/Profile/InputFields/ImageField";
+import DescriptionField from "../../pages/Profile/InputFields/DescriptionField";
+import PriceField from "../../pages/Profile/InputFields/PriceField";
+import ProductTypeField from "../../pages/Profile/InputFields/ProductTypeField";
 
-export default function AddProductForm() {
+export default function ProductForm({ title = "Add Product", productInfo = "" }) {
   const { handleSubmit, handleFormClose, isVisible, setIsVisible } = useFormContext();
 
   useEffect(() => {
     setIsVisible(true);
+    console.log(productInfo);
   }, []);
 
   return (
@@ -26,14 +27,14 @@ export default function AddProductForm() {
           className={`bg-[#434343] w-[440px] rounded-md z-[2] ${
             isVisible ? "scale-100 duration-200" : "scale-75 duration-200 opacity-15"
           }`}>
-          <h2 className="text-white text-2xl font-bold text-center p-6">Add Product</h2>
+          <h2 className="text-white text-2xl font-bold text-center p-6">{title}</h2>
           <form onSubmit={(event) => handleSubmit(event, "productForm")}>
             <div className="flex flex-col gap-[20px] p-5">
-              <NameField />
+              <NameField title={title} productName={productInfo.product_name} />
               <ImageField />
-              <PriceField />
-              <ProductTypeField />
-              <DescriptionField />
+              <PriceField title={title} productPrice={productInfo.product_price} />
+              <ProductTypeField title={title} productType={productInfo.product_type} />
+              <DescriptionField title={title} productDescription={productInfo.product_description} />
             </div>
             <div className="flex gap-[10px] p-4 justify-end items-center bg-[#2f2f2f] rounded-[0_0_6px_6px]">
               <Button

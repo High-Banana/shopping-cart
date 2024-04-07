@@ -1,10 +1,14 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useEffect } from "react";
 import Button from "../../components/ui/Button";
 import { useFormContext } from "../../context/FormContext";
-import AddProductForm from "./AddProductForm";
+import ProductForm from "../../components/Forms/ProductForm";
 
 export default function Profile() {
   const { user, isFormOpen, setIsFormOpen } = useFormContext();
-  console.log(user[0]);
+  useEffect(() => {
+    setIsFormOpen(false);
+  }, []);
   return (
     <div className="relative min-h-[800px]">
       <h1 className="font-semibold text-[22px] text-center">My Profile</h1>
@@ -48,7 +52,7 @@ export default function Profile() {
           )}
         </div>
       </div>
-      {isFormOpen && <AddProductForm />}
+      {isFormOpen && <ProductForm />}
     </div>
   );
 }
