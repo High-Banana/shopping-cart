@@ -8,12 +8,23 @@ import useFetch from "../../hooks/useFetch";
 import Error from "../../components/Error";
 import GoBackButton from "../../components/ui/GoBackButton";
 import { useFormContext } from "../../context/FormContext";
+import { BsThreeDotsVertical } from "react-icons/bs";
+import { useEffect, useRef, useState } from "react";
 
 export default function SingleProduct() {
   const { productID } = useParams();
   const { addToCart } = useCart();
   const { user } = useFormContext();
   const navigate = useNavigate();
+  const [showOptions, setShowOptions] = useState(false);
+  const buttonRef = useRef();
+  function handleClickOutside(event) {
+    if (buttonRef.current && !buttonRef.current.contains(event.target)) setShowOptions(false);
+  }
+  useEffect(() => {
+    document.addEventListener("click", handleClickOutside, true);
+    return () => document.removeEventListener("click", handleClickOutside, true);
+  }, []);
   const {
     items: [product],
     isLoading,
@@ -28,7 +39,32 @@ export default function SingleProduct() {
         <Loading />
       ) : (
         <div className="flex flex-col gap-[20px]">
-          <GoBackButton />
+          <div className="flex justify-between items-center">
+            <GoBackButton />
+            {user.length !== 0 && user[0].isAdmin !== 0 && (
+              <div className="relative flex items-center">
+                <button
+                  ref={buttonRef}
+                  className="mx-[15px] text-2xl"
+                  onClick={() => {
+                    setShowOptions(!showOptions);
+                  }}>
+                  <BsThreeDotsVertical />
+                </button>
+                <div
+                  className={`${
+                    showOptions ? "flex flex-col gap-2" : "hidden"
+                  } absolute top-[1px] right-[35px] bg-[gray] rounded-md text-white`}>
+                  <button className="font-semibold border-b py-2 px-4 hover:underline" aria-label="edit">
+                    Edit
+                  </button>
+                  <button className="font-semibold pb-2 px-4 hover:underline" aria-label="delete">
+                    Delete
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
           <div className="grid grid-cols-[700px_1fr] mx-[10px] gap-[30px] px-[10px] py-[50px]">
             <div className="max-h-[500px] flex items-center rounded-[10px]">
               <img src={`${IMAGE_SRC_PATH}/${product.image}`} className="object-contain max-h-full" alt={product.product_name} />

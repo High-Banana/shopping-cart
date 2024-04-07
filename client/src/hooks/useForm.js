@@ -1,6 +1,5 @@
 export default function useForm(inputValue) {
   function validateUserForm() {
-    console.log(inputValue);
     return new Promise((resolve, reject) => {
       if (inputValue.email === "" && inputValue.password == "") reject("empty-email-password");
       else if (inputValue.email === "") reject("empty-email");
