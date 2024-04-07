@@ -11,7 +11,6 @@ export default function useForm(inputValue) {
   }
 
   function validateProductForm() {
-    console.log("fuc");
     return new Promise((resolve, reject) => {
       if (inputValue.productName === "") reject("empty-productName");
       else if (inputValue.productImage === "") reject("empty-productImage");

@@ -16,6 +16,7 @@ export default function NameField() {
       <input
         onChange={(event) => setProductName(event.target.value)}
         type="text"
+        name="productName"
         placeholder="Accer Nitro 5"
         className="h-[40px] rounded-md p-3 focus:outline-none transition ease-in-out duration-300 bg-[#202020]"
       />

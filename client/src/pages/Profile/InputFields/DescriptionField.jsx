@@ -16,6 +16,7 @@ export default function DescriptionField() {
       <textarea
         onChange={(event) => setProductDescription(event.target.value)}
         type="text"
+        name="productDescription"
         placeholder="Features about product"
         className="h-[200px] rounded-md p-3 resize-none overflow-hidden focus:outline-none transition ease-in-out duration-300 bg-[#202020]"
       />

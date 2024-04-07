@@ -1,3 +1,4 @@
+import Button from "../../../components/ui/Button";
 import { useFormContext } from "../../../context/FormContext";
 
 export default function ImageField() {
@@ -14,10 +15,13 @@ export default function ImageField() {
         )}
       </label>
       <input
-        onChange={(event) => setProductImage(event.target.value)}
-        type="text"
-        className="h-[40px] rounded-md p-3 focus:outline-none transition ease-in-out duration-300 bg-[#202020]"
+        onChange={(event) => setProductImage(event.target.files)}
+        type="file"
+        accept="image/*"
+        name="image"
+        className="h-[40px] rounded-md px-3 py-[6px] focus:outline-a transition ease-in-out duration-300 bg-[#202020] file:bg-transparent file:text-white file:border-none"
       />
+      {/* <Button title="Upload image" className="w-[100px] h-[20px]" /> */}
     </div>
   );
 }

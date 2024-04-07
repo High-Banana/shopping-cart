@@ -11,7 +11,7 @@ export function FormProvider({ children }) {
   const [password, setPassword] = useState("");
   const [userName, setUserName] = useState("");
   const [productName, setProductName] = useState("");
-  const [productImage, setProductImage] = useState("");
+  const [productImage, setProductImage] = useState();
   const [productDescription, setProductDescription] = useState("");
   const [productPrice, setProductPrice] = useState();
   const [productType, setProductType] = useState("");
@@ -34,9 +34,9 @@ export function FormProvider({ children }) {
   });
 
   useEffect(() => {
-    setEmail("");
-    setPassword("");
-    setUserName("");
+    setEmail("test@gmail.com");
+    setPassword("testing");
+    setUserName("test");
     setInvalidMessage({ emailValue: "", passwordValue: "", userName: "" });
   }, [openSignUp]);
 
@@ -93,11 +93,16 @@ export function FormProvider({ children }) {
   }
 
   async function addProduct() {
+    const formData = new FormData();
+    formData.append("productName", productName);
+    formData.append("productImage", productImage[0]);
+    formData.append("productDescription", productDescription);
+    formData.append("productPrice", productPrice);
     axios
-      .post("/api/add-product", { productName, productImage, productDescription })
+      .post("/api/products/add-product", formData, { headers: { "Content-Type": "multipart/form-data" } })
       .then((response) => {
         if (response.status === 200) {
-          console.log("worked");
+          console.log(productImage);
         } else console.log("failed");
       })
       .catch((error) => {

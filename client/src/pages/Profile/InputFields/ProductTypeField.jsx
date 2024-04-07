@@ -16,6 +16,7 @@ export default function ProductTypeField() {
       <input
         onChange={(event) => setProductType(event.target.value)}
         type="text"
+        name="productType"
         placeholder="Laptop"
         className="h-[40px] rounded-md p-3 focus:outline-none transition ease-in-out duration-300 bg-[#202020]"
       />

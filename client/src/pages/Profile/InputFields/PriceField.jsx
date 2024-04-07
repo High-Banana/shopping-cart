@@ -17,6 +17,7 @@ export default function PriceField() {
       <input
         onChange={(event) => setProductPrice(parseFloat(event.target.value))}
         type="number"
+        name="productPrice"
         placeholder="Enter number only"
         className="h-[40px] rounded-md p-3 focus:outline-none transition ease-in-out duration-300 bg-[#202020]"
       />
