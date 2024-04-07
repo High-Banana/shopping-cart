@@ -30,13 +30,12 @@ async function getProductByID(req, res, next) {
 }
 
 async function addProduct(req, res, next) {
-  const { productName, productImage, productDescription, productPrice, productType } = req.body;
-  // await database.query(
-  //   "insert into products (product_name, product_description, product_price, image, product_type, uuid) values (?, ?, ?, ?, ?, ?)",
-  //   [productName, productDescription, productPrice, productImage, productType, uuidv4()]
-  // );
-
-  // console.log(productImage);
+  const { productName, productDescription, productPrice, productType } = req.body;
+  const productImage = req.file.filename;
+  await database.query(
+    "insert into products (product_name, product_description, product_price, image, product_type, uuid) values (?, ?, ?, ?, ?, ?)",
+    [productName, productDescription, productPrice, productImage, productType, uuidv4()]
+  );
 }
 
 async function getRegisteredUsers(req, res, next) {

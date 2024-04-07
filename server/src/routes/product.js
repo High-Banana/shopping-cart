@@ -9,9 +9,7 @@ router.get("/", tryCatch(getAllProducts));
 
 router.get("/:productType/:productID", tryCatch(getProductByID));
 
-router.post("/add-product", upload.single("productImage"), (req, res) => {
-  res.status(200).send({ message: "ok" });
-});
+router.post("/add-product", upload.single("productImage"), tryCatch(addProduct));
 
 router.get("/add-product", (req, res) => {
   res.status(200).send({ message: "ok" });
