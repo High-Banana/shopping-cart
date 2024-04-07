@@ -29,11 +29,14 @@ async function getProductByID(req, res, next) {
   }
 }
 
-async function addProduct(name, description, price, image, type) {
-  await database.query(
-    "insert into products (product_name, product_description, product_price, image, product_type, uuid) values (?, ?, ?, ?, ?, ?)",
-    [name, description, price, image, type, uuidv4()]
-  );
+async function addProduct(req, res, next) {
+  const { productName, productImage, productDescription, productPrice, productType } = req.body;
+  // await database.query(
+  //   "insert into products (product_name, product_description, product_price, image, product_type, uuid) values (?, ?, ?, ?, ?, ?)",
+  //   [productName, productDescription, productPrice, productImage, productType, uuidv4()]
+  // );
+
+  // console.log(productImage);
 }
 
 async function getRegisteredUsers(req, res, next) {
