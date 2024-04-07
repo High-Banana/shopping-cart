@@ -98,6 +98,7 @@ export function FormProvider({ children }) {
     formData.append("productImage", productImage[0]);
     formData.append("productDescription", productDescription);
     formData.append("productPrice", productPrice);
+    formData.append("productType", productType);
     axios
       .post("/api/products/add-product", formData, { headers: { "Content-Type": "multipart/form-data" } })
       .then((response) => {
