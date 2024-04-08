@@ -3,9 +3,13 @@ import { useEffect } from "react";
 import Button from "../../components/ui/Button";
 import { useFormContext } from "../../context/FormContext";
 import ProductForm from "../../components/Forms/ProductForm";
+import Form from "../../components/Forms/Form";
+import InputField from "../../components/Forms/InputField";
+import useCloseForm from "../../hooks/uesCloseForm";
 
 export default function Profile() {
-  const { user, isFormOpen, setIsFormOpen } = useFormContext();
+  const { user } = useFormContext();
+  const { isFormOpen, setIsFormOpen } = useCloseForm();
   useEffect(() => {
     setIsFormOpen(false);
   }, []);
@@ -52,7 +56,12 @@ export default function Profile() {
           )}
         </div>
       </div>
-      {isFormOpen && <ProductForm action="add" />}
+      {/* {isFormOpen && <ProductForm action="add" />} */}
+      {isFormOpen && (
+        <Form title="Add Product">
+          <InputField label="Product Name" attributes={["accept = '.png, .jpg, .jpeg, .gif, .webp'"]} />
+        </Form>
+      )}
     </div>
   );
 }
