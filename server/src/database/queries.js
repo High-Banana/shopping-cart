@@ -61,6 +61,11 @@ async function updateProduct(req, res, next) {
   await database.query(sqlQuery, sqlValues);
 }
 
+async function deleteProduct(req, res) {
+  const productId = req.params.productID;
+  database.query("delete from products where uuid = ?", productId);
+}
+
 async function getRegisteredUsers(req, res, next) {
   const { email, password } = req.body;
   const [user] = await database.query("select * from users where email = ? AND password = ? LIMIT 1", [email, password]);
@@ -89,4 +94,4 @@ async function registerUser(req, res, next) {
 
 // addProduct("name", "description", 111, "iphone-15-pro-max.jpg", "Mobile");
 
-export { getAllProducts, getProductByID, addProduct, getRegisteredUsers, registerUser, updateProduct };
+export { getAllProducts, getProductByID, addProduct, getRegisteredUsers, registerUser, updateProduct, deleteProduct };

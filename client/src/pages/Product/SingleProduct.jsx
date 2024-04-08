@@ -11,6 +11,7 @@ import { useFormContext } from "../../context/FormContext";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { useEffect, useRef, useState } from "react";
 import ProductForm from "../../components/Forms/ProductForm";
+import DeleteForm from "../../components/Forms/DeleteForm";
 
 export default function SingleProduct() {
   const { productID } = useParams();
@@ -20,6 +21,7 @@ export default function SingleProduct() {
   const [showOptions, setShowOptions] = useState(false);
   const buttonRef = useRef();
   const { isFormOpen, setIsFormOpen } = useFormContext();
+  const [openDeleteForm, setOpenDeleteForm] = useState(false);
 
   function handleClickOutside(event) {
     if (buttonRef.current && !buttonRef.current.contains(event.target)) setShowOptions(false);
@@ -69,7 +71,7 @@ export default function SingleProduct() {
                       Edit
                     </button>
                     <button
-                      onClick={() => setIsFormOpen(true)}
+                      onClick={() => setOpenDeleteForm(true)}
                       className="font-semibold pb-2 px-4 hover:underline"
                       aria-label="delete">
                       Delete
@@ -97,6 +99,7 @@ export default function SingleProduct() {
             </div>
           </div>
           {isFormOpen && <ProductForm title="Edit Product" productInfo={product} action="edit" />}
+          {openDeleteForm && <DeleteForm setOpenDeleteForm={setOpenDeleteForm} productInfo={product} />}
         </div>
       )}
     </>

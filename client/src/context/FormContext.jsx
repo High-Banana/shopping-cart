@@ -151,13 +151,22 @@ export function FormProvider({ children }) {
       .put(`/api/products/edit-product/${productUUID}`, formData, { headers: { "Content-Type": "multipart/form-data" } })
       .then((response) => {
         if (response.status === 200) {
-          console.log("product added");
+          console.log("product updated");
         } else console.log("failed");
       })
       .catch((error) => {
         console.log(error);
       });
     setIsLoading(false);
+  }
+
+  async function deleteProduct() {
+    axios
+      .delete(`/api/products/delete-product/${productUUID}`)
+      .then(() => {
+        console.log("deleted successfully");
+      })
+      .catch((error) => console.log(error));
   }
 
   function handleSubmit(event, formType, action) {
@@ -212,8 +221,10 @@ export function FormProvider({ children }) {
           });
       } else if (action === "edit") {
         console.log("im in edit");
-        console.log({ productName, productDescription, productPrice, productType, productImage });
         updateProduct();
+      } else if (action === "delete") {
+        console.log("dlete");
+        deleteProduct();
       }
     }
   }
