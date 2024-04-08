@@ -4,8 +4,8 @@ import { IMAGE_SRC_PATH } from "/src/services/constants.js";
 
 export default function ProductsList({ products, sortType }) {
   const sortMethods = {
-    ascendingPrice: { method: (a, b) => parseFloat(a.product_price - b.product_price) },
-    descendingPrice: { method: (a, b) => parseFloat(b.product_price - a.product_price) },
+    ascendingPrice: { method: (a, b) => parseFloat(b.product_price - a.product_price) },
+    descendingPrice: { method: (a, b) => parseFloat(a.product_price - b.product_price) },
     ascendingLetter: { method: (a, b) => (a.product_name > b.product_name ? 1 : -1) },
     descendingLetter: { method: (a, b) => (a.product_name > b.product_name ? -1 : 1) },
   };
