@@ -1,13 +1,11 @@
 import PropTypes from "prop-types";
 
-export default function InputField({ label, type, className, attributes }) {
+export default function TextAreaField({ label, type = "text", className, attributes }) {
   return (
     <div className="flex flex-col gap-2 text-[#c9c9c9]">
       <label>{label}</label>
-      <input
+      <textarea
         type={type}
-        name="productName"
-        placeholder="Accer Nitro 5"
         {...attributes}
         className={`${
           className === undefined
@@ -19,9 +17,9 @@ export default function InputField({ label, type, className, attributes }) {
   );
 }
 
-InputField.propTypes = {
+TextAreaField.propTypes = {
   label: PropTypes.string.isRequired,
-  type: PropTypes.string.isRequired,
+  type: PropTypes.string,
   className: PropTypes.string,
   attributes: PropTypes.object,
 };

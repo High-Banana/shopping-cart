@@ -1,27 +1,32 @@
 import PropTypes from "prop-types";
 
-export default function InputField({ label, type, className, attributes }) {
+export default function SelectField({ label, type, className, options, attributes }) {
+  console.log(options);
   return (
     <div className="flex flex-col gap-2 text-[#c9c9c9]">
       <label>{label}</label>
-      <input
+      <select
         type={type}
-        name="productName"
-        placeholder="Accer Nitro 5"
         {...attributes}
         className={`${
           className === undefined
             ? "h-[40px] rounded-md px-3 py-[6px] focus:outline-none transition ease-in-out duration-300 bg-[#202020]"
             : className
-        }`}
-      />
+        }`}>
+        {options.map((option, index) => (
+          <option value={option.toLowerCase()} key={index}>
+            {option}
+          </option>
+        ))}
+      </select>
     </div>
   );
 }
 
-InputField.propTypes = {
+SelectField.propTypes = {
   label: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
   className: PropTypes.string,
+  options: PropTypes.array.isRequired,
   attributes: PropTypes.object,
 };
