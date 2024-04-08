@@ -1,10 +1,13 @@
 import PropTypes from "prop-types";
+import { setID } from "../../utils/helper";
 
 export default function InputField({ label, type, className, attributes }) {
+  const id = setID(label);
   return (
     <div className="flex flex-col gap-2 text-[#c9c9c9]">
-      <label>{label}</label>
+      <label htmlFor={id}>{label}</label>
       <input
+        id={id}
         type={type}
         name="productName"
         placeholder="Accer Nitro 5"

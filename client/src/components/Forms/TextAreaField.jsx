@@ -1,10 +1,13 @@
 import PropTypes from "prop-types";
+import { setID } from "../../utils/helper";
 
 export default function TextAreaField({ label, type = "text", className, attributes }) {
+  const id = setID(label);
   return (
     <div className="flex flex-col gap-2 text-[#c9c9c9]">
-      <label>{label}</label>
+      <label htmlFor={id}>{label}</label>
       <textarea
+        id={id}
         type={type}
         {...attributes}
         className={`${

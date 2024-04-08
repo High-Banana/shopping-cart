@@ -2,7 +2,6 @@
 import { useEffect } from "react";
 import Button from "../../components/ui/Button";
 import { useFormContext } from "../../context/FormContext";
-import ProductForm from "../../components/Forms/ProductForm";
 import Form from "../../components/Forms/Form";
 import InputField from "../../components/Forms/InputField";
 import useCloseForm from "../../hooks/uesCloseForm";
@@ -11,7 +10,7 @@ import TextAreaField from "../../components/Forms/TextAreaField";
 
 export default function Profile() {
   const { user } = useFormContext();
-  const { isFormOpen, setIsFormOpen } = useCloseForm();
+  const { isFormOpen, setIsFormOpen, handleFormClose } = useCloseForm();
   useEffect(() => {
     setIsFormOpen(false);
   }, []);
@@ -60,7 +59,12 @@ export default function Profile() {
       </div>
       {/* {isFormOpen && <ProductForm action="add" />} */}
       {isFormOpen && (
-        <Form title="Add Product">
+        <Form
+          values={{
+            isFormOpen: isFormOpen,
+            title: "Add Product",
+            handleFormClose: handleFormClose,
+          }}>
           <InputField label="Product Name" type="text" attributes={{ placeholder: "ASUS Nitro 5", name: "productName" }} />
           <InputField
             label="Product Image"
