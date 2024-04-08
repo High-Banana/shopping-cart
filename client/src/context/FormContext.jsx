@@ -230,6 +230,8 @@ export function FormProvider({ children }) {
       } else if (action === "delete") {
         console.log("dlete");
         deleteProduct();
+        setIsSubmitted(true);
+        handleFormClose(event);
       }
     }
   }

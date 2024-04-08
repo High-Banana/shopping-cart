@@ -3,9 +3,11 @@
 import { useEffect } from "react";
 import { useFormContext } from "../../context/FormContext";
 import Button from "../ui/Button";
+import { useNavigate } from "react-router-dom";
 
 export default function DeleteForm({ setOpenDeleteForm, productInfo }) {
   const { handleFormClose, isVisible, setIsVisible, handleSubmit, setProductUUID } = useFormContext();
+  const navigation = useNavigate();
 
   useEffect(() => {
     setIsVisible(true);
@@ -35,6 +37,12 @@ export default function DeleteForm({ setOpenDeleteForm, productInfo }) {
               <Button
                 title="Delete"
                 className="bg-[#5865f2] font-normal py-[7px] px-[28px] rounded-sm hover:scale-[none] hover:bg-opacity-70"
+                onClick={() => {
+                  setTimeout(() => {
+                    setOpenDeleteForm(false);
+                    navigation("/products");
+                  }, 100);
+                }}
               />
             </div>
           </form>

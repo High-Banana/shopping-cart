@@ -35,6 +35,7 @@ export default function SingleProduct() {
 
   useEffect(() => {
     setIsFormOpen(false);
+    setOpenDeleteForm(false);
     document.addEventListener("click", handleClickOutside, true);
     return () => document.removeEventListener("click", handleClickOutside, true);
   }, []);
