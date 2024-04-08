@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/prop-types */
 import { useEffect, useRef } from "react";
 import { useFormContext } from "../../../context/FormContext";
@@ -27,6 +28,7 @@ export default function DescriptionField({ action, productDescription }) {
         type="text"
         name="productDescription"
         placeholder="Features about product"
+        cols="70"
         defaultValue={`${action === "edit" ? `${productDescription}` : ""}`}
         className="h-[200px] rounded-md p-3 resize-none overflow-hidden focus:outline-none transition ease-in-out duration-300 bg-[#202020]"
       />

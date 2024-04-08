@@ -22,6 +22,7 @@ export function FormProvider({ children }) {
   const [invalidMessage, setInvalidMessage] = useState();
   const [user, setUser] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
   const { validateUserForm, validateProductForm } = useForm({
     email,
     password,
@@ -47,6 +48,7 @@ export function FormProvider({ children }) {
     setProductDescription("");
     setProductPrice();
     setProductType("");
+    setIsSubmitted(false);
     setInvalidMessage({ productName: "", productImage: "", productDescription: "" });
   }, [isFormOpen]);
 
@@ -222,6 +224,9 @@ export function FormProvider({ children }) {
       } else if (action === "edit") {
         console.log("im in edit");
         updateProduct();
+        setIsSubmitted(true);
+        handleFormClose(event);
+        // fetchItems(productUUID);
       } else if (action === "delete") {
         console.log("dlete");
         deleteProduct();
@@ -258,6 +263,7 @@ export function FormProvider({ children }) {
     setIsVisible,
     isVisible,
     setProductUUID,
+    isSubmitted,
   };
 
   return <FormContext.Provider value={providerValues}>{children}</FormContext.Provider>;

@@ -20,8 +20,14 @@ export default function SingleProduct() {
   const navigate = useNavigate();
   const [showOptions, setShowOptions] = useState(false);
   const buttonRef = useRef();
-  const { isFormOpen, setIsFormOpen } = useFormContext();
+  const { isFormOpen, setIsFormOpen, isSubmitted } = useFormContext();
   const [openDeleteForm, setOpenDeleteForm] = useState(false);
+  const {
+    items: [product],
+    isLoading,
+    errorState: error,
+    fetchItems,
+  } = useFetch(productID);
 
   function handleClickOutside(event) {
     if (buttonRef.current && !buttonRef.current.contains(event.target)) setShowOptions(false);
@@ -33,12 +39,11 @@ export default function SingleProduct() {
     return () => document.removeEventListener("click", handleClickOutside, true);
   }, []);
 
-  const {
-    items: [product],
-    isLoading,
-    errorState: error,
-    fetchItems,
-  } = useFetch(productID);
+  useEffect(() => {
+    fetchItems(productID, isSubmitted);
+    console.log(product);
+  }, [isSubmitted]);
+
   if (error !== undefined) return <Error errorDetail={error} onClickFunction={() => fetchItems(productID)} />;
 
   return (
@@ -87,7 +92,9 @@ export default function SingleProduct() {
             </div>
             <div className="flex flex-col gap-[50px] px-[5px]">
               <h1 className="text-3xl font-[500]">{product.product_name}</h1>
-              <p className="text-[#3e3e3e] text-[15px] overflow-auto scrollbar-none">{product.product_description}</p>
+              <p className="text-[#3e3e3e] text-[15px] whitespace-pre-wrap break-words scrollbar-none max-w-[480px]">
+                {product.product_description}
+              </p>
               <div className="flex justify-between items-center">
                 <span className="font-[700] text-2xl">NPR {parseFloat(product.product_price).toLocaleString()}</span>
                 <Button

@@ -1,7 +1,8 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 import { fetchAllProducts, fetchProductByID } from "../services/api/Fetch";
 
-export default function useFetch(productID) {
+export default function useFetch(productID, isSubmitted) {
   const [items, setItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [errorState, setErrorState] = useState();
@@ -20,7 +21,8 @@ export default function useFetch(productID) {
 
   useEffect(() => {
     fetchItems(productID);
-  }, [productID]);
+    console.log(items);
+  }, [productID, isSubmitted]);
 
   return { items, isLoading, errorState, fetchItems };
 }
