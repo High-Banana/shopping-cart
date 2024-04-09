@@ -4,7 +4,7 @@ import Loading from "../../components/Loading/Loading";
 import { IMAGE_SRC_PATH } from "../../services/constants";
 import Button from "../../components/ui/Button";
 import { useCart } from "../../context/CartContext";
-import useFetch from "../../hooks/useFetch";
+import useProductAPI from "../../hooks/useProductAPI";
 import Error from "../../components/Error";
 import GoBackButton from "../../components/ui/GoBackButton";
 import { useFormContext } from "../../context/FormContext";
@@ -27,7 +27,7 @@ export default function SingleProduct() {
     isLoading,
     errorState: error,
     fetchItems,
-  } = useFetch(productID);
+  } = useProductAPI(productID);
 
   function handleClickOutside(event) {
     if (buttonRef.current && !buttonRef.current.contains(event.target)) setShowOptions(false);

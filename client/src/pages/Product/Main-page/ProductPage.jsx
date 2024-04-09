@@ -1,13 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import Loading from "../../../components/Loading/Loading";
-import useFetch from "../../../hooks/useFetch";
+import useProductAPI from "../../../hooks/useProductAPI";
 import Error from "../../../components/Error";
 import { useEffect, useState } from "react";
 import SortItems from "./SortItems";
 import ProductsList from "./ProductsList";
 
 export default function ProductPage() {
-  const { items: products, isLoading, errorState: error, fetchItems } = useFetch();
+  const { items: products, isLoading, errorState: error, fetchItems } = useProductAPI();
   const [sortType, setSortType] = useState("ascendingPrice");
 
   useEffect(() => {

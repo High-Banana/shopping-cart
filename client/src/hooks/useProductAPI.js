@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { fetchAllProducts, fetchProductByID } from "../services/api/ProductAPI";
 
-export default function useFetch(productID, isSubmitted) {
+export default function useProductAPI(productID, isSubmitted) {
   const [items, setItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [errorState, setErrorState] = useState();
