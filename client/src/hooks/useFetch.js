@@ -1,27 +1,27 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
-import { fetchAllProducts, fetchProductByID } from "../services/api/Fetch";
+import { fetchAllProducts, fetchProductByID } from "../services/api/ProductAPI";
 
 export default function useFetch(productID, isSubmitted) {
   const [items, setItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [errorState, setErrorState] = useState();
 
-  async function fetchItems(productID) {
+  async function fetchItems() {
     setErrorState(undefined);
-    const products = productID === undefined ? fetchAllProducts() : fetchProductByID(productID);
-    console.log(products);
-    products
-      .then((data) => {
-        setItems(data);
-        setIsLoading(false);
-      })
-      .catch((error) => setErrorState(error));
+    setIsLoading(true);
+    try {
+      const products = productID === undefined ? await fetchAllProducts() : await fetchProductByID(productID);
+      setItems(products);
+    } catch (error) {
+      setErrorState(error);
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   useEffect(() => {
-    fetchItems(productID);
-    console.log(items);
+    fetchItems();
   }, [productID, isSubmitted]);
 
   return { items, isLoading, errorState, fetchItems };
