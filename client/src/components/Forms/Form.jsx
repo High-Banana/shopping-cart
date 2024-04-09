@@ -1,8 +1,17 @@
 import PropTypes from "prop-types";
 import Button from "../ui/Button";
+import { useEffect } from "react";
+import { useFormContext } from "../../context/FormContext";
 
-export default function Form({ values = { isFormOpen: false, title: "", handleFormClose: null }, children }) {
-  const { isFormOpen, handleFormClose, title } = values;
+export default function Form({ values = { title: "" }, children }) {
+  const { title } = values;
+  const { handleFormClose, isVisible, setIsVisible } = useFormContext();
+
+  useEffect(() => {
+    setIsVisible(true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <div className="absolute min-h-screen top-0 left-0 right-0 bottom-0">
       <div
@@ -11,7 +20,7 @@ export default function Form({ values = { isFormOpen: false, title: "", handleFo
       <div className="absolute flex flex-col justify-center items-center right-0 left-0 py-3">
         <div
           className={`bg-[#434343] w-[440px] rounded-md z-[2] ${
-            isFormOpen ? "scale-100 duration-200" : "scale-75 duration-200 opacity-15"
+            isVisible ? "scale-100 duration-200" : "scale-75 duration-200 opacity-15"
           }`}>
           <h2 className="text-white text-2xl font-bold text-center p-6">{title}</h2>
           <form>
@@ -38,8 +47,8 @@ export default function Form({ values = { isFormOpen: false, title: "", handleFo
 Form.propTypes = {
   children: PropTypes.node.isRequired,
   values: PropTypes.shape({
-    isFormOpen: PropTypes.bool.isRequired,
     title: PropTypes.string.isRequired,
-    handleFormClose: PropTypes.func.isRequired,
+    // formOpenTransition: PropTypes.bool.isRequired,
+    // handleFormClose: PropTypes.func.isRequired,
   }),
 };

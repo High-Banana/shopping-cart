@@ -1,19 +1,12 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect } from "react";
 import Button from "../../components/ui/Button";
 import { useFormContext } from "../../context/FormContext";
 import Form from "../../components/Forms/Form";
-import InputField from "../../components/Forms/InputField";
-import useCloseForm from "../../hooks/uesCloseForm";
-import SelectField from "../../components/Forms/SelectField";
-import TextAreaField from "../../components/Forms/TextAreaField";
+import ProductForm from "../../components/Forms/ProductForm";
 
 export default function Profile() {
   const { user } = useFormContext();
-  const { isFormOpen, setIsFormOpen, handleFormClose } = useCloseForm();
-  useEffect(() => {
-    setIsFormOpen(false);
-  }, []);
+  const { isFormOpen, setIsFormOpen } = useFormContext();
+
   return (
     <div className="relative min-h-[800px]">
       <h1 className="font-semibold text-[22px] text-center">My Profile</h1>
@@ -57,36 +50,12 @@ export default function Profile() {
           )}
         </div>
       </div>
-      {/* {isFormOpen && <ProductForm action="add" />} */}
       {isFormOpen && (
         <Form
           values={{
-            isFormOpen: isFormOpen,
             title: "Add Product",
-            handleFormClose: handleFormClose,
           }}>
-          <InputField label="Product Name" type="text" attributes={{ placeholder: "ASUS Nitro 5", name: "productName" }} />
-          <InputField
-            label="Product Image"
-            attributes={{ accept: ".png, .jpg, .jpeg, .gif, .webp", name: "image" }}
-            type="file"
-          />
-          <InputField
-            label="Product Price"
-            type="number"
-            attributes={{ placeholder: "Enter number only", name: "productPrice" }}
-          />
-          <SelectField
-            label="Product Type"
-            type="text"
-            attributes={{ name: "productType" }}
-            options={["Laptop", "Mobile", "Desktop", "Mouse", "Keyboard", "Headphone"]}
-          />
-          <TextAreaField
-            label="Product Description"
-            className="h-[200px] rounded-md p-3 resize-none overflow-hidden focus:outline-none transition ease-in-out duration-300 bg-[#202020]"
-            attributes={{ placeholder: "Features about product", name: "productDescription" }}
-          />
+          <ProductForm />
         </Form>
       )}
     </div>
