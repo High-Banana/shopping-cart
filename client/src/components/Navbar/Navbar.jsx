@@ -30,7 +30,7 @@ export default function Navbar() {
             Login
           </Link>
         ) : (
-          <Link to="profile">{user[0].userName}</Link>
+          <Link to="profile">{user[0].username}</Link>
         )}
       </div>
     </div>

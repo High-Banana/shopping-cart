@@ -2,7 +2,8 @@ import React from "react";
 
 export default function useForm() {
   const [isLoginForm, setIsLoginForm] = React.useState(true);
-  const [errorState, setErrorState] = React.useState({ email: "", password: "" });
+  const [errorState, setErrorState] = React.useState({ email: "", password: "", username: "" });
+  const [showPassword, setShowPassword] = React.useState(false);
 
   React.useEffect(() => {
     console.log(errorState);
@@ -17,7 +18,7 @@ export default function useForm() {
     console.log(inputValue);
     if (!inputValue.email) errors.email = "Please enter Email";
     if (!inputValue.password) errors.password = "Please enter Password";
-    if (!inputValue.isLoginForm && !inputValue.username) errors.username = "Please enter a username";
+    if (!inputValue.isLoginForm && !inputValue.username) errors.username = "Please enter a Username";
     return Object.values(errors).every((value) => value === "") ? true : errors;
   }
 
@@ -32,5 +33,13 @@ export default function useForm() {
   //   });
   // }
 
-  return { isLoginForm, setIsLoginForm, validateUserForm, errorState, setErrorState };
+  return {
+    isLoginForm,
+    setIsLoginForm,
+    validateUserForm,
+    errorState,
+    setErrorState,
+    showPassword,
+    setShowPassword,
+  };
 }

@@ -26,7 +26,7 @@ export default function LoginPage() {
               isLoading ? (
                 <span className="border-[2px] border-[white_transparent] h-[20px] w-[20px] rounded-[50%] animate-spin"></span>
               ) : (
-                "Sign In"
+                "Continue"
               )
             }
             className="bg-[#be2b2b] hover:scale-[none] hover:bg-[#ad1a1a] flex justify-center"

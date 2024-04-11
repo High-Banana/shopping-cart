@@ -1,12 +1,11 @@
 import InputField from "../../components/Forms/InputField";
 import PasswordToggle from "../../components/ui/PasswordToggle";
 import { useFormContext } from "../../context/FormContext";
-import React from "react";
+import useForm from "../../hooks/useForm";
 
 export default function LoginForm() {
   const { setEmail, setPassword, errorState } = useFormContext();
-  const [showPassword, setShowPassword] = React.useState(false);
-  console.log(errorState);
+  const { showPassword, setShowPassword } = useForm();
   return (
     <>
       <InputField

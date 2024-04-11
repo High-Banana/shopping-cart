@@ -75,18 +75,18 @@ async function getRegisteredUsers(req, res, next) {
 }
 
 async function registerUser(req, res, next) {
-  const { email, userName, password } = req.body;
-  console.log({ email, userName, password });
+  const { email, username, password } = req.body;
   const [user] = await database.query("select * from users where email = ?", [email]);
   if (user.length !== 0) return res.status(409).send("Email is already registered");
   try {
-    await database.query("insert into users (userName, email, password, isAdmin) VALUES (?,?,?,?)", [
-      userName,
+    await database.query("insert into users (username, email, password, isAdmin) VALUES (?,?,?,?)", [
+      username,
       email,
       password,
       false,
     ]);
-    res.status(200).send("Ok");
+    const registeredUser = await getRegisteredUsers(req, res);
+    res.status(200).send(registeredUser);
   } catch (error) {
     next();
   }

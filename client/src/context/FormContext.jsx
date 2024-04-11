@@ -10,7 +10,7 @@ const FormContext = createContext();
 export function FormProvider({ children }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [userName, setUserName] = useState("");
+  const [username, setUsername] = useState("");
   const [productName, setProductName] = useState("");
   const [productImage, setProductImage] = useState();
   const [productDescription, setProductDescription] = useState("");
@@ -30,7 +30,7 @@ export function FormProvider({ children }) {
   useEffect(() => {
     setEmail("");
     setPassword("");
-    setUserName("");
+    setUsername("");
     setInvalidMessage({ emailValue: "", passwordValue: "", userName: "" });
   }, [isLoginForm]);
 
@@ -55,37 +55,21 @@ export function FormProvider({ children }) {
     setTimeout(() => setIsFormOpen(false), 100);
   }
 
-  // async function loginUser() {
+  // async function registerUser() {
   //   axios
-  //     .post("/api/users/login", { email, password })
+  //     .post("/api/users/register", { email, username, password })
   //     .then((response) => {
   //       if (response.status === 200) {
-  //         setUser(response.data);
-  //         console.log(response.data[0]);
+  //         console.log("thanks for registering");
+  //         setUser([{ email: email, userName: username, password: password }]);
   //       } else console.log("Login failed");
   //     })
   //     .catch((error) => {
-  //       setInvalidMessage({ emailValue: error.response.data, passwordValue: error.response.data });
+  //       setInvalidMessage({ emailValue: error.response.data });
   //       console.log(error.response.data);
   //     });
   //   setIsLoading(false);
   // }
-
-  async function registerUser() {
-    axios
-      .post("/api/users/register", { email, userName, password })
-      .then((response) => {
-        if (response.status === 200) {
-          console.log("thanks for registering");
-          setUser([{ email: email, userName: userName, password: password }]);
-        } else console.log("Login failed");
-      })
-      .catch((error) => {
-        setInvalidMessage({ emailValue: error.response.data });
-        console.log(error.response.data);
-      });
-    setIsLoading(false);
-  }
 
   // class Product {
   //   constructor(productName, productImage, productDescription, productPrice, productType) {
@@ -229,18 +213,17 @@ export function FormProvider({ children }) {
   // }
   async function handleSubmit(event) {
     event.preventDefault();
-    const isFormValid = validateUserForm({ email, password, isLoginForm });
-    console.log(isFormValid);
+    const isFormValid = validateUserForm({ email, password, username, isLoginForm });
     console.log(isLoginForm);
     if (isFormValid === true) {
-      console.log("hm");
-      await submitUserForm({ email, password, isLoginForm })
+      await submitUserForm({ email, password, username, isLoginForm })
         .then((response) => {
+          console.log(response);
           setUser(response);
           setErrorState({ email: "", password: "", username: "" });
         })
         .catch((error) => {
-          setErrorState({ email: error.response.data, password: error.response.data });
+          setErrorState({ email: error.response.data, password: error.response.data, username: error.response.data });
         });
     } else {
       setErrorState(validateUserForm({ email, password }));
@@ -255,8 +238,8 @@ export function FormProvider({ children }) {
     setEmail,
     password,
     setPassword,
-    userName,
-    setUserName,
+    username,
+    setUsername,
     invalidMessage,
     handleSubmit,
     toggleSignUpForm,

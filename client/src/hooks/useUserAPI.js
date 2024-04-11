@@ -8,7 +8,7 @@ export default function useUserAPI() {
 
   async function submitUserForm(inputValues) {
     setIsLoading(true);
-    setErrorState(undefined);
+    setErrorState({});
     try {
       return inputValues.isLoginForm
         ? await loginUser(inputValues.email, inputValues.password)
