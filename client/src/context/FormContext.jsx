@@ -211,20 +211,22 @@ export function FormProvider({ children }) {
   //     }
   //   }
   // }
+
   async function handleSubmit(event) {
     event.preventDefault();
     const isFormValid = validateUserForm({ email, password, username, isLoginForm });
-    console.log(isLoginForm);
     if (isFormValid === true) {
+      setIsLoading(true);
+      await new Promise((resolve) => setTimeout(resolve, 3000));
       await submitUserForm({ email, password, username, isLoginForm })
         .then((response) => {
-          console.log(response);
           setUser(response);
           setErrorState({ email: "", password: "", username: "" });
         })
         .catch((error) => {
-          setErrorState({ email: error.response.data, password: error.response.data, username: error.response.data });
-        });
+          setErrorState({ email: error.response.data, password: "", username: "" });
+        })
+        .finally(setIsLoading(false));
     } else {
       setErrorState(validateUserForm({ email, password }));
     }
@@ -232,6 +234,7 @@ export function FormProvider({ children }) {
 
   const providerValues = {
     errorState,
+    setErrorState,
     setIsLoginForm,
     user,
     email,

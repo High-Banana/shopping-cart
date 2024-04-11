@@ -1,19 +1,32 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+import React from "react";
 import Button from "../../components/ui/Button";
 import GoBackButton from "../../components/ui/GoBackButton";
 import LoginForm from "./LoginForm";
 import { useFormContext } from "../../context/FormContext";
 import SignUpForm from "./SignUpForm";
 import { useNavigate } from "react-router-dom";
-// import { Link } from "react-router-dom";
-import { useEffect } from "react";
+import useForm from "../../hooks/useForm";
+import Loading from "../../components/Loading/Loading";
 
 export default function LoginPage() {
-  const { handleSubmit, isLoading, isLoginForm, setIsLoginForm, user } = useFormContext();
+  const { handleSubmit, isLoading, isLoginForm, setIsLoginForm, user, setErrorState } = useFormContext();
+  const { errorState } = useForm();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (user.length !== 0) navigate(-1);
-  }, [user, navigate]);
+  // React.useEffect(() => {
+  //   console.log(isLoading);
+  // }, [isLoading]);
+
+  React.useEffect(() => {
+    if (user.length !== 0 && !isLoading) navigate(-1);
+  }, [user, isLoading]);
+
+  React.useEffect(() => {
+    setErrorState(errorState);
+  }, [isLoginForm]);
+
+  // if (isLoading) return <Loading />;
 
   return (
     <>
@@ -29,7 +42,8 @@ export default function LoginPage() {
                 "Continue"
               )
             }
-            className="bg-[#be2b2b] hover:scale-[none] hover:bg-[#ad1a1a] flex justify-center"
+            className={`bg-[#be2b2b] hover:scale-[none] hover:bg-[#ad1a1a] flex justify-center`}
+            attributes={isLoading ? { "aria-busy": true, disabled: true } : {}}
           />
         </form>
         <span className="text-[14px] text-white">
