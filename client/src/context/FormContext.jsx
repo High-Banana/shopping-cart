@@ -3,6 +3,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import useForm from "../hooks/useForm";
 import axios from "axios";
+import useUserAPI from "../hooks/useUserAPI";
 
 const FormContext = createContext();
 
@@ -16,31 +17,22 @@ export function FormProvider({ children }) {
   const [productPrice, setProductPrice] = useState();
   const [productType, setProductType] = useState("");
   const [productUUID, setProductUUID] = useState("");
-  const [openSignUp, setOpenSignUp] = useState(false);
+  const [isLoginForm, setIsLoginForm] = useState(true);
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const [invalidMessage, setInvalidMessage] = useState();
   const [user, setUser] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const { validateUserForm, validateProductForm } = useForm({
-    email,
-    password,
-    userName,
-    openSignUp,
-    productName,
-    productImage,
-    productDescription,
-    productPrice,
-    productType,
-  });
+  const { validateUserForm, errorState, setErrorState } = useForm();
+  const { submitUserForm } = useUserAPI();
 
   useEffect(() => {
-    setEmail("test@gmail.com");
-    setPassword("testing");
-    setUserName("test");
+    setEmail("");
+    setPassword("");
+    setUserName("");
     setInvalidMessage({ emailValue: "", passwordValue: "", userName: "" });
-  }, [openSignUp]);
+  }, [isLoginForm]);
 
   useEffect(() => {
     setProductName("");
@@ -53,8 +45,8 @@ export function FormProvider({ children }) {
   }, [isFormOpen]);
 
   function toggleSignUpForm() {
-    setOpenSignUp(!openSignUp);
-    return openSignUp;
+    setIsLoginForm(!isLoginForm);
+    return isLoginForm;
   }
 
   function handleFormClose(event) {
@@ -63,21 +55,21 @@ export function FormProvider({ children }) {
     setTimeout(() => setIsFormOpen(false), 100);
   }
 
-  async function loginUser() {
-    axios
-      .post("/api/users/login", { email, password })
-      .then((response) => {
-        if (response.status === 200) {
-          setUser(response.data);
-          console.log(response.data[0]);
-        } else console.log("Login failed");
-      })
-      .catch((error) => {
-        setInvalidMessage({ emailValue: error.response.data, passwordValue: error.response.data });
-        console.log(error.response.data);
-      });
-    setIsLoading(false);
-  }
+  // async function loginUser() {
+  //   axios
+  //     .post("/api/users/login", { email, password })
+  //     .then((response) => {
+  //       if (response.status === 200) {
+  //         setUser(response.data);
+  //         console.log(response.data[0]);
+  //       } else console.log("Login failed");
+  //     })
+  //     .catch((error) => {
+  //       setInvalidMessage({ emailValue: error.response.data, passwordValue: error.response.data });
+  //       console.log(error.response.data);
+  //     });
+  //   setIsLoading(false);
+  // }
 
   async function registerUser() {
     axios
@@ -171,72 +163,93 @@ export function FormProvider({ children }) {
       .catch((error) => console.log(error));
   }
 
-  function handleSubmit(event, formType, action) {
+  // function handleSubmit(event, formType, action) {
+  //   event.preventDefault();
+  //   if (formType === "userForm") {
+  //     validateUserForm()
+  //       .then(() => {
+  //         setInvalidMessage({ emailValue: "", passwordValue: "", userName: "" });
+  //         setIsLoading(true);
+  //         isLoginForm ? registerUser() : loginUser();
+  //       })
+  //       .catch((error) => {
+  //         switch (error) {
+  //           case "empty-email":
+  //             return setInvalidMessage({ emailValue: "Please enter Email" });
+  //           case "empty-password":
+  //             return setInvalidMessage({ passwordValue: "Please enter password" });
+  //           case "empty-email-password":
+  //             return setInvalidMessage({ emailValue: "Please enter Email", passwordValue: "Please enter Password" });
+  //           case "empty-username":
+  //             return setInvalidMessage({ userName: "Please enter a username" });
+  //           default:
+  //             alert(error);
+  //         }
+  //       });
+  //   } else if (formType === "productForm") {
+  //     console.log("product form");
+  //     if (action === "add") {
+  //       validateProductForm()
+  //         .then(() => {
+  //           handleFormClose(event);
+  //           setIsLoading(true);
+  //           addProduct();
+  //           // product.productMethod(action);
+  //           // setIsLoading(false);
+  //           setInvalidMessage({ productName: "", productImage: "", productDescription: "" });
+  //         })
+  //         .catch((error) => {
+  //           console.log("bad form");
+  //           switch (error) {
+  //             case "empty-productName":
+  //               return setInvalidMessage({ productName: "Product name cannot be empty" });
+  //             case "empty-productImage":
+  //               return setInvalidMessage({ productImage: "Product image cannot be empty" });
+  //             case "empty-productDescription":
+  //               return setInvalidMessage({ productDescription: "Product description cannot be empty" });
+  //             case "empty-productPrice":
+  //               return setInvalidMessage({ productPrice: "Product price cannot be empty" });
+  //             case "empty-productType":
+  //               return setInvalidMessage({ productType: "Product type cannot be empty" });
+  //           }
+  //         });
+  //     } else if (action === "edit") {
+  //       console.log("im in edit");
+  //       updateProduct();
+  //       setIsSubmitted(true);
+  //       handleFormClose(event);
+  //       // fetchItems(productUUID);
+  //     } else if (action === "delete") {
+  //       console.log("dlete");
+  //       deleteProduct();
+  //       setIsSubmitted(true);
+  //       handleFormClose(event);
+  //     }
+  //   }
+  // }
+  async function handleSubmit(event) {
     event.preventDefault();
-    if (formType === "userForm") {
-      validateUserForm()
-        .then(() => {
-          setInvalidMessage({ emailValue: "", passwordValue: "", userName: "" });
-          setIsLoading(true);
-          openSignUp ? registerUser() : loginUser();
+    const isFormValid = validateUserForm({ email, password, isLoginForm });
+    console.log(isFormValid);
+    console.log(isLoginForm);
+    if (isFormValid === true) {
+      console.log("hm");
+      await submitUserForm({ email, password, isLoginForm })
+        .then((response) => {
+          setUser(response);
+          setErrorState({ email: "", password: "", username: "" });
         })
         .catch((error) => {
-          switch (error) {
-            case "empty-email":
-              return setInvalidMessage({ emailValue: "Please enter Email" });
-            case "empty-password":
-              return setInvalidMessage({ passwordValue: "Please enter password" });
-            case "empty-email-password":
-              return setInvalidMessage({ emailValue: "Please enter Email", passwordValue: "Please enter Password" });
-            case "empty-username":
-              return setInvalidMessage({ userName: "Please enter a username" });
-            default:
-              alert(error);
-          }
+          setErrorState({ email: error.response.data, password: error.response.data });
         });
-    } else if (formType === "productForm") {
-      console.log("product form");
-      if (action === "add") {
-        validateProductForm()
-          .then(() => {
-            handleFormClose(event);
-            setIsLoading(true);
-            addProduct();
-            // product.productMethod(action);
-            // setIsLoading(false);
-            setInvalidMessage({ productName: "", productImage: "", productDescription: "" });
-          })
-          .catch((error) => {
-            console.log("bad form");
-            switch (error) {
-              case "empty-productName":
-                return setInvalidMessage({ productName: "Product name cannot be empty" });
-              case "empty-productImage":
-                return setInvalidMessage({ productImage: "Product image cannot be empty" });
-              case "empty-productDescription":
-                return setInvalidMessage({ productDescription: "Product description cannot be empty" });
-              case "empty-productPrice":
-                return setInvalidMessage({ productPrice: "Product price cannot be empty" });
-              case "empty-productType":
-                return setInvalidMessage({ productType: "Product type cannot be empty" });
-            }
-          });
-      } else if (action === "edit") {
-        console.log("im in edit");
-        updateProduct();
-        setIsSubmitted(true);
-        handleFormClose(event);
-        // fetchItems(productUUID);
-      } else if (action === "delete") {
-        console.log("dlete");
-        deleteProduct();
-        setIsSubmitted(true);
-        handleFormClose(event);
-      }
+    } else {
+      setErrorState(validateUserForm({ email, password }));
     }
   }
 
   const providerValues = {
+    errorState,
+    setIsLoginForm,
     user,
     email,
     setEmail,
@@ -248,7 +261,7 @@ export function FormProvider({ children }) {
     handleSubmit,
     toggleSignUpForm,
     isLoading,
-    openSignUp,
+    isLoginForm,
     productName,
     setProductName,
     productImage,

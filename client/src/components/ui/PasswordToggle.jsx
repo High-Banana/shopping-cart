@@ -3,8 +3,13 @@ import { LuEye, LuEyeOff } from "react-icons/lu";
 
 export default function PasswordToggle({ showPassword, setShowPassword }) {
   return (
-    <div onClick={() => setShowPassword(!showPassword)} className="absolute right-4 top-[33px] text-2xl cursor-pointer">
+    <button
+      onClick={(event) => {
+        setShowPassword(!showPassword);
+        event.preventDefault();
+      }}
+      className="absolute right-4 top-[133px] text-[20px] text-white cursor-pointer">
       {showPassword ? <LuEye /> : <LuEyeOff />}
-    </div>
+    </button>
   );
 }

@@ -8,21 +8,19 @@ import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 
 export default function LoginPage() {
-  const { handleSubmit, isLoading, toggleSignUpForm, openSignUp, user } = useFormContext();
+  const { handleSubmit, isLoading, isLoginForm, setIsLoginForm, user } = useFormContext();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (user.length !== 0) {
-      navigate(-1);
-    }
+    if (user.length !== 0) navigate(-1);
   }, [user, navigate]);
 
   return (
     <>
       <GoBackButton />
       <div className="flex flex-col w-[580px] my-[70px] mx-auto max-h-[540px] bg-black/75 p-8 gap-3 rounded-lg shadow-[2px_5px_15px_2px] shadow-[rgba(0, 0, 0, 0.35)]">
-        <form className="flex flex-col gap-[30px] w-full" onSubmit={(event) => handleSubmit(event, "userForm")} method="POST">
-          {!openSignUp ? <LoginForm /> : <SignUpForm />}
+        <form className="flex flex-col gap-[30px] w-full relative" onSubmit={handleSubmit} method="POST">
+          {isLoginForm ? <LoginForm /> : <SignUpForm />}
           <Button
             title={
               isLoading ? (
@@ -35,9 +33,9 @@ export default function LoginPage() {
           />
         </form>
         <span className="text-[14px] text-white">
-          {openSignUp ? "Already have an account? " : "Don't have an account? "}
-          <button onClick={toggleSignUpForm} className="text-[#4db4e7] font-semibold hover:underline">
-            {openSignUp ? "Login here" : "Register here"}
+          {isLoginForm ? "Already have an account? " : "Don't have an account? "}
+          <button onClick={() => setIsLoginForm(!isLoginForm)} className="text-[#4db4e7] font-semibold hover:underline">
+            {isLoginForm ? "Login here" : "Register here"}
           </button>
         </span>
       </div>
