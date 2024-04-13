@@ -3,6 +3,7 @@ import { setID } from "../../utils/helper";
 
 export default function InputField({ label, type, className, attributes, errorState, setValue }) {
   const id = setID(label);
+  console.log(id);
   return (
     <div className="flex flex-col gap-2 text-[#c9c9c9]">
       <label
@@ -17,10 +18,10 @@ export default function InputField({ label, type, className, attributes, errorSt
         )}
       </label>
       <input
-        onChange={(event) => setValue(event.target.value)}
+        onChange={(event) => setValue(type === "file" ? event.target.files : event.target.value)}
         id={id}
         type={type}
-        name={id}
+        // name={id}
         placeholder="Accer Nitro 5"
         {...attributes}
         className={`${

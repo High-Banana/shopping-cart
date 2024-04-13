@@ -4,6 +4,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import useForm from "../hooks/useForm";
 import axios from "axios";
 import useUserAPI from "../hooks/useUserAPI";
+import useProductAPI from "../hooks/useProductAPI";
 
 const FormContext = createContext();
 
@@ -24,8 +25,10 @@ export function FormProvider({ children }) {
   const [user, setUser] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const { validateUserForm, errorState, setErrorState } = useForm();
+  const { validateUserForm, validateProductForm, errorState, setErrorState } = useForm();
   const { submitUserForm } = useUserAPI();
+  const { submitProductForm } = useProductAPI();
+  const [formSubmitType, setFormSubmitType] = useState("");
 
   useEffect(() => {
     setEmail("");
@@ -97,25 +100,25 @@ export function FormProvider({ children }) {
 
   // const product = new Product("add", productName, productImage, productDescription, productPrice, productType);
 
-  async function addProduct() {
-    const formData = new FormData();
-    formData.append("productName", productName);
-    formData.append("productImage", productImage[0]);
-    formData.append("productDescription", productDescription);
-    formData.append("productPrice", productPrice);
-    formData.append("productType", productType);
-    axios
-      .post("/api/products/add-product", formData, { headers: { "Content-Type": "multipart/form-data" } })
-      .then((response) => {
-        if (response.status === 200) {
-          console.log("product added");
-        } else console.log("failed");
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-    setIsLoading(false);
-  }
+  // async function addProduct() {
+  //   const formData = new FormData();
+  //   formData.append("productName", productName);
+  //   formData.append("productImage", productImage[0]);
+  //   formData.append("productDescription", productDescription);
+  //   formData.append("productPrice", productPrice);
+  //   formData.append("productType", productType);
+  //   axios
+  //     .post("/api/products/add-product", formData, { headers: { "Content-Type": "multipart/form-data" } })
+  //     .then((response) => {
+  //       if (response.status === 200) {
+  //         console.log("product added");
+  //       } else console.log("failed");
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  //   setIsLoading(false);
+  // }
 
   async function updateProduct() {
     const formData = new FormData();
@@ -212,30 +215,58 @@ export function FormProvider({ children }) {
   //   }
   // }
 
-  async function handleSubmit(event) {
+  async function handleUserSubmit(event) {
+    const inputValues = { email, password, username, isLoginForm };
     event.preventDefault();
-    const isFormValid = validateUserForm({ email, password, username, isLoginForm });
+    const isFormValid = validateUserForm(inputValues);
     if (isFormValid === true) {
       setIsLoading(true);
       await new Promise((resolve) => setTimeout(resolve, 3000));
-      await submitUserForm({ email, password, username, isLoginForm })
+      await submitUserForm(inputValues)
         .then((response) => {
           setUser(response);
-          setErrorState({ email: "", password: "", username: "" });
+          setErrorState(errorState);
+          setIsLoginForm(false);
         })
         .catch((error) => {
-          setErrorState({ email: error.response.data, password: "", username: "" });
+          console.log(error);
+          if (error.response.status === 401) {
+            setErrorState({ email: error.response.data, password: error.response.data, username: "" });
+          } else if (error.response.status === 409) {
+            setErrorState({ email: error.response.data, password: "", username: "" });
+          }
         })
         .finally(setIsLoading(false));
     } else {
-      setErrorState(validateUserForm({ email, password }));
+      setErrorState(validateUserForm(inputValues));
     }
+  }
+
+  async function handleProductSubmit(event) {
+    event.preventDefault();
+    const formData = new FormData();
+    formData.append("productName", productName);
+    formData.append("productImage", productImage[0]);
+    formData.append("productPrice", productPrice);
+    formData.append("productType", productType);
+    formData.append("productDescription", productDescription);
+    for (var pair of formData.entries()) {
+      console.log(pair[0] + ", " + pair[1]);
+    }
+    const inputValues = { productName, productPrice, productDescription, productType, productImage };
+    const isFormValid = validateProductForm(inputValues);
+    if (isFormValid === true) {
+      submitProductForm(formData, formSubmitType);
+      handleFormClose(event);
+      setIsSubmitted(true);
+    } else setErrorState(validateProductForm(inputValues));
   }
 
   const providerValues = {
     errorState,
     setErrorState,
     setIsLoginForm,
+    setFormSubmitType,
     user,
     email,
     setEmail,
@@ -244,7 +275,8 @@ export function FormProvider({ children }) {
     username,
     setUsername,
     invalidMessage,
-    handleSubmit,
+    handleUserSubmit,
+    handleProductSubmit,
     toggleSignUpForm,
     isLoading,
     isLoginForm,

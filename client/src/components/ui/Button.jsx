@@ -12,7 +12,7 @@ export default function Button({ title, className = "bg-[gray]", onClick, attrib
 }
 
 Button.propTypes = {
-  title: PropTypes.string.isRequired,
+  title: PropTypes.oneOfType([PropTypes.string, PropTypes.element]).isRequired,
   className: PropTypes.string,
   onClick: PropTypes.func,
   attributes: PropTypes.object,

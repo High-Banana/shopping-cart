@@ -3,8 +3,8 @@ import Button from "../ui/Button";
 import { useEffect } from "react";
 import { useFormContext } from "../../context/FormContext";
 
-export default function Form({ values = { title: "" }, children }) {
-  const { title } = values;
+export default function Form({ values = { title: "", handleSubmit: null }, children }) {
+  const { title, handleSubmit } = values;
   const { handleFormClose, isVisible, setIsVisible } = useFormContext();
 
   useEffect(() => {
@@ -23,7 +23,7 @@ export default function Form({ values = { title: "" }, children }) {
             isVisible ? "scale-100 duration-200" : "scale-75 duration-200 opacity-15"
           }`}>
           <h2 className="text-white text-2xl font-bold text-center p-6">{title}</h2>
-          <form>
+          <form onSubmit={handleSubmit}>
             <div className="flex flex-col gap-[20px] p-5">{children}</div>
             <div className="flex gap-[10px] p-4 justify-end items-center bg-[#2f2f2f] rounded-[0_0_6px_6px]">
               <Button
@@ -33,7 +33,7 @@ export default function Form({ values = { title: "" }, children }) {
               />
               <Button
                 title={title}
-                onClick={handleFormClose}
+                // onClick={handleFormClose}
                 className="bg-[#5865f2] font-normal py-[7px] px-[28px] rounded-sm hover:scale-[none] hover:bg-opacity-70"
               />
             </div>
@@ -48,6 +48,7 @@ Form.propTypes = {
   children: PropTypes.node.isRequired,
   values: PropTypes.shape({
     title: PropTypes.string.isRequired,
+    handleSubmit: PropTypes.func.isRequired,
     // formOpenTransition: PropTypes.bool.isRequired,
     // handleFormClose: PropTypes.func.isRequired,
   }),

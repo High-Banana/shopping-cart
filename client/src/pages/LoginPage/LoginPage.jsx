@@ -7,16 +7,11 @@ import { useFormContext } from "../../context/FormContext";
 import SignUpForm from "./SignUpForm";
 import { useNavigate } from "react-router-dom";
 import useForm from "../../hooks/useForm";
-import Loading from "../../components/Loading/Loading";
 
 export default function LoginPage() {
-  const { handleSubmit, isLoading, isLoginForm, setIsLoginForm, user, setErrorState } = useFormContext();
+  const { handleUserSubmit, isLoading, isLoginForm, setIsLoginForm, user, setErrorState } = useFormContext();
   const { errorState } = useForm();
   const navigate = useNavigate();
-
-  // React.useEffect(() => {
-  //   console.log(isLoading);
-  // }, [isLoading]);
 
   React.useEffect(() => {
     if (user.length !== 0 && !isLoading) navigate(-1);
@@ -24,15 +19,14 @@ export default function LoginPage() {
 
   React.useEffect(() => {
     setErrorState(errorState);
+    console.log(errorState);
   }, [isLoginForm]);
-
-  // if (isLoading) return <Loading />;
 
   return (
     <>
       <GoBackButton />
       <div className="flex flex-col w-[580px] my-[70px] mx-auto max-h-[540px] bg-black/75 p-8 gap-3 rounded-lg shadow-[2px_5px_15px_2px] shadow-[rgba(0, 0, 0, 0.35)]">
-        <form className="flex flex-col gap-[30px] w-full relative" onSubmit={handleSubmit} method="POST">
+        <form className="flex flex-col gap-[30px] w-full relative" onSubmit={handleUserSubmit} method="POST">
           {isLoginForm ? <LoginForm /> : <SignUpForm />}
           <Button
             title={

@@ -1,14 +1,24 @@
 import PropTypes from "prop-types";
 import { setID } from "../../utils/helper";
 
-export default function TextAreaField({ label, type = "text", className, attributes }) {
+export default function TextAreaField({ label, className, attributes, setValue, errorState }) {
   const id = setID(label);
   return (
     <div className="flex flex-col gap-2 text-[#c9c9c9]">
-      <label htmlFor={id}>{label}</label>
+      <label
+        className={`font-bold tracking-wider text-[12px] uppercase ${errorState ? "text-[#f14747]" : "text-white"}`}
+        htmlFor={id}>
+        {label}
+        {errorState && (
+          <span className="text-[#f14747] font-semibold italic normal-case">
+            <span className="pr-1 pl-1">-</span>
+            {errorState}
+          </span>
+        )}
+      </label>
       <textarea
+        onChange={(event) => setValue(event.target.value)}
         id={id}
-        type={type}
         {...attributes}
         className={`${
           className === undefined
@@ -22,7 +32,8 @@ export default function TextAreaField({ label, type = "text", className, attribu
 
 TextAreaField.propTypes = {
   label: PropTypes.string.isRequired,
-  type: PropTypes.string,
+  setValue: PropTypes.func.isRequired,
+  errorState: PropTypes.string.isRequired,
   className: PropTypes.string,
   attributes: PropTypes.object,
 };

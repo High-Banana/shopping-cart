@@ -2,10 +2,16 @@ import Button from "../../components/ui/Button";
 import { useFormContext } from "../../context/FormContext";
 import Form from "../../components/Forms/Form";
 import ProductForm from "../../components/Forms/ProductForm";
+import useForm from "../../hooks/useForm";
+import React from "react";
 
 export default function Profile() {
-  const { user } = useFormContext();
-  const { isFormOpen, setIsFormOpen } = useFormContext();
+  const { isFormOpen, setIsFormOpen, handleProductSubmit, user, setErrorState, setFormSubmitType } = useFormContext();
+  const { errorState } = useForm();
+
+  React.useEffect(() => {
+    setErrorState(errorState);
+  }, [isFormOpen]);
 
   return (
     <div className="relative min-h-[800px]">
@@ -45,7 +51,10 @@ export default function Profile() {
             <Button
               title="Add product"
               className="bg-[rgb(0,128,0)] py-[5px] px-[5px] border-2 border-transparent rounded-[3px] font-semibold hover:scale-[none] hover:bg-[rgb(0,128,0,0.5)]"
-              onClick={() => setIsFormOpen(true)}
+              onClick={() => {
+                setIsFormOpen(true);
+                setFormSubmitType("add");
+              }}
             />
           )}
         </div>
@@ -54,6 +63,7 @@ export default function Profile() {
         <Form
           values={{
             title: "Add Product",
+            handleSubmit: handleProductSubmit,
           }}>
           <ProductForm />
         </Form>

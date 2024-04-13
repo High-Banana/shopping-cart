@@ -16,3 +16,16 @@ export async function fetchProductByID(productID) {
     })
     .catch((error) => Promise.reject(error));
 }
+
+export async function addProduct(formData) {
+  axios
+    .post("/api/products/add-product", formData, { headers: { "Content-Type": "multipart/form-data" } })
+    .then((response) => {
+      if (response.status === 200) {
+        console.log("product added");
+      } else console.log("failed");
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+}

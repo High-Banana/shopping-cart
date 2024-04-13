@@ -1,12 +1,13 @@
 import PropTypes from "prop-types";
 import { setID } from "../../utils/helper";
 
-export default function SelectField({ label, type, className, options, attributes }) {
+export default function SelectField({ label, type, className, options, attributes, setValue }) {
   const id = setID(label);
   return (
     <div className="flex flex-col gap-2 text-[#c9c9c9]">
       <label htmlFor={id}>{label}</label>
       <select
+        onChange={(event) => setValue(event.target.value)}
         id={id}
         type={type}
         {...attributes}
@@ -28,7 +29,8 @@ export default function SelectField({ label, type, className, options, attribute
 SelectField.propTypes = {
   label: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
-  className: PropTypes.string,
   options: PropTypes.array.isRequired,
+  setValue: PropTypes.func.isRequired,
+  className: PropTypes.string,
   attributes: PropTypes.object,
 };

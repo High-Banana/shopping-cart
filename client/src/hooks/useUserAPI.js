@@ -12,5 +12,5 @@ export default function useUserAPI() {
     }
   }
 
-  return submitUserForm;
+  return { submitUserForm };
 }

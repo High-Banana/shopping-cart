@@ -2,7 +2,18 @@ import React from "react";
 
 export default function useForm() {
   const [isLoginForm, setIsLoginForm] = React.useState(true);
-  const [errorState, setErrorState] = React.useState({ email: "", password: "", username: "" });
+  const [errorState, setErrorState] = React.useState({
+    // for user form
+    email: "",
+    password: "",
+    username: "",
+    // for product form
+    name: "",
+    image: "",
+    price: "",
+    type: "",
+    description: "",
+  });
   const [showPassword, setShowPassword] = React.useState(false);
 
   React.useEffect(() => {
@@ -22,16 +33,22 @@ export default function useForm() {
     return Object.values(errors).every((value) => value === "") ? true : errors;
   }
 
-  // function validateProductForm() {
-  //   return new Promise((resolve, reject) => {
-  //     if (inputValue.productName === "") reject("empty-productName");
-  //     else if (inputValue.productImage === "") reject("empty-productImage");
-  //     else if (isNaN(inputValue.productPrice)) reject("empty-productPrice");
-  //     else if (inputValue.productType === "") reject("empty-productType");
-  //     else if (inputValue.productDescription === "") reject("empty-productDescription");
-  //     else resolve();
-  //   });
-  // }
+  function validateProductForm(inputValue) {
+    const errors = {
+      name: "",
+      image: "",
+      price: "",
+      type: "",
+      description: "",
+    };
+    console.log(inputValue);
+    if (!inputValue.productName) errors.name = "Product name cannot be empty";
+    if (!inputValue.productImage) errors.image = "Product image cannot be empty";
+    if (!inputValue.productPrice) errors.price = "Product price cannot be empty";
+    if (!inputValue.productDescription) errors.description = "Product description cannot be empty";
+    console.log(errors.name);
+    return Object.values(errors).every((value) => value === "") ? true : errors;
+  }
 
   return {
     isLoginForm,
@@ -41,5 +58,6 @@ export default function useForm() {
     setErrorState,
     showPassword,
     setShowPassword,
+    validateProductForm,
   };
 }
