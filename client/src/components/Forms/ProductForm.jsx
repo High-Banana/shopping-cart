@@ -9,7 +9,7 @@ export default function ProductForm() {
     useFormContext();
   const navigate = useNavigate();
 
-  isSubmitted && setTimeout(navigate("/products"), 1000);
+  isSubmitted && setTimeout(() => navigate("/products"), 700);
 
   return (
     <>

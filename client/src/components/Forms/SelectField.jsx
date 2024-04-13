@@ -1,8 +1,15 @@
 import PropTypes from "prop-types";
 import { setID } from "../../utils/helper";
+import React from "react";
 
 export default function SelectField({ label, type, className, options, attributes, setValue }) {
   const id = setID(label);
+
+  React.useEffect(() => {
+    setValue(options[0]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <div className="flex flex-col gap-2 text-[#c9c9c9]">
       <label htmlFor={id}>{label}</label>

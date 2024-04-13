@@ -33,6 +33,8 @@ export default function SingleProduct() {
     if (buttonRef.current && !buttonRef.current.contains(event.target)) setShowOptions(false);
   }
 
+  console.log(error);
+
   useEffect(() => {
     setIsFormOpen(false);
     setOpenDeleteForm(false);
@@ -45,7 +47,7 @@ export default function SingleProduct() {
     console.log(product);
   }, [isSubmitted]);
 
-  if (error !== undefined) return <Error errorDetail={error} onClickFunction={() => fetchItems(productID)} />;
+  if (error !== null) return <Error errorDetail={error} onClickFunction={() => fetchItems(productID)} />;
 
   return (
     <>

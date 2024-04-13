@@ -5,7 +5,7 @@ import { addProduct, fetchAllProducts, fetchProductByID } from "../services/api/
 export default function useProductAPI(productID, isSubmitted) {
   const [items, setItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [errorState, setErrorState] = useState();
+  const [errorState, setErrorState] = useState(null);
 
   async function fetchItems() {
     setErrorState(null);
