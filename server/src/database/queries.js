@@ -36,6 +36,7 @@ async function addProduct(req, res, next) {
     "insert into products (product_name, product_description, product_price, image, product_type, uuid) values (?, ?, ?, ?, ?, ?)",
     [productName, productDescription, productPrice, productImage, productType, uuidv4()]
   );
+  res.json({ message: "Product added" });
 }
 
 async function updateProduct(req, res, next) {
@@ -59,11 +60,14 @@ async function updateProduct(req, res, next) {
   sqlValues.push(productId);
 
   await database.query(sqlQuery, sqlValues);
+
+  res.json({ message: "Product updated" });
 }
 
 async function deleteProduct(req, res) {
   const productId = req.params.productID;
   database.query("delete from products where uuid = ?", productId);
+  res.json({ message: "Product deleted" });
 }
 
 async function getRegisteredUsers(req, res, next) {
