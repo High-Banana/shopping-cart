@@ -1,16 +1,16 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import Loading from "../../../components/Loading/Loading";
-import useProductAPI from "../../../hooks/useProductAPI";
-import Error from "../../../components/Error";
-import { useEffect, useState } from "react";
-import SortItems from "./SortItems";
+import React from "react";
 import ProductsList from "./ProductsList";
+import Loading from "../../../components/Loading/Loading";
+import Error from "../../../components/Error";
+import SortItems from "./SortItems";
+import useProductAPI from "../../../hooks/useProductAPI";
 
 export default function ProductPage() {
   const { items: products, isLoading, errorState: error, fetchItems } = useProductAPI();
-  const [sortType, setSortType] = useState("ascendingPrice");
+  const [sortType, setSortType] = React.useState("ascendingPrice");
 
-  useEffect(() => {
+  React.useEffect(() => {
     fetchItems();
   }, [sortType]);
 

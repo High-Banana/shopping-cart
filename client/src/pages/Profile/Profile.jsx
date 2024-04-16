@@ -1,9 +1,10 @@
-import Button from "../../components/ui/Button";
-import { useFormContext } from "../../context/FormContext";
-import Form from "../../components/Forms/Form";
-import ProductForm from "../../components/Forms/ProductForm";
-import useForm from "../../hooks/useForm";
+/* eslint-disable react-hooks/exhaustive-deps */
 import React from "react";
+import Button from "../../components/ui/Button";
+import Form from "../../components/Forms/Form";
+import useForm from "../../hooks/useForm";
+import ProductForm from "../../components/Forms/ProductForm";
+import { useFormContext } from "../../context/FormContext";
 
 export default function Profile() {
   const { isFormOpen, setIsFormOpen, handleProductSubmit, user, setErrorState, setFormSubmitType, setIsAddProductForm } =
@@ -12,7 +13,6 @@ export default function Profile() {
 
   React.useEffect(() => {
     setErrorState(errorState);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isFormOpen]);
 
   return (

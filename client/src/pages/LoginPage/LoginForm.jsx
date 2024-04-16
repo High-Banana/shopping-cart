@@ -1,7 +1,7 @@
+import useForm from "../../hooks/useForm";
 import InputField from "../../components/Forms/InputField";
 import PasswordToggle from "../../components/ui/PasswordToggle";
 import { useFormContext } from "../../context/FormContext";
-import useForm from "../../hooks/useForm";
 
 export default function LoginForm() {
   const { setEmail, setPassword, errorState } = useFormContext();

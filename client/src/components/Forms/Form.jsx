@@ -1,17 +1,16 @@
-/* eslint-disable react-hooks/exhaustive-deps */
+import React from "react";
 import PropTypes from "prop-types";
 import Button from "../ui/Button";
-import { useEffect } from "react";
 import { useFormContext } from "../../context/FormContext";
 import { useNavigate } from "react-router-dom";
+/* eslint-disable react-hooks/exhaustive-deps */
 
 export default function Form({ values = { title: "", handleSubmit: null }, children }) {
   const { title, handleSubmit } = values;
   const navigate = useNavigate();
   const { handleFormClose, isVisible, setIsVisible, openDeleteForm } = useFormContext();
 
-  useEffect(() => {
-    console.log(openDeleteForm);
+  React.useEffect(() => {
     setIsVisible(true);
   }, []);
 
@@ -52,7 +51,5 @@ Form.propTypes = {
   values: PropTypes.shape({
     title: PropTypes.string.isRequired,
     handleSubmit: PropTypes.func.isRequired,
-    // formOpenTransition: PropTypes.bool.isRequired,
-    // handleFormClose: PropTypes.func.isRequired,
   }),
 };

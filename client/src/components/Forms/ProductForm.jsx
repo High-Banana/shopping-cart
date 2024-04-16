@@ -1,10 +1,10 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React from "react";
 import PropTypes from "prop-types";
 import InputField from "../../components/Forms/InputField";
 import SelectField from "../../components/Forms/SelectField";
 import TextAreaField from "../../components/Forms/TextAreaField";
 import { useFormContext } from "../../context/FormContext";
+/* eslint-disable react-hooks/exhaustive-deps */
 
 export default function ProductForm({ productInfo }) {
   const {
@@ -25,8 +25,6 @@ export default function ProductForm({ productInfo }) {
       setProductType(productInfo.product_type);
       setProductDescription(productInfo.product_description);
     }
-    // if isSubmitted is true and if the form is for adding product, run the setTimeout function
-    // isSubmitted && setTimeout(() => navigate("/products"), 700);
   }, []);
 
   return (

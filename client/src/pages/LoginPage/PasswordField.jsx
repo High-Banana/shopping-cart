@@ -1,9 +1,9 @@
 /* eslint-disable react/prop-types */
-import { useState } from "react";
+import React from "react";
 import PasswordToggle from "../../components/ui/PasswordToggle";
 
 export default function PasswordField({ setPassword, invalidMessage }) {
-  const [showPassword, setShowPassword] = useState(false);
+  const [showPassword, setShowPassword] = React.useState(false);
 
   return (
     <div className="flex flex-col gap-[5px] relative">

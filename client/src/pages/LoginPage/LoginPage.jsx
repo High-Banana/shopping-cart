@@ -3,10 +3,10 @@ import React from "react";
 import Button from "../../components/ui/Button";
 import GoBackButton from "../../components/ui/GoBackButton";
 import LoginForm from "./LoginForm";
-import { useFormContext } from "../../context/FormContext";
 import SignUpForm from "./SignUpForm";
-import { useNavigate } from "react-router-dom";
 import useForm from "../../hooks/useForm";
+import { useFormContext } from "../../context/FormContext";
+import { useNavigate } from "react-router-dom";
 
 export default function LoginPage() {
   const { handleUserSubmit, isLoading, isLoginForm, setIsLoginForm, user, setErrorState } = useFormContext();
@@ -19,7 +19,6 @@ export default function LoginPage() {
 
   React.useEffect(() => {
     setErrorState(errorState);
-    console.log(errorState);
   }, [isLoginForm]);
 
   return (

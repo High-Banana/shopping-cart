@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import { Link } from "react-router-dom";
 import { useCart } from "../../context/CartContext";
 import { CiShoppingCart } from "react-icons/ci";

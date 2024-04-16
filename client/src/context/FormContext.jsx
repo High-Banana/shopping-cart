@@ -1,46 +1,48 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/prop-types */
 /* eslint-disable react-refresh/only-export-components */
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React from "react";
 import useForm from "../hooks/useForm";
-import axios from "axios";
 import useUserAPI from "../hooks/useUserAPI";
 import useProductAPI from "../hooks/useProductAPI";
-import { IoLogoAndroid } from "react-icons/io";
 
-const FormContext = createContext();
+const FormContext = React.createContext();
 
 export function FormProvider({ children }) {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [username, setUsername] = useState("");
-  const [productName, setProductName] = useState("");
-  const [productImage, setProductImage] = useState();
-  const [productDescription, setProductDescription] = useState("");
-  const [productPrice, setProductPrice] = useState();
-  const [productType, setProductType] = useState("");
-  const [productUUID, setProductUUID] = useState("");
-  const [isLoginForm, setIsLoginForm] = useState(true);
-  const [isFormOpen, setIsFormOpen] = useState(false);
-  const [isVisible, setIsVisible] = useState(false);
-  const [invalidMessage, setInvalidMessage] = useState();
-  const [user, setUser] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [isSubmitted, setIsSubmitted] = useState(false);
+  // for user login and registration
+  const [email, setEmail] = React.useState("");
+  const [password, setPassword] = React.useState("");
+  const [username, setUsername] = React.useState("");
+  const [user, setUser] = React.useState([]);
+  // for product adding and upating
+  const [productName, setProductName] = React.useState("");
+  const [productImage, setProductImage] = React.useState();
+  const [productDescription, setProductDescription] = React.useState("");
+  const [productPrice, setProductPrice] = React.useState();
+  const [productType, setProductType] = React.useState("");
+  const [productUUID, setProductUUID] = React.useState("");
+  // to check for form validations and form types
+  const [isLoginForm, setIsLoginForm] = React.useState(true);
+  const [formSubmitType, setFormSubmitType] = React.useState("");
+  const [isAddProductForm, setIsAddProductForm] = React.useState(false);
   const { validateUserForm, validateProductForm, errorState, setErrorState } = useForm();
   const { submitUserForm } = useUserAPI();
   const { submitProductForm } = useProductAPI();
-  const [formSubmitType, setFormSubmitType] = useState("");
-  const [isAddProductForm, setIsAddProductForm] = useState(false);
-  const [openDeleteForm, setOpenDeleteForm] = useState(false);
+  // to open and close forms and form animations
+  const [isFormOpen, setIsFormOpen] = React.useState(false);
+  const [isVisible, setIsVisible] = React.useState(false);
+  const [openDeleteForm, setOpenDeleteForm] = React.useState(false);
+  const [isSubmitted, setIsSubmitted] = React.useState(false);
+  // for loading animation while data is being fetched
+  const [isLoading, setIsLoading] = React.useState(false);
 
-  useEffect(() => {
+  React.useEffect(() => {
     setEmail("");
     setPassword("");
     setUsername("");
-    setInvalidMessage({ emailValue: "", passwordValue: "", userName: "" });
   }, [isLoginForm]);
 
-  useEffect(() => {
+  React.useEffect(() => {
     setProductName("");
     setProductImage("");
     setProductDescription("");
@@ -48,13 +50,7 @@ export function FormProvider({ children }) {
     setProductType("");
     setIsSubmitted(false);
     setErrorState(errorState);
-    setInvalidMessage({ productName: "", productImage: "", productDescription: "" });
   }, [isFormOpen]);
-
-  function toggleSignUpForm() {
-    setIsLoginForm(!isLoginForm);
-    return isLoginForm;
-  }
 
   function handleFormClose(event) {
     event.preventDefault();
@@ -64,163 +60,6 @@ export function FormProvider({ children }) {
       setOpenDeleteForm(false);
     }, 100);
   }
-
-  // async function registerUser() {
-  //   axios
-  //     .post("/api/users/register", { email, username, password })
-  //     .then((response) => {
-  //       if (response.status === 200) {
-  //         console.log("thanks for registering");
-  //         setUser([{ email: email, userName: username, password: password }]);
-  //       } else console.log("Login failed");
-  //     })
-  //     .catch((error) => {
-  //       setInvalidMessage({ emailValue: error.response.data });
-  //       console.log(error.response.data);
-  //     });
-  //   setIsLoading(false);
-  // }
-
-  // class Product {
-  //   constructor(productName, productImage, productDescription, productPrice, productType) {
-  //     this.formData = new FormData();
-  //     this.formData.append("productName", productName);
-  //     this.formData.append("productImage", productImage[0]);
-  //     this.formData.append("productDescription", productDescription);
-  //     this.formData.append("productPrice", productPrice);
-  //     this.formData.append("productType", productType);
-  //   }
-
-  //   productMethod(action) {
-  //     axios
-  //       .post(`/api/products/${action}-product`, this.formData, { headers: { "Content-Type": "multipart/form-data" } })
-  //       .then((response) => {
-  //         if (response.status === 200) {
-  //           console.log("product added");
-  //         } else console.log("failed");
-  //       })
-  //       .catch((error) => {
-  //         console.log(error);
-  //       });
-  //   }
-  // }
-
-  // const product = new Product("add", productName, productImage, productDescription, productPrice, productType);
-
-  // async function addProduct() {
-  //   const formData = new FormData();
-  //   formData.append("productName", productName);
-  //   formData.append("productImage", productImage[0]);
-  //   formData.append("productDescription", productDescription);
-  //   formData.append("productPrice", productPrice);
-  //   formData.append("productType", productType);
-  //   axios
-  //     .post("/api/products/add-product", formData, { headers: { "Content-Type": "multipart/form-data" } })
-  //     .then((response) => {
-  //       if (response.status === 200) {
-  //         console.log("product added");
-  //       } else console.log("failed");
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  //   setIsLoading(false);
-  // }
-
-  // async function updateProduct() {
-  //   const formData = new FormData();
-  //   formData.append("productName", productName);
-  //   formData.append("productImage", productImage[0]);
-  //   formData.append("productDescription", productDescription);
-  //   formData.append("productPrice", productPrice);
-  //   formData.append("productType", productType);
-
-  //   axios
-  //     .put(`/api/products/edit-product/${productUUID}`, formData, { headers: { "Content-Type": "multipart/form-data" } })
-  //     .then((response) => {
-  //       if (response.status === 200) {
-  //         console.log("product updated");
-  //       } else console.log("failed");
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  //   setIsLoading(false);
-  // }
-
-  async function deleteProduct() {
-    axios
-      .delete(`/api/products/delete-product/${productUUID}`)
-      .then(() => {
-        console.log("deleted successfully");
-      })
-      .catch((error) => console.log(error));
-  }
-
-  // function handleSubmit(event, formType, action) {
-  //   event.preventDefault();
-  //   if (formType === "userForm") {
-  //     validateUserForm()
-  //       .then(() => {
-  //         setInvalidMessage({ emailValue: "", passwordValue: "", userName: "" });
-  //         setIsLoading(true);
-  //         isLoginForm ? registerUser() : loginUser();
-  //       })
-  //       .catch((error) => {
-  //         switch (error) {
-  //           case "empty-email":
-  //             return setInvalidMessage({ emailValue: "Please enter Email" });
-  //           case "empty-password":
-  //             return setInvalidMessage({ passwordValue: "Please enter password" });
-  //           case "empty-email-password":
-  //             return setInvalidMessage({ emailValue: "Please enter Email", passwordValue: "Please enter Password" });
-  //           case "empty-username":
-  //             return setInvalidMessage({ userName: "Please enter a username" });
-  //           default:
-  //             alert(error);
-  //         }
-  //       });
-  //   } else if (formType === "productForm") {
-  //     console.log("product form");
-  //     if (action === "add") {
-  //       validateProductForm()
-  //         .then(() => {
-  //           handleFormClose(event);
-  //           setIsLoading(true);
-  //           addProduct();
-  //           // product.productMethod(action);
-  //           // setIsLoading(false);
-  //           setInvalidMessage({ productName: "", productImage: "", productDescription: "" });
-  //         })
-  //         .catch((error) => {
-  //           console.log("bad form");
-  //           switch (error) {
-  //             case "empty-productName":
-  //               return setInvalidMessage({ productName: "Product name cannot be empty" });
-  //             case "empty-productImage":
-  //               return setInvalidMessage({ productImage: "Product image cannot be empty" });
-  //             case "empty-productDescription":
-  //               return setInvalidMessage({ productDescription: "Product description cannot be empty" });
-  //             case "empty-productPrice":
-  //               return setInvalidMessage({ productPrice: "Product price cannot be empty" });
-  //             case "empty-productType":
-  //               return setInvalidMessage({ productType: "Product type cannot be empty" });
-  //           }
-  //         });
-  //     } else if (action === "edit") {
-  //       console.log("im in edit");
-  //       updateProduct();
-  //       setIsSubmitted(true);
-  //       handleFormClose(event);
-  //       // fetchItems(productUUID);
-  //     } else if (action === "delete") {
-  //       console.log("dlete");
-  //       deleteProduct();
-  //       setIsSubmitted(true);
-  //       handleFormClose(event);
-  //     }
-  //   }
-  // }
 
   async function handleUserSubmit(event) {
     const inputValues = { email, password, username, isLoginForm };
@@ -259,7 +98,7 @@ export function FormProvider({ children }) {
     formData.append("productDescription", productDescription);
     const inputValues = { productName, productPrice, productDescription, productType, productImage };
     const isFormValid = validateProductForm(inputValues, formSubmitType);
-    if (isFormValid === true || formSubmitType === "delete") {
+    if (isFormValid === true) {
       handleFormClose(event);
       setIsLoading(true);
       await submitProductForm(formData, formSubmitType, productUUID)
@@ -276,49 +115,51 @@ export function FormProvider({ children }) {
   }
 
   const providerValues = {
+    // for user login and registration
+    user,
+    email,
+    password,
+    username,
+    setEmail,
+    setPassword,
+    setUsername,
+    // for product form
+    productName,
+    productImage,
+    productPrice,
+    productType,
+    productDescription,
+    setProductName,
+    setProductImage,
+    setProductPrice,
+    setProductType,
+    setProductDescription,
+    setProductUUID,
+    // to check form validations
     errorState,
+    isLoginForm,
+    isAddProductForm,
     setErrorState,
     setIsLoginForm,
     setFormSubmitType,
-    isAddProductForm,
     setIsAddProductForm,
-    user,
-    email,
-    setEmail,
-    password,
-    setPassword,
-    username,
-    setUsername,
-    invalidMessage,
     handleUserSubmit,
     handleProductSubmit,
-    toggleSignUpForm,
+    // for loading and form animations
     isLoading,
-    isLoginForm,
-    productName,
-    setProductName,
-    productImage,
-    setProductImage,
-    productPrice,
-    setProductPrice,
-    productType,
-    setProductType,
-    productDescription,
-    setProductDescription,
     isFormOpen,
-    setIsFormOpen,
     openDeleteForm,
+    isVisible,
+    isSubmitted,
+    setIsFormOpen,
     setOpenDeleteForm,
     handleFormClose,
     setIsVisible,
-    isVisible,
-    setProductUUID,
-    isSubmitted,
   };
 
   return <FormContext.Provider value={providerValues}>{children}</FormContext.Provider>;
 }
 
 export function useFormContext() {
-  return useContext(FormContext);
+  return React.useContext(FormContext);
 }

@@ -1,17 +1,13 @@
+import useForm from "../../hooks/useForm";
 import InputField from "../../components/Forms/InputField";
 import PasswordToggle from "../../components/ui/PasswordToggle";
 import { useFormContext } from "../../context/FormContext";
-import useForm from "../../hooks/useForm";
 
 export default function SignUpForm() {
-  // const { setEmail, setPassword, setUserName, invalidMessage } = useFormContext();
   const { setEmail, setPassword, setUsername, errorState } = useFormContext();
   const { showPassword, setShowPassword } = useForm();
   return (
     <>
-      {/* <EmailField setEmail={setEmail} invalidMessage={invalidMessage} />
-      <UserNameField setUserName={setUserName} invalidMessage={invalidMessage} />
-      <PasswordField setPassword={setPassword} invalidMessage={invalidMessage} /> */}
       <InputField
         label="Email"
         type="email"

@@ -2,6 +2,7 @@ import React from "react";
 
 export default function useForm() {
   const [isLoginForm, setIsLoginForm] = React.useState(true);
+  const [showPassword, setShowPassword] = React.useState(false);
   const [errorState, setErrorState] = React.useState({
     // for user form
     email: "",
@@ -14,11 +15,6 @@ export default function useForm() {
     type: "",
     description: "",
   });
-  const [showPassword, setShowPassword] = React.useState(false);
-
-  React.useEffect(() => {
-    console.log(errorState);
-  }, [errorState]);
 
   function validateUserForm(inputValue) {
     const errors = {
@@ -26,7 +22,6 @@ export default function useForm() {
       password: "",
       username: "",
     };
-    console.log(inputValue);
     if (!inputValue.email) errors.email = "Please enter Email";
     if (!inputValue.password) errors.password = "Please enter Password";
     if (!inputValue.isLoginForm && !inputValue.username) errors.username = "Please enter a Username";
@@ -47,17 +42,16 @@ export default function useForm() {
       if (!inputValue.productPrice) errors.price = "Product price cannot be empty";
       if (!inputValue.productDescription) errors.description = "Product description cannot be empty";
     }
-    console.log(errors.name);
     return Object.values(errors).every((value) => value === "") ? true : errors;
   }
 
   return {
     isLoginForm,
+    errorState,
+    showPassword,
     setIsLoginForm,
     validateUserForm,
-    errorState,
     setErrorState,
-    showPassword,
     setShowPassword,
     validateProductForm,
   };

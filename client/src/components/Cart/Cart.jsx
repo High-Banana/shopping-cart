@@ -1,5 +1,5 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useState } from "react";
+import React from "react";
+import Button from "../ui/Button";
 import { useCart } from "../../context/CartContext";
 import { Link } from "react-router-dom";
 import { IMAGE_SRC_PATH } from "../../services/constants";
@@ -7,15 +7,14 @@ import { FaMinus } from "react-icons/fa";
 import { FaPlus } from "react-icons/fa";
 import { FaTrash } from "react-icons/fa";
 import { RxCross1 } from "react-icons/rx";
-import Button from "../ui/Button";
+/* eslint-disable react-hooks/exhaustive-deps */
 
-/* eslint-disable react/prop-types */
 export default function Cart() {
   const { toggleOpenCart, cartItems, addToCart, getTotalItems, removeFromCart, handleInputValue, calculateTotalPrice } =
     useCart();
-  const [isVisible, setIsVisible] = useState(false);
+  const [isVisible, setIsVisible] = React.useState(false);
 
-  useEffect(() => {
+  React.useEffect(() => {
     document.body.style.overflow = "hidden";
     setTimeout(() => setIsVisible(true), 0);
   }, []);

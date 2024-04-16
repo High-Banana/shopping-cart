@@ -1,17 +1,17 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useParams, useNavigate } from "react-router-dom";
-import Loading from "../../components/Loading/Loading";
-import { IMAGE_SRC_PATH } from "../../services/constants";
+import React from "react";
 import Button from "../../components/ui/Button";
-import { useCart } from "../../context/CartContext";
-import useProductAPI from "../../hooks/useProductAPI";
-import Error from "../../components/Error";
+import Loading from "../../components/Loading/Loading";
 import GoBackButton from "../../components/ui/GoBackButton";
+import Error from "../../components/Error";
+import Form from "../../components/Forms/Form";
+import ProductForm from "../../components/Forms/ProductForm";
+import useProductAPI from "../../hooks/useProductAPI";
+import { useParams, useNavigate } from "react-router-dom";
+import { IMAGE_SRC_PATH } from "../../services/constants";
+import { useCart } from "../../context/CartContext";
 import { useFormContext } from "../../context/FormContext";
 import { BsThreeDotsVertical } from "react-icons/bs";
-import React from "react";
-import ProductForm from "../../components/Forms/ProductForm";
-import Form from "../../components/Forms/Form";
 
 export default function SingleProduct() {
   const { productID } = useParams();
@@ -116,13 +116,11 @@ export default function SingleProduct() {
               </div>
             </div>
           </div>
-          {/* {isFormOpen && <ProductForm title="Edit Product" productInfo={product} action="edit" />} */}
           {isFormOpen && (
             <Form values={{ title: "Update Product", handleSubmit: handleProductSubmit }}>
               <ProductForm productInfo={product} />
             </Form>
           )}
-          {/* {openDeleteForm && <DeleteForm setOpenDeleteForm={setOpenDeleteForm} productInfo={product} />} */}
           {openDeleteForm && (
             <div className="top-20">
               <Form values={{ title: "Delete Product", handleSubmit: handleProductSubmit }}>

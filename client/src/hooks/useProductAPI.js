@@ -1,11 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useState } from "react";
+import React from "react";
 import { addProduct, deleteProduct, fetchAllProducts, fetchProductByID, updateProduct } from "../services/api/ProductAPI";
 
 export default function useProductAPI() {
-  const [items, setItems] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [errorState, setErrorState] = useState(null);
+  const [items, setItems] = React.useState([]);
+  const [isLoading, setIsLoading] = React.useState(true);
+  const [errorState, setErrorState] = React.useState(null);
 
   async function fetchItems(productID) {
     setErrorState(null);
@@ -33,13 +33,6 @@ export default function useProductAPI() {
     } finally {
       setIsLoading(false);
     }
-    // else if(submitType === "edit")
-    // else if(submitType === "delete")
   }
-
-  // useEffect(() => {
-  //   fetchItems();
-  // }, [productID, isSubmitted]);
-
   return { items, isLoading, errorState, fetchItems, submitProductForm };
 }

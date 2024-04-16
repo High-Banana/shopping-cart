@@ -1,16 +1,12 @@
 /* eslint-disable react-refresh/only-export-components */
 /* eslint-disable react/prop-types */
-import { createContext, useContext, useEffect, useState } from "react";
+import React from "react";
 
-const CartContext = createContext();
+const CartContext = React.createContext();
 
 export function CartProvider({ children }) {
-  const [cartItems, setCartItems] = useState([]);
-  const [openCart, setOpenCart] = useState(false);
-
-  useEffect(() => {
-    console.log(cartItems);
-  }, [cartItems]);
+  const [cartItems, setCartItems] = React.useState([]);
+  const [openCart, setOpenCart] = React.useState(false);
 
   function addToCart(newItem) {
     let isItemInCart = false;
@@ -73,9 +69,9 @@ export function CartProvider({ children }) {
   }
 
   const providerValues = {
-    addToCart,
     cartItems,
     openCart,
+    addToCart,
     toggleOpenCart,
     getTotalItems,
     removeFromCart,
@@ -87,5 +83,5 @@ export function CartProvider({ children }) {
 }
 
 export function useCart() {
-  return useContext(CartContext);
+  return React.useContext(CartContext);
 }
