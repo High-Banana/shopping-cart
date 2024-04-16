@@ -1,13 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
-import { addProduct, fetchAllProducts, fetchProductByID } from "../services/api/ProductAPI";
+import { addProduct, deleteProduct, fetchAllProducts, fetchProductByID, updateProduct } from "../services/api/ProductAPI";
 
-export default function useProductAPI(productID, isSubmitted) {
+export default function useProductAPI() {
   const [items, setItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [errorState, setErrorState] = useState(null);
 
-  async function fetchItems() {
+  async function fetchItems(productID) {
     setErrorState(null);
     setIsLoading(true);
     try {
@@ -20,11 +20,13 @@ export default function useProductAPI(productID, isSubmitted) {
     }
   }
 
-  async function submitProductForm(formData, submitType) {
+  async function submitProductForm(formData, submitType, productID) {
     setErrorState(null);
     setIsLoading(true);
     try {
       if (submitType === "add") await addProduct(formData);
+      else if (submitType === "edit") await updateProduct(formData, productID);
+      else if (submitType === "delete") await deleteProduct(productID);
     } catch (error) {
       console.log(error);
       setErrorState(error);
@@ -35,9 +37,9 @@ export default function useProductAPI(productID, isSubmitted) {
     // else if(submitType === "delete")
   }
 
-  useEffect(() => {
-    fetchItems();
-  }, [productID, isSubmitted]);
+  // useEffect(() => {
+  //   fetchItems();
+  // }, [productID, isSubmitted]);
 
   return { items, isLoading, errorState, fetchItems, submitProductForm };
 }

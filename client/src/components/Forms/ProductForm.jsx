@@ -1,22 +1,44 @@
-import { useNavigate } from "react-router-dom";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React from "react";
+import PropTypes from "prop-types";
 import InputField from "../../components/Forms/InputField";
 import SelectField from "../../components/Forms/SelectField";
 import TextAreaField from "../../components/Forms/TextAreaField";
 import { useFormContext } from "../../context/FormContext";
 
-export default function ProductForm() {
-  const { setProductName, setProductImage, setProductPrice, setProductType, setProductDescription, errorState, isSubmitted } =
-    useFormContext();
-  const navigate = useNavigate();
+export default function ProductForm({ productInfo }) {
+  const {
+    setProductName,
+    setProductImage,
+    setProductPrice,
+    setProductType,
+    setProductDescription,
+    errorState,
+    isAddProductForm,
+  } = useFormContext();
 
-  isSubmitted && setTimeout(() => navigate("/products"), 700);
+  React.useEffect(() => {
+    // if the form is opened to update the product, the product's details will be set as initial value
+    if (!isAddProductForm) {
+      setProductName(productInfo.product_name);
+      setProductPrice(productInfo.product_price);
+      setProductType(productInfo.product_type);
+      setProductDescription(productInfo.product_description);
+    }
+    // if isSubmitted is true and if the form is for adding product, run the setTimeout function
+    // isSubmitted && setTimeout(() => navigate("/products"), 700);
+  }, []);
 
   return (
     <>
       <InputField
         label="Product Name"
         type="text"
-        attributes={{ placeholder: "ASUS Nitro 5", name: "productName" }}
+        attributes={{
+          placeholder: "ASUS Nitro 5",
+          name: "productName",
+          defaultValue: isAddProductForm ? "" : productInfo.product_name,
+        }}
         setValue={setProductName}
         errorState={errorState.name}
       />
@@ -30,14 +52,18 @@ export default function ProductForm() {
       <InputField
         label="Product Price"
         type="number"
-        attributes={{ placeholder: "Enter number only", name: "productPrice" }}
+        attributes={{
+          placeholder: "Enter number only",
+          name: "productPrice",
+          defaultValue: isAddProductForm ? "" : productInfo.product_price,
+        }}
         setValue={setProductPrice}
         errorState={errorState.price}
       />
       <SelectField
         label="Product Type"
         type="text"
-        attributes={{ name: "productType" }}
+        attributes={{ name: "productType", defaultValue: isAddProductForm ? "" : productInfo.product_type }}
         options={["Laptop", "Mobile", "Desktop", "Mouse", "Keyboard", "Headphone"]}
         setValue={setProductType}
         errorState={errorState.type}
@@ -45,10 +71,18 @@ export default function ProductForm() {
       <TextAreaField
         label="Product Description"
         className="h-[200px] rounded-md p-3 resize-none overflow-hidden focus:outline-none transition ease-in-out duration-300 bg-[#202020]"
-        attributes={{ placeholder: "Features about product", name: "productDescription" }}
+        attributes={{
+          placeholder: "Features about product",
+          name: "productDescription",
+          defaultValue: isAddProductForm ? "" : productInfo.product_description,
+        }}
         setValue={setProductDescription}
         errorState={errorState.description}
       />
     </>
   );
 }
+
+ProductForm.propTypes = {
+  productInfo: PropTypes.object,
+};

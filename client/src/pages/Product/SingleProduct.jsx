@@ -9,42 +9,55 @@ import Error from "../../components/Error";
 import GoBackButton from "../../components/ui/GoBackButton";
 import { useFormContext } from "../../context/FormContext";
 import { BsThreeDotsVertical } from "react-icons/bs";
-import { useEffect, useRef, useState } from "react";
+import React from "react";
 import ProductForm from "../../components/Forms/ProductForm";
-import DeleteForm from "../../components/Forms/DeleteForm";
+import Form from "../../components/Forms/Form";
 
 export default function SingleProduct() {
   const { productID } = useParams();
   const { addToCart } = useCart();
   const { user } = useFormContext();
   const navigate = useNavigate();
-  const [showOptions, setShowOptions] = useState(false);
-  const buttonRef = useRef();
-  const { isFormOpen, setIsFormOpen, isSubmitted } = useFormContext();
-  const [openDeleteForm, setOpenDeleteForm] = useState(false);
+  const buttonRef = React.useRef();
+  const [showOptions, setShowOptions] = React.useState(false);
+  const {
+    isFormOpen,
+    setIsFormOpen,
+    openDeleteForm,
+    setOpenDeleteForm,
+    isSubmitted,
+    handleProductSubmit,
+    setProductUUID,
+    setIsAddProductForm,
+    setFormSubmitType,
+  } = useFormContext();
   const {
     items: [product],
     isLoading,
     errorState: error,
     fetchItems,
-  } = useProductAPI(productID);
+  } = useProductAPI();
 
   function handleClickOutside(event) {
     if (buttonRef.current && !buttonRef.current.contains(event.target)) setShowOptions(false);
   }
 
-  console.log(error);
+  function handleClick({ action }) {
+    action === "edit" ? setIsFormOpen(true) : setOpenDeleteForm(true);
+    setIsAddProductForm(false);
+    setFormSubmitType(action);
+    setProductUUID(productID);
+  }
 
-  useEffect(() => {
+  React.useEffect(() => {
     setIsFormOpen(false);
     setOpenDeleteForm(false);
     document.addEventListener("click", handleClickOutside, true);
     return () => document.removeEventListener("click", handleClickOutside, true);
   }, []);
 
-  useEffect(() => {
-    fetchItems(productID, isSubmitted);
-    console.log(product);
+  React.useEffect(() => {
+    fetchItems(productID);
   }, [isSubmitted]);
 
   if (error !== null) return <Error errorDetail={error} onClickFunction={() => fetchItems(productID)} />;
@@ -60,12 +73,7 @@ export default function SingleProduct() {
             {user.length !== 0 && user[0].isAdmin !== 0 && (
               <div className="relative">
                 <div className="relative flex items-center">
-                  <button
-                    ref={buttonRef}
-                    className="mx-[15px] text-2xl"
-                    onClick={() => {
-                      setShowOptions(!showOptions);
-                    }}>
+                  <button ref={buttonRef} className="mx-[15px] text-2xl" onClick={() => setShowOptions(!showOptions)}>
                     <BsThreeDotsVertical />
                   </button>
                   <div
@@ -73,13 +81,13 @@ export default function SingleProduct() {
                       showOptions ? "flex flex-col gap-2" : "hidden"
                     } absolute top-[1px] right-[35px] bg-[gray] rounded-md text-white`}>
                     <button
-                      onClick={() => setIsFormOpen(true)}
+                      onClick={() => handleClick({ action: "edit" })}
                       className="font-semibold border-b py-2 px-4 hover:underline"
                       aria-label="edit">
                       Edit
                     </button>
                     <button
-                      onClick={() => setOpenDeleteForm(true)}
+                      onClick={() => handleClick({ action: "delete" })}
                       className="font-semibold pb-2 px-4 hover:underline"
                       aria-label="delete">
                       Delete
@@ -108,8 +116,20 @@ export default function SingleProduct() {
               </div>
             </div>
           </div>
-          {isFormOpen && <ProductForm title="Edit Product" productInfo={product} action="edit" />}
-          {openDeleteForm && <DeleteForm setOpenDeleteForm={setOpenDeleteForm} productInfo={product} />}
+          {/* {isFormOpen && <ProductForm title="Edit Product" productInfo={product} action="edit" />} */}
+          {isFormOpen && (
+            <Form values={{ title: "Update Product", handleSubmit: handleProductSubmit }}>
+              <ProductForm productInfo={product} />
+            </Form>
+          )}
+          {/* {openDeleteForm && <DeleteForm setOpenDeleteForm={setOpenDeleteForm} productInfo={product} />} */}
+          {openDeleteForm && (
+            <div className="top-20">
+              <Form values={{ title: "Delete Product", handleSubmit: handleProductSubmit }}>
+                <h2 className="text-white text-1xl font-bold">Are you sure you want to delete this product?</h2>
+              </Form>
+            </div>
+          )}
         </div>
       )}
     </>

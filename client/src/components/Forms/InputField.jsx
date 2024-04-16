@@ -3,7 +3,6 @@ import { setID } from "../../utils/helper";
 
 export default function InputField({ label, type, className, attributes, errorState, setValue }) {
   const id = setID(label);
-  console.log(id);
   return (
     <div className="flex flex-col gap-2 text-[#c9c9c9]">
       <label

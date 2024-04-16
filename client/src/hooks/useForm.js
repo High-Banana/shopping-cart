@@ -33,7 +33,7 @@ export default function useForm() {
     return Object.values(errors).every((value) => value === "") ? true : errors;
   }
 
-  function validateProductForm(inputValue) {
+  function validateProductForm(inputValue, formSubmitType) {
     const errors = {
       name: "",
       image: "",
@@ -41,11 +41,12 @@ export default function useForm() {
       type: "",
       description: "",
     };
-    console.log(inputValue);
-    if (!inputValue.productName) errors.name = "Product name cannot be empty";
-    if (!inputValue.productImage) errors.image = "Product image cannot be empty";
-    if (!inputValue.productPrice) errors.price = "Product price cannot be empty";
-    if (!inputValue.productDescription) errors.description = "Product description cannot be empty";
+    if (formSubmitType !== "delete") {
+      if (!inputValue.productName) errors.name = "Product name cannot be empty";
+      if (!inputValue.productImage && formSubmitType === "add") errors.image = "Product image cannot be empty";
+      if (!inputValue.productPrice) errors.price = "Product price cannot be empty";
+      if (!inputValue.productDescription) errors.description = "Product description cannot be empty";
+    }
     console.log(errors.name);
     return Object.values(errors).every((value) => value === "") ? true : errors;
   }

@@ -6,11 +6,13 @@ import useForm from "../../hooks/useForm";
 import React from "react";
 
 export default function Profile() {
-  const { isFormOpen, setIsFormOpen, handleProductSubmit, user, setErrorState, setFormSubmitType } = useFormContext();
+  const { isFormOpen, setIsFormOpen, handleProductSubmit, user, setErrorState, setFormSubmitType, setIsAddProductForm } =
+    useFormContext();
   const { errorState } = useForm();
 
   React.useEffect(() => {
     setErrorState(errorState);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isFormOpen]);
 
   return (
@@ -54,6 +56,7 @@ export default function Profile() {
               onClick={() => {
                 setIsFormOpen(true);
                 setFormSubmitType("add");
+                setIsAddProductForm(true);
               }}
             />
           )}

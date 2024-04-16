@@ -1,10 +1,11 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable react-refresh/only-export-components */
-import { createContext, useContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import useForm from "../hooks/useForm";
 import axios from "axios";
 import useUserAPI from "../hooks/useUserAPI";
 import useProductAPI from "../hooks/useProductAPI";
+import { IoLogoAndroid } from "react-icons/io";
 
 const FormContext = createContext();
 
@@ -29,6 +30,8 @@ export function FormProvider({ children }) {
   const { submitUserForm } = useUserAPI();
   const { submitProductForm } = useProductAPI();
   const [formSubmitType, setFormSubmitType] = useState("");
+  const [isAddProductForm, setIsAddProductForm] = useState(false);
+  const [openDeleteForm, setOpenDeleteForm] = useState(false);
 
   useEffect(() => {
     setEmail("");
@@ -44,6 +47,7 @@ export function FormProvider({ children }) {
     setProductPrice();
     setProductType("");
     setIsSubmitted(false);
+    setErrorState(errorState);
     setInvalidMessage({ productName: "", productImage: "", productDescription: "" });
   }, [isFormOpen]);
 
@@ -55,7 +59,10 @@ export function FormProvider({ children }) {
   function handleFormClose(event) {
     event.preventDefault();
     setIsVisible(false);
-    setTimeout(() => setIsFormOpen(false), 100);
+    setTimeout(() => {
+      setIsFormOpen(false);
+      setOpenDeleteForm(false);
+    }, 100);
   }
 
   // async function registerUser() {
@@ -120,26 +127,26 @@ export function FormProvider({ children }) {
   //   setIsLoading(false);
   // }
 
-  async function updateProduct() {
-    const formData = new FormData();
-    formData.append("productName", productName);
-    formData.append("productImage", productImage[0]);
-    formData.append("productDescription", productDescription);
-    formData.append("productPrice", productPrice);
-    formData.append("productType", productType);
+  // async function updateProduct() {
+  //   const formData = new FormData();
+  //   formData.append("productName", productName);
+  //   formData.append("productImage", productImage[0]);
+  //   formData.append("productDescription", productDescription);
+  //   formData.append("productPrice", productPrice);
+  //   formData.append("productType", productType);
 
-    axios
-      .put(`/api/products/edit-product/${productUUID}`, formData, { headers: { "Content-Type": "multipart/form-data" } })
-      .then((response) => {
-        if (response.status === 200) {
-          console.log("product updated");
-        } else console.log("failed");
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-    setIsLoading(false);
-  }
+  //   axios
+  //     .put(`/api/products/edit-product/${productUUID}`, formData, { headers: { "Content-Type": "multipart/form-data" } })
+  //     .then((response) => {
+  //       if (response.status === 200) {
+  //         console.log("product updated");
+  //       } else console.log("failed");
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  //   setIsLoading(false);
+  // }
 
   async function deleteProduct() {
     axios
@@ -250,15 +257,21 @@ export function FormProvider({ children }) {
     formData.append("productPrice", productPrice);
     formData.append("productType", productType);
     formData.append("productDescription", productDescription);
-    for (var pair of formData.entries()) {
-      console.log(pair[0] + ", " + pair[1]);
-    }
     const inputValues = { productName, productPrice, productDescription, productType, productImage };
-    const isFormValid = validateProductForm(inputValues);
-    if (isFormValid === true) {
-      submitProductForm(formData, formSubmitType);
+    const isFormValid = validateProductForm(inputValues, formSubmitType);
+    if (isFormValid === true || formSubmitType === "delete") {
       handleFormClose(event);
-      setIsSubmitted(true);
+      setIsLoading(true);
+      await submitProductForm(formData, formSubmitType, productUUID)
+        .then(() => {
+          handleFormClose(event);
+          // Used setTimout so that form can close smoothly
+          setTimeout(() => setIsSubmitted(true), 500);
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+        .finally(() => setIsLoading(false));
     } else setErrorState(validateProductForm(inputValues));
   }
 
@@ -267,6 +280,8 @@ export function FormProvider({ children }) {
     setErrorState,
     setIsLoginForm,
     setFormSubmitType,
+    isAddProductForm,
+    setIsAddProductForm,
     user,
     email,
     setEmail,
@@ -292,6 +307,8 @@ export function FormProvider({ children }) {
     setProductDescription,
     isFormOpen,
     setIsFormOpen,
+    openDeleteForm,
+    setOpenDeleteForm,
     handleFormClose,
     setIsVisible,
     isVisible,
