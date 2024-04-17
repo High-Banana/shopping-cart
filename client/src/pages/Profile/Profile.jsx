@@ -22,7 +22,7 @@ export default function Profile() {
         <div className="w-[400px] flex justify-between">
           <div>
             <h3 className="uppercase font-[700] text-[12px] tracking-widest text-[#c9c9c9]">Username</h3>
-            <span className="text-white">{user[0].userName}</span>
+            <span className="text-white">{user[0].username}</span>
           </div>
           <Button title="Edit" className="py-[2px] px-[8px] h-[35px] bg-[gray] hover:scale-[none] hover:bg-[#b6b6b6]" />
         </div>

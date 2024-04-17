@@ -67,7 +67,6 @@ export function FormProvider({ children }) {
     const isFormValid = validateUserForm(inputValues);
     if (isFormValid === true) {
       setIsLoading(true);
-      await new Promise((resolve) => setTimeout(resolve, 3000));
       await submitUserForm(inputValues)
         .then((response) => {
           setUser(response);
