@@ -24,7 +24,7 @@ export default function ProductPage() {
         <>
           <div className="mb-[50px] mt-[20px] flex justify-between px-5">
             <h1 className="font-[700] text-[20px]">{products.length} items</h1>
-            <SortItems setSortType={setSortType} />
+            <SortItems sortType={sortType} setSortType={setSortType} />
           </div>
           <ProductsList products={products} sortType={sortType} />
         </>
