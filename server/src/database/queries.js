@@ -1,13 +1,6 @@
 import { v4 as uuidv4 } from "uuid";
 import database from "./db.js";
 
-database.query(`
-    CREATE TABLE IF NOT EXISTS product_mapping (
-        uuid VARCHAR(36) PRIMARY KEY,
-        product_id INT NOT NULL
-    );
-`);
-
 async function getAllProducts(req, res, next) {
   try {
     const [products] = await database.query("select * from products");
@@ -95,7 +88,5 @@ async function registerUser(req, res, next) {
     next();
   }
 }
-
-// addProduct("name", "description", 111, "iphone-15-pro-max.jpg", "Mobile");
 
 export { getAllProducts, getProductByID, addProduct, getRegisteredUsers, registerUser, updateProduct, deleteProduct };
