@@ -6,6 +6,6 @@ const router = express.Router();
 
 router.post("/login", tryCatch(getRegisteredUsers));
 
-router.post("/register", async (req, res, next) => await registerUser(req, res, next));
+router.post("/register", tryCatch(registerUser));
 
 export default router;
