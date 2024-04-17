@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
@@ -9,3 +10,7 @@ export default function ScrollToTop({ children }) {
 
   return children;
 }
+
+ScrollToTop.propTypes = {
+  children: PropTypes.node.isRequired,
+};

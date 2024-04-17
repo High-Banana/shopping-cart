@@ -1,4 +1,4 @@
-/* eslint-disable react/prop-types */
+import PropTypes from "prop-types";
 
 export default function SortItems({ setSortType }) {
   return (
@@ -16,3 +16,7 @@ export default function SortItems({ setSortType }) {
     </div>
   );
 }
+
+SortItems.propTypes = {
+  setSortType: PropTypes.func.isRequired,
+};

@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable react/prop-types */
 /* eslint-disable react-refresh/only-export-components */
 import React from "react";
+import PropTypes from "prop-types";
 import useForm from "../hooks/useForm";
 import useUserAPI from "../hooks/useUserAPI";
 import useProductAPI from "../hooks/useProductAPI";
@@ -163,3 +163,7 @@ export function FormProvider({ children }) {
 export function useFormContext() {
   return React.useContext(FormContext);
 }
+
+FormProvider.propTypes = {
+  children: PropTypes.node.isRequired,
+};

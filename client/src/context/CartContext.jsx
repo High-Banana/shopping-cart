@@ -1,6 +1,6 @@
 /* eslint-disable react-refresh/only-export-components */
-/* eslint-disable react/prop-types */
 import React from "react";
+import PropTypes from "prop-types";
 
 const CartContext = React.createContext();
 
@@ -85,3 +85,7 @@ export function CartProvider({ children }) {
 export function useCart() {
   return React.useContext(CartContext);
 }
+
+CartProvider.propTypes = {
+  children: PropTypes.node.isRequired,
+};

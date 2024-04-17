@@ -1,4 +1,4 @@
-/* eslint-disable react/prop-types */
+import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { IMAGE_SRC_PATH } from "/src/services/constants.js";
 
@@ -34,3 +34,8 @@ export default function ProductsList({ products, sortType }) {
     </div>
   );
 }
+
+ProductsList.propTypes = {
+  products: PropTypes.array.isRequired,
+  sortType: PropTypes.string.isRequired,
+};

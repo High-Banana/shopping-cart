@@ -1,4 +1,4 @@
-/* eslint-disable react/prop-types */
+import PropTypes from "prop-types";
 import { createContext } from "react";
 import { CartProvider } from "./CartContext";
 import { FormProvider } from "./FormContext";
@@ -15,3 +15,7 @@ export default function ContextProvider({ children }) {
     </AppContext.Provider>
   );
 }
+
+ContextProvider.propTypes = {
+  children: PropTypes.node.isRequired,
+};
