@@ -1,6 +1,5 @@
 import axios from "axios";
-
-const HEADERS = { headers: { "Content-Type": "multipart/form-data" } };
+import { HEADERS } from "../constants";
 
 export async function fetchAllProducts() {
   return axios

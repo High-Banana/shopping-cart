@@ -1,7 +1,9 @@
 import React from "react";
 import Button from "../ui/Button";
-import { useCart } from "../../context/CartContext";
+import { useFormContext } from "../../context/FormContext";
+import { handleCartCheckout } from "../../hooks/useCheckoutAPI";
 import { Link } from "react-router-dom";
+import { useCart } from "../../context/CartContext";
 import { IMAGE_SRC_PATH } from "../../services/constants";
 import { FaMinus } from "react-icons/fa";
 import { FaPlus } from "react-icons/fa";
@@ -13,6 +15,7 @@ export default function Cart() {
   const { toggleOpenCart, cartItems, addToCart, getTotalItems, removeFromCart, handleInputValue, calculateTotalPrice } =
     useCart();
   const [isVisible, setIsVisible] = React.useState(false);
+  const { user } = useFormContext();
 
   React.useEffect(() => {
     document.body.style.overflow = "hidden";
@@ -23,6 +26,19 @@ export default function Cart() {
     setIsVisible(false);
     document.body.style.overflow = "auto";
     setTimeout(() => toggleOpenCart(), 400);
+  }
+
+  function handleClick() {
+    const userID = user[0].userId;
+    // console.log({ userID });
+    const productDetails = cartItems.map((item) => {
+      const id = item.id;
+      const quantity = item.quantity;
+      return { id, quantity };
+    });
+    // console.log(cartItems);
+    // console.log(productDetails);
+    handleCartCheckout({ userID, productDetails });
   }
 
   return (
@@ -99,7 +115,7 @@ export default function Cart() {
                 <span className="font-bold">NPR {calculateTotalPrice()}</span>
               </div>
               <div className="text-center">
-                <Button title="Checkout" className="bg-[#009027] w-[100%]" />
+                <Button title="Checkout" className="bg-[#009027] w-[100%]" onClick={() => handleClick()} />
               </div>
             </div>
           </>

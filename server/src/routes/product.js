@@ -15,8 +15,4 @@ router.put("/edit-product/:productID", upload.single("productImage"), tryCatch(u
 
 router.delete("/delete-product/:productID", tryCatch(deleteProduct));
 
-router.get("/add-product", (req, res) => {
-  res.status(200).send({ message: "ok" });
-});
-
 export default router;

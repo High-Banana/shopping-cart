@@ -85,8 +85,24 @@ async function registerUser(req, res, next) {
     const registeredUser = await getRegisteredUsers(req, res);
     res.status(200).send(registeredUser);
   } catch (error) {
-    next();
+    next(error);
   }
+}
+
+export async function addUserAndProductID(req, res, next) {
+  const { userID, productDetails } = req.body;
+  try {
+    for (let i = 0; i < productDetails.length; i++) {
+      await database.query("insert into users_products (user_id, product_id, quantity) values (?, ?, ?)", [
+        userID,
+        productDetails[i].id,
+        productDetails[i].quantity,
+      ]);
+    }
+  } catch (error) {
+    next(error);
+  }
+  res.status(200).send("user and product id");
 }
 
 export { getAllProducts, getProductByID, addProduct, getRegisteredUsers, registerUser, updateProduct, deleteProduct };
