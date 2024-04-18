@@ -49,7 +49,6 @@ export function FormProvider({ children }) {
     setProductPrice();
     setProductType("");
     setIsSubmitted(false);
-    setErrorState(errorState);
   }, [isFormOpen]);
 
   function handleFormClose(event) {
@@ -110,7 +109,7 @@ export function FormProvider({ children }) {
           console.log(error);
         })
         .finally(() => setIsLoading(false));
-    } else setErrorState(validateProductForm(inputValues));
+    } else setErrorState(validateProductForm(inputValues, formSubmitType));
   }
 
   const providerValues = {
