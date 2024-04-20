@@ -105,4 +105,10 @@ export async function addUserAndProductID(req, res, next) {
   res.status(200).send("user and product id");
 }
 
+// select users.username, products.product_name, products.product_price
+// from users_products
+// join users on users_products.user_id = users.userId
+// join products on users_products.product_id = products.id
+// where users_products.user_id = 45 and users_products.product_id in (51, 2);
+
 export { getAllProducts, getProductByID, addProduct, getRegisteredUsers, registerUser, updateProduct, deleteProduct };

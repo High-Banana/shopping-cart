@@ -46,9 +46,7 @@ export function CartProvider({ children }) {
   function calculateTotalPrice() {
     return cartItems
       .reduce((total, currentValue) => {
-        let price = parseFloat(currentValue.product_price);
-        price *= currentValue.quantity;
-        return total + price;
+        return total + parseFloat(currentValue.product_price * currentValue.quantity);
       }, 0)
       .toLocaleString();
   }
