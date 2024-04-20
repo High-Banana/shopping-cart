@@ -68,7 +68,7 @@ export default function SingleProduct() {
         <Loading />
       ) : (
         <div className="relative flex flex-col gap-[20px] min-h-[800px]">
-          <div className="flex justify-between items-center">
+          <div className="flex justify-between items-center sticky top-[80px]">
             <GoBackButton />
             {user.length !== 0 && user[0].isAdmin !== 0 && (
               <div className="relative">
@@ -79,7 +79,7 @@ export default function SingleProduct() {
                   <div
                     className={`${
                       showOptions ? "flex flex-col gap-2" : "hidden"
-                    } absolute top-[1px] right-[35px] bg-[gray] rounded-md text-white`}>
+                    } absolute top-[1px] right-[35px] bg-[#212121] rounded-md text-white`}>
                     <button
                       onClick={() => handleClick({ action: "edit" })}
                       className="font-semibold border-b py-2 px-4 hover:underline"
@@ -103,7 +103,7 @@ export default function SingleProduct() {
             </div>
             <div className="flex flex-col gap-[50px] px-[5px]">
               <h1 className="text-3xl font-[500]">{product.product_name}</h1>
-              <p className="text-[#3e3e3e] text-[15px] whitespace-pre-wrap break-words scrollbar-none max-w-[480px]">
+              <p className="text-[#3e3e3e] text-[15px] whitespace-pre-wrap break-words max-w-[480px] max-h-[230px] overflow-y-auto custom-scrollbar">
                 {product.product_description}
               </p>
               <div className="flex justify-between items-center">
