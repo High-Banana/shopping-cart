@@ -1,9 +1,9 @@
 export default function Loading() {
   return (
-    <>
-      <h3 className="text-6xl font-semibold flex justify-center items-center mt-[200px] gap-[40px]">
-        Loading <div className="border-[8px] border-[black_transparent] h-[80px] w-[80px] rounded-[50%] animate-spin"></div>
+    <div className="absolute min-h-screen left-0 right-0 top-0 bottom-0 background-overlay">
+      <h3 className="text-6xl font-semibold flex justify-center items-center mt-[200px] gap-[40px] tracking-wider text-white">
+        Loading <div className="border-[8px] border-[white_transparent] h-[80px] w-[80px] rounded-[50%] animate-spin"></div>
       </h3>
-    </>
+    </div>
   );
 }

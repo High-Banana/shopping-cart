@@ -15,6 +15,9 @@ export default {
         ".custom-scrollbar": {
           "@apply scrollbar scrollbar-w-2 scrollbar-thumb-[#545454] scrollbar-thumb-rounded-sm": {},
         },
+        ".background-overlay": {
+          "@apply bg-black bg-opacity-35 backdrop-blur-sm": {},
+        },
       };
 
       addComponents(newComponents);

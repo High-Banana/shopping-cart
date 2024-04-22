@@ -17,16 +17,18 @@ export default function Profile() {
     setErrorState,
     setFormSubmitType,
     setIsAddProductForm,
-    addedProduct,
     productUUID,
     productType,
     isLoading,
+    addedProduct,
+    setAddedProduct,
   } = useFormContext();
   const { errorState } = useForm();
   const navigate = useNavigate();
 
   React.useEffect(() => {
     if (addedProduct) {
+      setAddedProduct(false);
       navigate(`/products/${productType}/${productUUID}`);
     }
     console.log(addedProduct);
@@ -36,7 +38,7 @@ export default function Profile() {
     setErrorState(errorState);
   }, [isFormOpen]);
 
-  if (isLoading) return <Loading />;
+  // if (isLoading) return <Loading />;
 
   return (
     <div className="relative min-h-[800px]">
@@ -94,6 +96,7 @@ export default function Profile() {
           <ProductForm />
         </Form>
       )}
+      {isLoading && <Loading />}
     </div>
   );
 }

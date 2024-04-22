@@ -22,7 +22,7 @@ export default function Form({ values = { title: "", handleSubmit: null }, child
     <div className="absolute min-h-screen top-0 left-0 right-0 bottom-0">
       <div
         onClick={(event) => handleFormClose(event)}
-        className="absolute top-0 left-0 right-0 bottom-0 bg-black bg-opacity-35 backdrop-blur-sm z-[1]"></div>
+        className="absolute top-0 left-0 right-0 bottom-0 background-overlay z-[1]"></div>
       <div className="absolute flex flex-col justify-center items-center right-0 left-0 py-3 min-h-dvh">
         <div
           className={`bg-[#434343] w-[440px] rounded-md z-[2] ${
