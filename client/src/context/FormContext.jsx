@@ -14,7 +14,7 @@ export function FormProvider({ children }) {
   const [password, setPassword] = React.useState("");
   const [username, setUsername] = React.useState("");
   const [user, setUser] = React.useState([]);
-  // for product adding and upating
+  // for product adding and updating
   const [productName, setProductName] = React.useState("");
   const [productImage, setProductImage] = React.useState();
   const [productDescription, setProductDescription] = React.useState("");
@@ -35,6 +35,8 @@ export function FormProvider({ children }) {
   const [isSubmitted, setIsSubmitted] = React.useState(false);
   // for loading animation while data is being fetched
   const [isLoading, setIsLoading] = React.useState(false);
+  // to navigate to recently added product
+  const [addedProduct, setAddedProduct] = React.useState(false);
 
   React.useEffect(() => {
     setEmail("");
@@ -49,6 +51,7 @@ export function FormProvider({ children }) {
     setProductPrice();
     setProductType("");
     setIsSubmitted(false);
+    setAddedProduct(false);
   }, [isFormOpen]);
 
   function handleFormClose(event) {
@@ -97,13 +100,21 @@ export function FormProvider({ children }) {
     const inputValues = { productName, productPrice, productDescription, productType, productImage };
     const isFormValid = validateProductForm(inputValues, formSubmitType);
     if (isFormValid === true) {
-      handleFormClose(event);
       setIsLoading(true);
+      handleFormClose(event);
+      await new Promise((resolve) => setTimeout(resolve, 3000));
       await submitProductForm(formData, formSubmitType, productUUID)
-        .then(() => {
-          handleFormClose(event);
-          // Used setTimout so that form can close smoothly
-          setTimeout(() => setIsSubmitted(true), 500);
+        .then((response) => {
+          console.log(response);
+          if (response) {
+            setProductUUID(response.data.productUUID);
+            setProductType(response.data.productType);
+            setAddedProduct(true);
+          }
+          // Used setTimout so that form can close smoothly. Didn't put it in handleFormClose because everytime it changes, it triggers fetching function in SingleProduct.jsx. We do not want to fetch the data even when the form is simply closed.
+          setTimeout(() => {
+            setIsSubmitted(true);
+          }, 500);
         })
         .catch((error) => {
           console.log(error);
@@ -127,6 +138,7 @@ export function FormProvider({ children }) {
     productPrice,
     productType,
     productDescription,
+    productUUID,
     setProductName,
     setProductImage,
     setProductPrice,
@@ -149,10 +161,12 @@ export function FormProvider({ children }) {
     openDeleteForm,
     isVisible,
     isSubmitted,
+    addedProduct,
     setIsFormOpen,
     setOpenDeleteForm,
     handleFormClose,
     setIsVisible,
+    setAddedProduct,
   };
 
   return <FormContext.Provider value={providerValues}>{children}</FormContext.Provider>;

@@ -25,11 +25,16 @@ async function getProductByID(req, res, next) {
 async function addProduct(req, res, next) {
   const { productName, productDescription, productPrice, productType } = req.body;
   const productImage = req.file.filename;
-  await database.query(
-    "insert into products (product_name, product_description, product_price, image, product_type, uuid) values (?, ?, ?, ?, ?, ?)",
-    [productName, productDescription, productPrice, productImage, productType, uuidv4()]
-  );
-  res.json({ message: "Product added" });
+  const productUUID = uuidv4();
+  await database
+    .query(
+      "insert into products (product_name, product_description, product_price, image, product_type, uuid) values (?, ?, ?, ?, ?, ?)",
+      [productName, productDescription, productPrice, productImage, productType, productUUID]
+    )
+    .then(() => {
+      res.status(200).send({ productUUID, productType });
+    });
+  // res.json({ message: "Product added" });
 }
 
 async function updateProduct(req, res, next) {

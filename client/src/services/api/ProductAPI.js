@@ -22,11 +22,12 @@ export async function fetchProductByID(productID) {
 }
 
 export async function addProduct(formData) {
-  axios
+  return axios
     .post("/api/products/add-product", formData, HEADERS)
     .then((response) => {
       if (response.status === 200) {
         console.log("product added");
+        return response;
       } else console.log("failed");
     })
     .catch((error) => {

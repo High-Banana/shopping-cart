@@ -24,7 +24,7 @@ export default function useProductAPI() {
     setErrorState(null);
     setIsLoading(true);
     try {
-      if (submitType === "add") await addProduct(formData);
+      if (submitType === "add") return await addProduct(formData);
       else if (submitType === "edit") await updateProduct(formData, productID);
       else if (submitType === "delete") await deleteProduct(productID);
     } catch (error) {

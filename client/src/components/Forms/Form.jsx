@@ -10,6 +10,10 @@ export default function Form({ values = { title: "", handleSubmit: null }, child
   const navigate = useNavigate();
   const { handleFormClose, isVisible, setIsVisible, openDeleteForm } = useFormContext();
 
+  function handleClick() {
+    openDeleteForm && setTimeout(() => navigate("/products"), 500);
+  }
+
   React.useEffect(() => {
     setIsVisible(true);
   }, []);
@@ -35,7 +39,7 @@ export default function Form({ values = { title: "", handleSubmit: null }, child
               />
               <Button
                 title={title}
-                onClick={() => openDeleteForm && setTimeout(() => navigate("/products"), 500)}
+                onClick={() => handleClick()}
                 className="bg-[#5865f2] font-normal py-[7px] px-[28px] rounded-sm hover:scale-[none] hover:bg-opacity-70"
               />
             </div>

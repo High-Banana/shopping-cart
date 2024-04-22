@@ -5,15 +5,38 @@ import Form from "../../components/Forms/Form";
 import useForm from "../../hooks/useForm";
 import ProductForm from "../../components/Forms/ProductForm";
 import { useFormContext } from "../../context/FormContext";
+import { useNavigate } from "react-router-dom";
+import Loading from "../../components/Loading/Loading";
 
 export default function Profile() {
-  const { isFormOpen, setIsFormOpen, handleProductSubmit, user, setErrorState, setFormSubmitType, setIsAddProductForm } =
-    useFormContext();
+  const {
+    isFormOpen,
+    setIsFormOpen,
+    handleProductSubmit,
+    user,
+    setErrorState,
+    setFormSubmitType,
+    setIsAddProductForm,
+    addedProduct,
+    productUUID,
+    productType,
+    isLoading,
+  } = useFormContext();
   const { errorState } = useForm();
+  const navigate = useNavigate();
+
+  React.useEffect(() => {
+    if (addedProduct) {
+      navigate(`/products/${productType}/${productUUID}`);
+    }
+    console.log(addedProduct);
+  }, [addedProduct]);
 
   React.useEffect(() => {
     setErrorState(errorState);
   }, [isFormOpen]);
+
+  if (isLoading) return <Loading />;
 
   return (
     <div className="relative min-h-[800px]">
