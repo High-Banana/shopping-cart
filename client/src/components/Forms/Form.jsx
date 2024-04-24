@@ -14,13 +14,13 @@ export default function Form({ values = { title: "", handleSubmit: null }, child
   }, []);
 
   return (
-    <div className="absolute min-h-screen top-0 left-0 right-0 bottom-0">
+    <div className="absolute min-h-screen top-0 left-0 right-0 bottom-0 z-30">
       <div
         onClick={(event) => handleFormClose(event)}
         className="absolute top-0 left-0 right-0 bottom-0 background-overlay z-[1]"></div>
       <div className="absolute flex flex-col justify-center items-center right-0 left-0 py-3 min-h-dvh">
         <div
-          className={`bg-[#434343] w-[440px] rounded-md z-[2] ${
+          className={`bg-[#434343] w-[440px] mt-10 rounded-md z-[2] ${
             isVisible ? "scale-100 duration-200" : "scale-75 duration-200 opacity-15"
           }`}>
           <h2 className="text-white text-2xl font-bold text-center p-6">{title}</h2>

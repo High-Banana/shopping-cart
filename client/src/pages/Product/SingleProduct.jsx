@@ -71,7 +71,7 @@ export default function SingleProduct() {
       {isLoading ? (
         <Loading />
       ) : (
-        <div className="relative flex flex-col gap-[20px] min-h-[800px]">
+        <div className="flex flex-col gap-[20px] min-h-[800px]">
           {isUpdating && <Loading />}
           <div className="flex justify-between items-center sticky top-[80px]">
             <GoBackButton />
@@ -127,11 +127,11 @@ export default function SingleProduct() {
             </Form>
           )}
           {openDeleteForm && (
-            <div className="top-20">
+            <>
               <Form values={{ title: "Delete Product", handleSubmit: handleProductSubmit }}>
                 <h2 className="text-white text-1xl font-bold">Are you sure you want to delete this product?</h2>
               </Form>
-            </div>
+            </>
           )}
         </div>
       )}

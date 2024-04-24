@@ -127,7 +127,7 @@ export function FormProvider({ children }) {
       const formData = getFormDatas();
       setIsLoading(true);
       handleFormClose(event);
-      // await new Promise((resolve) => setTimeout(resolve, 3000));
+      await new Promise((resolve) => setTimeout(resolve, 3000));
       await submitProductForm(formData, formSubmitType, productUUID)
         .then((response) => {
           handleResponse(response);

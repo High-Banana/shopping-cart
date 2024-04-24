@@ -9,7 +9,7 @@ function App() {
   const { openCart } = useCart();
 
   return (
-    <>
+    <div className="relative">
       {openCart && <Cart />}
       <nav className="sticky top-0 z-10">
         <Navbar />
@@ -22,7 +22,7 @@ function App() {
       <footer className="bottom-0">
         <Footer />
       </footer>
-    </>
+    </div>
   );
 }
 
