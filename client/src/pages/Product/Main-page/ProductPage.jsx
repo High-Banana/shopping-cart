@@ -17,17 +17,17 @@ export default function ProductPage() {
   if (error) return <Error errorDetail={error} onClickFunction={() => fetchItems()} />;
 
   return (
-    <div className="mx-[50px]">
+    <div className="relative">
       {isLoading ? (
         <Loading />
       ) : (
-        <>
-          <div className="mb-[50px] mt-[20px] flex justify-between px-5">
+        <div className="mx-[50px]">
+          <div className="mb-[50px] mt-[20px] flex justify-between">
             <h1 className="font-[700] text-[20px]">{products.length} items</h1>
             <SortItems sortType={sortType} setSortType={setSortType} />
           </div>
           <ProductsList products={products} sortType={sortType} />
-        </>
+        </div>
       )}
     </div>
   );

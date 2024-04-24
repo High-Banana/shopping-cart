@@ -32,9 +32,9 @@ async function addProduct(req, res, next) {
       [productName, productDescription, productPrice, productImage, productType, productUUID]
     )
     .then(() => {
-      res.status(200).send({ productUUID, productType });
-    });
-  // res.json({ message: "Product added" });
+      res.status(200).send({ productUUID, productType, message: "product-added" });
+    })
+    .catch((error) => next(error));
 }
 
 async function updateProduct(req, res, next) {
@@ -57,15 +57,22 @@ async function updateProduct(req, res, next) {
   sqlQuery += "where uuid = ?";
   sqlValues.push(productId);
 
-  await database.query(sqlQuery, sqlValues);
-
-  res.json({ message: "Product updated" });
+  await database
+    .query(sqlQuery, sqlValues)
+    .then(() => {
+      res.status(200).send({ message: "product-updated" });
+    })
+    .catch((error) => next(error));
 }
 
-async function deleteProduct(req, res) {
+async function deleteProduct(req, res, next) {
   const productId = req.params.productID;
-  database.query("delete from products where uuid = ?", productId);
-  res.json({ message: "Product deleted" });
+  database
+    .query("delete from products where uuid = ?", productId)
+    .then(() => {
+      res.send({ message: "product-deleted" });
+    })
+    .catch((error) => next(error));
 }
 
 async function getRegisteredUsers(req, res, next) {

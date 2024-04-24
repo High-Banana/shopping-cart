@@ -20,19 +20,17 @@ export default function Profile() {
     productUUID,
     productType,
     isLoading,
-    addedProduct,
-    setAddedProduct,
+    isProductAdded,
   } = useFormContext();
   const { errorState } = useForm();
   const navigate = useNavigate();
 
   React.useEffect(() => {
-    if (addedProduct) {
-      setAddedProduct(false);
+    if (isProductAdded) {
       navigate(`/products/${productType}/${productUUID}`);
     }
-    console.log(addedProduct);
-  }, [addedProduct]);
+    console.log(isProductAdded);
+  }, [isProductAdded]);
 
   React.useEffect(() => {
     setErrorState(errorState);

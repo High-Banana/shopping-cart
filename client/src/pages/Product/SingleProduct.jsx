@@ -30,6 +30,8 @@ export default function SingleProduct() {
     setProductUUID,
     setIsAddProductForm,
     setFormSubmitType,
+    isLoading: isUpdating,
+    isProductDeleted,
   } = useFormContext();
   const {
     items: [product],
@@ -50,6 +52,7 @@ export default function SingleProduct() {
   }
 
   React.useEffect(() => {
+    fetchItems(productID);
     setIsFormOpen(false);
     setOpenDeleteForm(false);
     document.addEventListener("click", handleClickOutside, true);
@@ -57,8 +60,9 @@ export default function SingleProduct() {
   }, []);
 
   React.useEffect(() => {
-    fetchItems(productID);
-  }, [isSubmitted]);
+    if (isSubmitted) fetchItems(productID);
+    if (isProductDeleted) navigate("/products");
+  }, [isSubmitted, isProductDeleted]);
 
   if (error !== null) return <Error errorDetail={error} onClickFunction={() => fetchItems(productID)} />;
 
@@ -68,6 +72,7 @@ export default function SingleProduct() {
         <Loading />
       ) : (
         <div className="relative flex flex-col gap-[20px] min-h-[800px]">
+          {isUpdating && <Loading />}
           <div className="flex justify-between items-center sticky top-[80px]">
             <GoBackButton />
             {user.length !== 0 && user[0].isAdmin !== 0 && (

@@ -37,11 +37,12 @@ export async function addProduct(formData) {
 }
 
 export async function updateProduct(formData, productID) {
-  axios
+  return axios
     .put(`/api/products/edit-product/${productID}`, formData, HEADERS)
     .then((response) => {
       if (response.status === 200) {
         console.log("updated product");
+        return response;
       } else console.log("failed");
     })
     .catch((error) => {
@@ -51,9 +52,12 @@ export async function updateProduct(formData, productID) {
 }
 
 export async function deleteProduct(productID) {
-  axios
+  return axios
     .delete(`/api/products/delete-product/${productID}`)
-    .then(() => console.log("product deleted"))
+    .then((response) => {
+      console.log("product deleted");
+      return response;
+    })
     .catch((error) => {
       console.log(error);
       Promise.reject(error);

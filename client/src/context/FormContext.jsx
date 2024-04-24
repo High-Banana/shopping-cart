@@ -35,8 +35,9 @@ export function FormProvider({ children }) {
   const [isSubmitted, setIsSubmitted] = React.useState(false);
   // for loading animation while data is being fetched
   const [isLoading, setIsLoading] = React.useState(false);
-  // to navigate to recently added product
-  const [addedProduct, setAddedProduct] = React.useState(false);
+  // to navigate after adding or deleting product
+  const [isProductAdded, setIsProductAdded] = React.useState(false);
+  const [isProductDeleted, setIsProductDeleted] = React.useState(false);
 
   React.useEffect(() => {
     setEmail("");
@@ -51,8 +52,9 @@ export function FormProvider({ children }) {
     setProductPrice();
     setProductType("");
     setIsSubmitted(false);
-    setAddedProduct(false);
-  }, [isFormOpen]);
+    setIsProductAdded(false);
+    setIsProductDeleted(false);
+  }, [isFormOpen, openDeleteForm]);
 
   function handleFormClose(event) {
     event.preventDefault();
@@ -89,32 +91,46 @@ export function FormProvider({ children }) {
     }
   }
 
-  async function handleProductSubmit(event) {
-    event.preventDefault();
+  function getFormDatas() {
     const formData = new FormData();
     formData.append("productName", productName);
     formData.append("productImage", productImage[0]);
     formData.append("productPrice", productPrice);
     formData.append("productType", productType);
     formData.append("productDescription", productDescription);
+    return formData;
+  }
+
+  function handleResponse(response) {
+    if (response.data.message === "product-added") {
+      setProductUUID(response.data.productUUID);
+      setProductType(response.data.productType);
+      setIsProductAdded(true);
+    } else if (response.data.message === "product-deleted") {
+      setIsProductDeleted(true);
+    }
+
+    // Used setTimeout so that form can close smoothly. Didn't put it in handleFormClose because everytime it changes, it triggers fetching function in SingleProduct.jsx. We do not want to fetch the data even when the form is simply closed.
+    setTimeout(() => {
+      setIsSubmitted(true);
+      setIsProductAdded(false);
+      setIsProductDeleted(false);
+      console.log("timeout");
+    }, 500);
+  }
+
+  async function handleProductSubmit(event) {
+    event.preventDefault();
     const inputValues = { productName, productPrice, productDescription, productType, productImage };
     const isFormValid = validateProductForm(inputValues, formSubmitType);
     if (isFormValid === true) {
+      const formData = getFormDatas();
       setIsLoading(true);
       handleFormClose(event);
-      await new Promise((resolve) => setTimeout(resolve, 3000));
+      // await new Promise((resolve) => setTimeout(resolve, 3000));
       await submitProductForm(formData, formSubmitType, productUUID)
         .then((response) => {
-          console.log(response);
-          if (response) {
-            setProductUUID(response.data.productUUID);
-            setProductType(response.data.productType);
-            setAddedProduct(true);
-          }
-          // Used setTimout so that form can close smoothly. Didn't put it in handleFormClose because everytime it changes, it triggers fetching function in SingleProduct.jsx. We do not want to fetch the data even when the form is simply closed.
-          setTimeout(() => {
-            setIsSubmitted(true);
-          }, 500);
+          handleResponse(response);
         })
         .catch((error) => {
           console.log(error);
@@ -161,12 +177,14 @@ export function FormProvider({ children }) {
     openDeleteForm,
     isVisible,
     isSubmitted,
-    addedProduct,
+    isProductAdded,
+    isProductDeleted,
     setIsFormOpen,
     setOpenDeleteForm,
     handleFormClose,
     setIsVisible,
-    setAddedProduct,
+    setIsProductAdded,
+    setIsSubmitted,
   };
 
   return <FormContext.Provider value={providerValues}>{children}</FormContext.Provider>;

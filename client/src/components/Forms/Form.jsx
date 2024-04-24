@@ -2,20 +2,15 @@ import React from "react";
 import PropTypes from "prop-types";
 import Button from "../ui/Button";
 import { useFormContext } from "../../context/FormContext";
-import { useNavigate } from "react-router-dom";
 /* eslint-disable react-hooks/exhaustive-deps */
 
 export default function Form({ values = { title: "", handleSubmit: null }, children }) {
   const { title, handleSubmit } = values;
-  const navigate = useNavigate();
-  const { handleFormClose, isVisible, setIsVisible, openDeleteForm } = useFormContext();
-
-  function handleClick() {
-    openDeleteForm && setTimeout(() => navigate("/products"), 500);
-  }
+  const { handleFormClose, isVisible, setIsVisible, setIsSubmitted } = useFormContext();
 
   React.useEffect(() => {
     setIsVisible(true);
+    setIsSubmitted(false);
   }, []);
 
   return (
@@ -39,7 +34,6 @@ export default function Form({ values = { title: "", handleSubmit: null }, child
               />
               <Button
                 title={title}
-                onClick={() => handleClick()}
                 className="bg-[#5865f2] font-normal py-[7px] px-[28px] rounded-sm hover:scale-[none] hover:bg-opacity-70"
               />
             </div>
