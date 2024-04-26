@@ -2,10 +2,12 @@ import { Link } from "react-router-dom";
 import { useCart } from "../../context/CartContext";
 import { CiShoppingCart } from "react-icons/ci";
 import { useFormContext } from "../../context/FormContext";
+import { useUserContext } from "../../context/UserContext";
 
 export default function Navbar() {
   const { getTotalItems, toggleOpenCart } = useCart();
-  const { user } = useFormContext();
+  // const { user } = useFormContext();
+  const { user } = useUserContext();
 
   return (
     <div className="flex justify-between bg-black/75 text-white py-[20px] px-[100px] backdrop-blur-lg">

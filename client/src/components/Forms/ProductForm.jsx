@@ -3,27 +3,19 @@ import PropTypes from "prop-types";
 import InputField from "../../components/Forms/InputField";
 import SelectField from "../../components/Forms/SelectField";
 import TextAreaField from "../../components/Forms/TextAreaField";
-import { useFormContext } from "../../context/FormContext";
+import { useProductFormProvider } from "../../context/ProductFormContext";
 /* eslint-disable react-hooks/exhaustive-deps */
 
 export default function ProductForm({ productInfo }) {
-  const {
-    setProductName,
-    setProductImage,
-    setProductPrice,
-    setProductType,
-    setProductDescription,
-    errorState,
-    isAddProductForm,
-  } = useFormContext();
+  const { dispatch, productFormError, productFormDetail } = useProductFormProvider();
 
   React.useEffect(() => {
     // if the form is opened to update the product, the product's details will be set as initial value
-    if (!isAddProductForm) {
-      setProductName(productInfo.product_name);
-      setProductPrice(productInfo.product_price);
-      setProductType(productInfo.product_type);
-      setProductDescription(productInfo.product_description);
+    if (productFormDetail.formSubmitType === "EDIT") {
+      dispatch({ type: "SET_PRODUCT_NAME", payload: productInfo.product_name });
+      dispatch({ type: "SET_PRODUCT_PRICE", payload: productInfo.product_price });
+      dispatch({ type: "SET_PRODUCT_TYPE", payload: productInfo.product_type });
+      dispatch({ type: "SET_PRODUCT_DESCRIPTION", payload: productInfo.product_description });
     }
   }, []);
 
@@ -35,17 +27,17 @@ export default function ProductForm({ productInfo }) {
         attributes={{
           placeholder: "ASUS Nitro 5",
           name: "productName",
-          defaultValue: isAddProductForm ? "" : productInfo.product_name,
+          defaultValue: productFormDetail.formSubmitType === "EDIT" ? productInfo.product_name : "",
         }}
-        setValue={setProductName}
-        errorState={errorState.name}
+        setValue={(value) => dispatch({ type: "SET_PRODUCT_NAME", payload: value })}
+        errorState={productFormError.name}
       />
       <InputField
         label="Product Image"
         attributes={{ accept: ".png, .jpg, .jpeg, .gif, .webp", name: "productImage" }}
         type="file"
-        setValue={setProductImage}
-        errorState={errorState.image}
+        setValue={(value) => dispatch({ type: "SET_PRODUCT_IMAGE", payload: value })}
+        errorState={productFormError.image}
       />
       <InputField
         label="Product Price"
@@ -53,18 +45,21 @@ export default function ProductForm({ productInfo }) {
         attributes={{
           placeholder: "Enter number only",
           name: "productPrice",
-          defaultValue: isAddProductForm ? "" : productInfo.product_price,
+          defaultValue: productFormDetail.formSubmitType === "EDIT" ? productInfo.product_price : "",
         }}
-        setValue={setProductPrice}
-        errorState={errorState.price}
+        setValue={(value) => dispatch({ type: "SET_PRODUCT_PRICE", payload: value })}
+        errorState={productFormError.price}
       />
       <SelectField
         label="Product Type"
         type="text"
-        attributes={{ name: "productType", defaultValue: isAddProductForm ? "" : productInfo.product_type }}
+        attributes={{
+          name: "productType",
+          defaultValue: productFormDetail.formSubmitType === "EDIT" ? productInfo.product_type : "",
+        }}
         options={["Laptop", "Mobile", "Desktop", "Mouse", "Keyboard", "Headphone"]}
-        setValue={setProductType}
-        errorState={errorState.type}
+        setValue={(value) => dispatch({ type: "SET_PRODUCT_TYPE", payload: value })}
+        errorState={productFormError.type}
       />
       <TextAreaField
         label="Product Description"
@@ -72,10 +67,10 @@ export default function ProductForm({ productInfo }) {
         attributes={{
           placeholder: "Features about product",
           name: "productDescription",
-          defaultValue: isAddProductForm ? "" : productInfo.product_description,
+          defaultValue: productFormDetail.formSubmitType === "EDIT" ? productInfo.product_description : "",
         }}
-        setValue={setProductDescription}
-        errorState={errorState.description}
+        setValue={(value) => dispatch({ type: "SET_PRODUCT_DESCRIPTION", payload: value })}
+        errorState={productFormError.description}
       />
     </>
   );

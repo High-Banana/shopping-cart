@@ -65,7 +65,7 @@ export function UserProvider({ children }) {
   }
 
   const ProviderValues = {
-    userFormDetail,
+    // userFormDetail,
     dispatch,
     handleUserSubmit,
     isLoading,

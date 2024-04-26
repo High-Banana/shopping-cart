@@ -1,16 +1,17 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Button from "../ui/Button";
-import { useFormContext } from "../../context/FormContext";
+import { useUIContext } from "../../context/UIContext";
 /* eslint-disable react-hooks/exhaustive-deps */
 
 export default function Form({ values = { title: "", handleSubmit: null }, children }) {
   const { title, handleSubmit } = values;
-  const { handleFormClose, isVisible, setIsVisible, setIsSubmitted } = useFormContext();
+  const { showForm, handleFormClose } = useUIContext();
 
   React.useEffect(() => {
-    setIsVisible(true);
-    setIsSubmitted(false);
+    // setIsVisible(true);
+    // setIsFormOpen(true);
+    // setIsSubmitted(false);
   }, []);
 
   return (
@@ -21,7 +22,7 @@ export default function Form({ values = { title: "", handleSubmit: null }, child
       <div className="absolute flex flex-col justify-center items-center right-0 left-0 py-3 min-h-dvh">
         <div
           className={`bg-[#434343] w-[440px] mt-10 rounded-md z-[2] ${
-            isVisible ? "scale-100 duration-200" : "scale-75 duration-200 opacity-15"
+            showForm ? "scale-100 duration-200" : "scale-75 duration-200 opacity-15"
           }`}>
           <h2 className="text-white text-2xl font-bold text-center p-6">{title}</h2>
           <form onSubmit={handleSubmit}>

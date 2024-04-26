@@ -4,36 +4,26 @@ import Button from "../../components/ui/Button";
 import Form from "../../components/Forms/Form";
 import useForm from "../../hooks/useForm";
 import ProductForm from "../../components/Forms/ProductForm";
-import { useFormContext } from "../../context/FormContext";
 import { useNavigate } from "react-router-dom";
 import Loading from "../../components/Loading/Loading";
+import { useUserContext } from "../../context/UserContext";
+import { useProductFormProvider } from "../../context/ProductFormContext";
+import { useUIContext } from "../../context/UIContext";
 
 export default function Profile() {
-  const {
-    isFormOpen,
-    setIsFormOpen,
-    handleProductSubmit,
-    user,
-    setErrorState,
-    setFormSubmitType,
-    setIsAddProductForm,
-    productUUID,
-    productType,
-    isLoading,
-    isProductAdded,
-  } = useFormContext();
-  const { errorState } = useForm();
+  const { user } = useUserContext();
+  const { handleProductSubmit, setProductFormError, dispatch, reFetchData, productFormDetail } = useProductFormProvider();
+  const { productFormError, isLoading } = useForm();
+  const { isFormOpen, handleFormOpen } = useUIContext();
   const navigate = useNavigate();
 
   React.useEffect(() => {
-    if (isProductAdded) {
-      navigate(`/products/${productType}/${productUUID}`);
-    }
-    console.log(isProductAdded);
-  }, [isProductAdded]);
+    const { productType, productUUID } = productFormDetail;
+    if (reFetchData) navigate(`/products/${productType}/${productUUID}`);
+  }, [reFetchData]);
 
   React.useEffect(() => {
-    setErrorState(errorState);
+    setProductFormError(productFormError);
   }, [isFormOpen]);
 
   // if (isLoading) return <Loading />;
@@ -77,9 +67,8 @@ export default function Profile() {
               title="Add product"
               className="bg-[rgb(0,128,0)] py-[5px] px-[5px] border-2 border-transparent rounded-[3px] font-semibold hover:scale-[none] hover:bg-[rgb(0,128,0,0.5)]"
               onClick={() => {
-                setIsFormOpen(true);
-                setFormSubmitType("add");
-                setIsAddProductForm(true);
+                handleFormOpen();
+                dispatch({ type: "ADD_PRODUCT" });
               }}
             />
           )}

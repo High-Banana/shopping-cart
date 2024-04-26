@@ -3,6 +3,8 @@ import { createContext } from "react";
 import { CartProvider } from "./CartContext";
 import { FormProvider } from "./FormContext";
 import { UserProvider } from "./UserContext";
+import { ProductFormProvider } from "./ProductFormContext";
+import { UIProvider } from "./UIContext";
 
 const AppContext = createContext();
 
@@ -10,11 +12,15 @@ export default function ContextProvider({ children }) {
   const appInitialState = {};
   return (
     <AppContext.Provider value={appInitialState}>
-      <FormProvider>
-        <UserProvider>
-          <CartProvider>{children}</CartProvider>
-        </UserProvider>
-      </FormProvider>
+      <UIProvider>
+        <FormProvider>
+          <UserProvider>
+            <ProductFormProvider>
+              <CartProvider>{children}</CartProvider>
+            </ProductFormProvider>
+          </UserProvider>
+        </FormProvider>
+      </UIProvider>
     </AppContext.Provider>
   );
 }
