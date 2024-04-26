@@ -1,20 +1,22 @@
 import React from "react";
 
 export default function useForm() {
+  const [isLoading, setIsLoading] = React.useState(false);
   const [isLoginForm, setIsLoginForm] = React.useState(true);
   const [showPassword, setShowPassword] = React.useState(false);
-  const [errorState, setErrorState] = React.useState({
-    // for user form
-    email: "",
-    password: "",
-    username: "",
-    // for product form
-    name: "",
-    image: "",
-    price: "",
-    type: "",
-    description: "",
-  });
+  const [userFormError, setUserFormError] = React.useState({ email: "", password: "", username: "" });
+  // const [errorState, setErrorState] = React.useState({
+  //   // for user form
+  //   email: "",
+  //   password: "",
+  //   username: "",
+  //   // for product form
+  //   name: "",
+  //   image: "",
+  //   price: "",
+  //   type: "",
+  //   description: "",
+  // });
 
   function validateUserForm(inputValue) {
     const errors = {
@@ -46,12 +48,14 @@ export default function useForm() {
   }
 
   return {
+    isLoading,
     isLoginForm,
-    errorState,
+    userFormError,
     showPassword,
+    setIsLoading,
     setIsLoginForm,
     validateUserForm,
-    setErrorState,
+    setUserFormError,
     setShowPassword,
     validateProductForm,
   };

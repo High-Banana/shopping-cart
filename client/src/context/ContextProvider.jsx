@@ -2,6 +2,7 @@ import PropTypes from "prop-types";
 import { createContext } from "react";
 import { CartProvider } from "./CartContext";
 import { FormProvider } from "./FormContext";
+import { UserProvider } from "./UserContext";
 
 const AppContext = createContext();
 
@@ -10,7 +11,9 @@ export default function ContextProvider({ children }) {
   return (
     <AppContext.Provider value={appInitialState}>
       <FormProvider>
-        <CartProvider>{children}</CartProvider>
+        <UserProvider>
+          <CartProvider>{children}</CartProvider>
+        </UserProvider>
       </FormProvider>
     </AppContext.Provider>
   );

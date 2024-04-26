@@ -5,20 +5,21 @@ import GoBackButton from "../../components/ui/GoBackButton";
 import LoginForm from "./LoginForm";
 import SignUpForm from "./SignUpForm";
 import useForm from "../../hooks/useForm";
-import { useFormContext } from "../../context/FormContext";
 import { useNavigate } from "react-router-dom";
+import { useUserContext } from "../../context/UserContext";
 
 export default function LoginPage() {
-  const { handleUserSubmit, isLoading, isLoginForm, setIsLoginForm, user, setErrorState } = useFormContext();
-  const { errorState } = useForm();
+  const { handleUserSubmit, isLoading, user, setUserFormError } = useUserContext();
+  const { userFormError } = useForm();
   const navigate = useNavigate();
+  const [isLoginForm, setIsLoginForm] = React.useState(true);
 
   React.useEffect(() => {
     if (user.length !== 0 && !isLoading) navigate(-1);
   }, [user, isLoading]);
 
   React.useEffect(() => {
-    setErrorState(errorState);
+    setUserFormError(userFormError);
   }, [isLoginForm]);
 
   return (
