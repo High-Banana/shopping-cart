@@ -3,6 +3,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import useForm from "../hooks/useForm";
 import useProductAPI from "../hooks/useProductAPI";
+import { useUIContext } from "./UIContext";
 
 const ProductContext = React.createContext();
 
@@ -32,6 +33,10 @@ function productReducer(state, action) {
       return { ...state, productUUID: action.payload };
     case "ADD_PRODUCT":
       return { ...state, formSubmitType: "ADD" };
+    case "UPDATE_PRODUCT":
+      return { ...state, formSubmitType: "EDIT" };
+    case "DELETE_PRODUCT":
+      return { ...state, formSubmitType: "DELETE" };
   }
 }
 
@@ -39,11 +44,14 @@ export function ProductFormProvider({ children }) {
   const [productFormDetail, dispatch] = React.useReducer(productReducer, initialProductFormDetail);
   const [isFormOpen, setIsFormOpen] = React.useState(false);
   const [reFetchData, setReFetchData] = React.useState(false);
+  const [isProductDeleted, setIsProductDeleted] = React.useState(false);
   const { validateProductForm, setProductFormError, setIsLoading, productFormError } = useForm();
   const { submitProductForm } = useProductAPI();
+  const { handleFormClose } = useUIContext();
 
   React.useEffect(() => {
     setReFetchData(false);
+    setIsProductDeleted(false);
   }, []);
 
   function getFormDatas() {
@@ -56,24 +64,18 @@ export function ProductFormProvider({ children }) {
     return formData;
   }
 
-  function handleFormClose(event) {
-    event.preventDefault();
-    // setIsVisible(false);
-    console.log("close");
-    setTimeout(() => {
-      setIsFormOpen(false);
-      //   setOpenDeleteForm(false);
-    }, 100);
-  }
-
   function handleResponse(response) {
-    console.log(response);
-    if (response.data.message === "product-added") {
-      dispatch({ type: "SET_PRODUCT_UUID", payload: response.data.productUUID });
-      dispatch({ type: "SET_PRODUCT_TYPE", payload: response.data.productType });
-      setReFetchData(true);
-    } else if (response.data.message === "product-deleted") {
-      //   setIsProductDeleted(true);
+    if (response.data.message === "product-deleted") {
+      setReFetchData(false);
+      setIsProductDeleted(true);
+    } else {
+      if (response.data.message === "product-added") {
+        dispatch({ type: "SET_PRODUCT_UUID", payload: response.data.productUUID });
+        dispatch({ type: "SET_PRODUCT_TYPE", payload: response.data.productType });
+      }
+      setTimeout(() => {
+        setReFetchData(true);
+      }, 200);
     }
   }
 
@@ -81,15 +83,14 @@ export function ProductFormProvider({ children }) {
     event.preventDefault();
     const isFormValid = validateProductForm(productFormDetail);
     console.log(isFormValid);
-    if (isFormValid !== true) return setProductFormError(isFormValid);
+    const { formSubmitType, productUUID } = productFormDetail;
+    if (isFormValid !== true && formSubmitType !== "DELETE") return setProductFormError(isFormValid);
     const formData = getFormDatas();
     setIsLoading(true);
-    // await new Promise((resolve) => setTimeout(resolve, 3000));
-    console.log(formData);
-    await submitProductForm(formData, productFormDetail.formSubmitType, productFormDetail.productUUID)
+    await submitProductForm(formData, formSubmitType, productUUID)
       .then((response) => {
-        // handleFormClose(event);
         handleResponse(response);
+        handleFormClose(event);
       })
       .catch((error) => {
         console.log(error);
@@ -105,10 +106,12 @@ export function ProductFormProvider({ children }) {
     productFormError,
     isFormOpen,
     reFetchData,
+    isProductDeleted,
     dispatch,
     setProductFormError,
     setIsFormOpen,
-    handleFormClose,
+    setReFetchData,
+    setIsProductDeleted,
     handleProductSubmit,
   };
 

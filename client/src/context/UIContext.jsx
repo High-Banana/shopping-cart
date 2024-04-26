@@ -7,6 +7,7 @@ const UIContext = React.createContext();
 export function UIProvider({ children }) {
   const [isFormOpen, setIsFormOpen] = React.useState(false);
   const [showForm, setShowForm] = React.useState(false);
+  const [isDeleteForm, setIsDeleteForm] = React.useState(false);
 
   function handleFormOpen() {
     setIsFormOpen(true);
@@ -16,14 +17,25 @@ export function UIProvider({ children }) {
     }, 0);
   }
 
-  function handleFormClose() {
+  function handleFormClose(event) {
+    event.preventDefault();
     setShowForm(false);
     setTimeout(() => {
       setIsFormOpen(false);
+      setIsDeleteForm(false);
     }, 100);
   }
 
-  const providerValues = { isFormOpen, showForm, handleFormClose, handleFormOpen };
+  const providerValues = {
+    isFormOpen,
+    showForm,
+    isDeleteForm,
+    setIsFormOpen,
+    setShowForm,
+    setIsDeleteForm,
+    handleFormOpen,
+    handleFormClose,
+  };
 
   return <UIContext.Provider value={providerValues}>{children}</UIContext.Provider>;
 }

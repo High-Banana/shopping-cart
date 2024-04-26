@@ -12,27 +12,21 @@ import { IMAGE_SRC_PATH } from "../../services/constants";
 import { useCart } from "../../context/CartContext";
 import { useFormContext } from "../../context/FormContext";
 import { BsThreeDotsVertical } from "react-icons/bs";
+import { useUserContext } from "../../context/UserContext";
+import { useUIContext } from "../../context/UIContext";
+import { useProductFormProvider } from "../../context/ProductFormContext";
 
 export default function SingleProduct() {
   const { productID } = useParams();
   const { addToCart } = useCart();
-  const { user } = useFormContext();
+  // const { user } = useFormContext();
+  const { user } = useUserContext();
+  const { isFormOpen, setIsFormOpen, handleFormOpen, isDeleteForm, setIsDeleteForm } = useUIContext();
+  const { dispatch, reFetchData, setReFetchData, isProductDeleted, handleProductSubmit } = useProductFormProvider();
   const navigate = useNavigate();
   const buttonRef = React.useRef();
   const [showOptions, setShowOptions] = React.useState(false);
-  const {
-    isFormOpen,
-    setIsFormOpen,
-    openDeleteForm,
-    setOpenDeleteForm,
-    isSubmitted,
-    handleProductSubmit,
-    setProductUUID,
-    setIsAddProductForm,
-    setFormSubmitType,
-    isLoading: isUpdating,
-    isProductDeleted,
-  } = useFormContext();
+  const { isLoading: isUpdating } = useFormContext();
   const {
     items: [product],
     isLoading,
@@ -45,24 +39,27 @@ export default function SingleProduct() {
   }
 
   function handleClick({ action }) {
-    action === "edit" ? setIsFormOpen(true) : setOpenDeleteForm(true);
-    setIsAddProductForm(false);
-    setFormSubmitType(action);
-    setProductUUID(productID);
+    action === "UPDATE_PRODUCT" ? handleFormOpen() : setIsDeleteForm(true);
+    dispatch({ type: action });
+    dispatch({ type: "SET_PRODUCT_UUID", payload: productID });
+    setReFetchData(false);
   }
 
   React.useEffect(() => {
     fetchItems(productID);
     setIsFormOpen(false);
-    setOpenDeleteForm(false);
+    setIsDeleteForm(false);
+    setReFetchData(false);
     document.addEventListener("click", handleClickOutside, true);
     return () => document.removeEventListener("click", handleClickOutside, true);
   }, []);
 
   React.useEffect(() => {
-    if (isSubmitted) fetchItems(productID);
-    if (isProductDeleted) navigate("/products");
-  }, [isSubmitted, isProductDeleted]);
+    setTimeout(() => {
+      if (reFetchData) fetchItems(productID);
+      if (isProductDeleted) navigate("/products");
+    }, 200);
+  }, [reFetchData, isProductDeleted]);
 
   if (error !== null) return <Error errorDetail={error} onClickFunction={() => fetchItems(productID)} />;
 
@@ -86,13 +83,13 @@ export default function SingleProduct() {
                       showOptions ? "flex flex-col gap-2" : "hidden"
                     } absolute top-[1px] right-[35px] bg-[#212121] rounded-md text-white`}>
                     <button
-                      onClick={() => handleClick({ action: "edit" })}
+                      onClick={() => handleClick({ action: "UPDATE_PRODUCT" })}
                       className="font-semibold border-b py-2 px-4 hover:underline"
                       aria-label="edit">
                       Edit
                     </button>
                     <button
-                      onClick={() => handleClick({ action: "delete" })}
+                      onClick={() => handleClick({ action: "DELETE_PRODUCT" })}
                       className="font-semibold pb-2 px-4 hover:underline"
                       aria-label="delete">
                       Delete
@@ -126,7 +123,7 @@ export default function SingleProduct() {
               <ProductForm productInfo={product} />
             </Form>
           )}
-          {openDeleteForm && (
+          {isDeleteForm && (
             <>
               <Form values={{ title: "Delete Product", handleSubmit: handleProductSubmit }}>
                 <h2 className="text-white text-1xl font-bold">Are you sure you want to delete this product?</h2>

@@ -23,10 +23,12 @@ export default function useProductAPI() {
   async function submitProductForm(formData, submitType, productID) {
     setErrorState(null);
     setIsLoading(true);
+    console.log(submitType);
+    console.log(productID);
     try {
       if (submitType === "ADD") return await addProduct(formData);
-      else if (submitType === "edit") return await updateProduct(formData, productID);
-      else if (submitType === "delete") return await deleteProduct(productID);
+      else if (submitType === "EDIT") return await updateProduct(formData, productID);
+      else if (submitType === "DELETE") return await deleteProduct(productID);
     } catch (error) {
       console.log(error);
       setErrorState(error);

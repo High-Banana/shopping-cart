@@ -2,16 +2,18 @@ import React from "react";
 import PropTypes from "prop-types";
 import Button from "../ui/Button";
 import { useUIContext } from "../../context/UIContext";
+import { useProductFormProvider } from "../../context/ProductFormContext";
 /* eslint-disable react-hooks/exhaustive-deps */
 
 export default function Form({ values = { title: "", handleSubmit: null }, children }) {
   const { title, handleSubmit } = values;
-  const { showForm, handleFormClose } = useUIContext();
+  const { showForm, handleFormClose, setShowForm } = useUIContext();
+  const { setReFetchData, setIsProductDeleted } = useProductFormProvider();
 
   React.useEffect(() => {
-    // setIsVisible(true);
-    // setIsFormOpen(true);
-    // setIsSubmitted(false);
+    setShowForm(true);
+    setReFetchData(false);
+    setIsProductDeleted(false);
   }, []);
 
   return (
