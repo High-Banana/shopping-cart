@@ -4,6 +4,7 @@ import InputField from "../../components/Forms/InputField";
 import SelectField from "../../components/Forms/SelectField";
 import TextAreaField from "../../components/Forms/TextAreaField";
 import { useProductFormProvider } from "../../context/ProductFormContext";
+import { productTypes } from "../../services/product";
 /* eslint-disable react-hooks/exhaustive-deps */
 
 export default function ProductForm({ productInfo }) {
@@ -57,7 +58,7 @@ export default function ProductForm({ productInfo }) {
           name: "productType",
           defaultValue: productFormDetail.formSubmitType === "EDIT" ? productInfo.product_type : "",
         }}
-        options={["Laptop", "Mobile", "Desktop", "Mouse", "Keyboard", "Headphone"]}
+        options={productTypes}
         setValue={(value) => dispatch({ type: "SET_PRODUCT_TYPE", payload: value })}
         errorState={productFormError.type}
       />

@@ -5,6 +5,7 @@ import Loading from "../../../components/Loading/Loading";
 import Error from "../../../components/Error";
 import SortItems from "./SortItems";
 import useProductAPI from "../../../hooks/useProductAPI";
+import FilterItems from "./FilterItems";
 
 export default function ProductPage() {
   const { items: products, isLoading, errorState: error, fetchItems } = useProductAPI();
@@ -21,12 +22,15 @@ export default function ProductPage() {
       {isLoading ? (
         <Loading />
       ) : (
-        <div className="mx-[50px]">
-          <div className="mb-[50px] mt-[20px] flex justify-between">
-            <h1 className="font-[700] text-[20px]">{products.length} items</h1>
-            <SortItems sortType={sortType} setSortType={setSortType} />
+        <div className="mx-[10px] flex gap-4">
+          <FilterItems />
+          <div className="flex flex-col gap-[40px]">
+            <div className="flex justify-between mt-[20px]">
+              <h1 className="font-[700] text-[20px]">{products.length} items</h1>
+              <SortItems sortType={sortType} setSortType={setSortType} />
+            </div>
+            <ProductsList products={products} sortType={sortType} />
           </div>
-          <ProductsList products={products} sortType={sortType} />
         </div>
       )}
     </div>

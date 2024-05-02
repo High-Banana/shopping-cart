@@ -11,7 +11,7 @@ export default function ProductsList({ products, sortType }) {
   };
 
   return (
-    <div className="grid grid-cols-4 gap-[15px] items-center pb-[100px] pt-[20px]">
+    <div className="grid grid-cols-3 gap-[35px] items-center pb-[100px] pt-[20px] mx-[20px]">
       {products.sort(sortMethods[sortType].method).map((product) => {
         return (
           <div key={product.id} className="flex flex-col h-full transition duration-[0.3s] hover:translate-y-[-10px]">
