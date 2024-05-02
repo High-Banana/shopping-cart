@@ -4,7 +4,7 @@ import App from "../pages/App";
 import ErrorPage from "../pages/ErrorPage";
 import ProductPage from "../pages/Product/Main-page/ProductPage";
 import LoginPage from "../pages/LoginPage/LoginPage";
-import SingleProduct from "../pages/Product/SingleProduct";
+import SingleProduct from "../pages/Product/SingleProduct/SingleProduct";
 import ContextProvider from "../context/ContextProvider";
 import Profile from "../pages/Profile/Profile";
 
