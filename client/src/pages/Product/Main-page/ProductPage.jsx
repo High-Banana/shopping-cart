@@ -10,10 +10,12 @@ import FilterItems from "./FilterItems";
 export default function ProductPage() {
   const { items: products, isLoading, errorState: error, fetchItems } = useProductAPI();
   const [sortType, setSortType] = React.useState("ascendingPrice");
+  const [filterType, setFilterType] = React.useState(null);
 
   React.useEffect(() => {
     fetchItems();
-  }, [sortType]);
+    if (filterType !== null) fetchItems(null, filterType);
+  }, [sortType, filterType]);
 
   if (error) return <Error errorDetail={error} onClickFunction={() => fetchItems()} />;
 
@@ -23,7 +25,7 @@ export default function ProductPage() {
         <Loading />
       ) : (
         <div className="mx-[10px] flex gap-4">
-          <FilterItems />
+          <FilterItems filterType={filterType} setFilterType={setFilterType} />
           <div className="flex flex-col gap-[40px]">
             <div className="flex justify-between mt-[20px]">
               <h1 className="font-[700] text-[20px]">{products.length} items</h1>

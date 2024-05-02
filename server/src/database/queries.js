@@ -22,6 +22,17 @@ async function getProductByID(req, res, next) {
   }
 }
 
+export async function getProductByType(req, res, next) {
+  const productType = req.params.productType;
+  try {
+    const [product] = await database.query("select * from products where product_type = ?", [productType]);
+    if (product.length === 0) throw new Error("404 Error");
+    else res.send(product);
+  } catch (error) {
+    next(error);
+  }
+}
+
 async function addProduct(req, res, next) {
   const { productName, productDescription, productPrice, productType } = req.body;
   const productImage = req.file.filename;

@@ -1,19 +1,38 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React from "react";
-import { addProduct, deleteProduct, fetchAllProducts, fetchProductByID, updateProduct } from "../services/api/ProductAPI";
+import {
+  addProduct,
+  deleteProduct,
+  fetchAllProducts,
+  fetchFilteredProducts,
+  fetchProductByID,
+  updateProduct,
+} from "../services/api/ProductAPI";
 
 export default function useProductAPI() {
   const [items, setItems] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
   const [errorState, setErrorState] = React.useState(null);
 
-  async function fetchItems(productID) {
+  async function fetchItems(productID, fetchType) {
     setErrorState(null);
     setIsLoading(true);
     try {
-      const products = productID === undefined ? await fetchAllProducts() : await fetchProductByID(productID);
+      // const products = productID === undefined ? await fetchAllProducts() : await fetchProductByID(productID);
+      let products;
+      if (productID === undefined && fetchType === undefined) {
+        console.log("all");
+        products = await fetchAllProducts();
+      } else if (productID === null && fetchType !== null) {
+        console.log("filter");
+        products = await fetchFilteredProducts(fetchType);
+      } else if (productID && fetchType === undefined) {
+        console.log("id");
+        products = await fetchProductByID(productID);
+      }
       setItems(products);
     } catch (error) {
+      console.log(error);
       setErrorState(error);
     } finally {
       setIsLoading(false);

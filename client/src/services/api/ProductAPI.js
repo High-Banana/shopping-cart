@@ -21,6 +21,24 @@ export async function fetchProductByID(productID) {
     });
 }
 
+export async function fetchFilteredProducts(productType) {
+  return axios
+    .get(`/api/products/${productType}`)
+    .then((response) => {
+      return response.data;
+    })
+    .catch((error) => {
+      Promise.reject(error);
+      const customError = {
+        response: {
+          status: 404,
+          statusText: "The product is not available",
+        },
+      };
+      throw customError;
+    });
+}
+
 export async function addProduct(formData) {
   console.log(formData);
   return axios

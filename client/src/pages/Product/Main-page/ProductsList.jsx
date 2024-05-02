@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { IMAGE_SRC_PATH } from "/src/services/constants.js";
 
-export default function ProductsList({ products, sortType }) {
+export default function ProductsList({ products, sortType, filterType }) {
   const sortMethods = {
     ascendingPrice: { method: (a, b) => parseFloat(b.product_price - a.product_price) },
     descendingPrice: { method: (a, b) => parseFloat(a.product_price - b.product_price) },
