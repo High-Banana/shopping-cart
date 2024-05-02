@@ -22,7 +22,8 @@ export default function SingleProduct() {
   // const { user } = useFormContext();
   const { user } = useUserContext();
   const { isFormOpen, setIsFormOpen, handleFormOpen, isDeleteForm, setIsDeleteForm } = useUIContext();
-  const { dispatch, reFetchData, setReFetchData, isProductDeleted, handleProductSubmit } = useProductFormProvider();
+  const { dispatch, reFetchData, setReFetchData, isProductDeleted, handleProductSubmit, setIsProductDeleted } =
+    useProductFormProvider();
   const navigate = useNavigate();
   const buttonRef = React.useRef();
   const [showOptions, setShowOptions] = React.useState(false);
@@ -56,8 +57,13 @@ export default function SingleProduct() {
 
   React.useEffect(() => {
     setTimeout(() => {
-      if (reFetchData) fetchItems(productID);
-      if (isProductDeleted) navigate("/products");
+      if (reFetchData) {
+        fetchItems(productID);
+        setReFetchData(false);
+      } else if (isProductDeleted) {
+        navigate("/products");
+        setIsProductDeleted(false);
+      }
     }, 200);
   }, [reFetchData, isProductDeleted]);
 
