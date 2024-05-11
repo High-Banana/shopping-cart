@@ -37,7 +37,7 @@ export default function ProductPage() {
               <ProductsList products={products} sortType={sortType} />
             </div>
           ) : (
-            <p className="text-4xl font-bold">No items found</p>
+            <p className="text-4xl font-bold mt-[20px]">No items found</p>
           )}
         </div>
       )}

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React from "react";
 import { Link } from "react-router-dom";
 import { useCart } from "../../context/CartContext";
@@ -21,7 +22,7 @@ export default function Navbar() {
   React.useEffect(() => {
     window.addEventListener("scroll", handleNavbarScroll);
     return () => window.removeEventListener("scroll", handleNavbarScroll);
-  }, [lastScrollPosition]);
+  }, [handleNavbarScroll, lastScrollPosition]);
 
   return (
     <div
