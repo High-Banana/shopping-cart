@@ -20,7 +20,7 @@ export default function FilterItems({ filterType, setFilterType }) {
 
   const categoriesList = productTypes.map((type, index) => {
     const isSelected = index === selectedIndex;
-    const styles = `relative flex justify-between items-center max-w-[90%] px-[10px] py-[2px] font-semibold tracking-wide rounded-md ${
+    const styles = `relative flex justify-between items-center max-w-[90%] px-[10px] py-[2px] font-semibold tracking-wide rounded-md hover:cursor-default ${
       isSelected ? "bg-black text-white py-[4px] text-[20px]" : "hover:bg-[#bbbbbb] text-[#363636] text-[18px]"
     }`;
     return (
@@ -31,7 +31,7 @@ export default function FilterItems({ filterType, setFilterType }) {
   });
 
   return (
-    <div className="min-w-[200px] border-r border-black">
+    <div className="min-w-[200px] border-r border-black hover:cur">
       <ul className="sticky top-20 mt-[20px] pb-[100px] space-y-5">
         <h1 className="font-bold text-[22px]">Categories</h1>
         <div className="flex flex-col gap-[6px]">{categoriesList}</div>

@@ -20,16 +20,10 @@ export default function useProductAPI() {
     try {
       // const products = productID === undefined ? await fetchAllProducts() : await fetchProductByID(productID);
       let products;
-      if (productID === undefined && fetchType === undefined) {
-        console.log("all");
-        products = await fetchAllProducts();
-      } else if (productID === null && fetchType !== null) {
-        console.log("filter");
-        products = await fetchFilteredProducts(fetchType);
-      } else if (productID && fetchType === undefined) {
-        console.log("id");
-        products = await fetchProductByID(productID);
-      }
+      if (productID === undefined && fetchType === undefined) products = await fetchAllProducts();
+      else if (productID === null && fetchType !== null) products = await fetchFilteredProducts(fetchType);
+      else if (productID && fetchType === undefined) products = await fetchProductByID(productID);
+      console.log(products);
       setItems(products);
     } catch (error) {
       console.log(error);

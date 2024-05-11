@@ -25,17 +25,19 @@ export async function fetchFilteredProducts(productType) {
   return axios
     .get(`/api/products/${productType}`)
     .then((response) => {
+      console.log(response);
       return response.data;
     })
     .catch((error) => {
+      console.log(error);
       Promise.reject(error);
-      const customError = {
-        response: {
-          status: 404,
-          statusText: "The product is not available",
-        },
-      };
-      throw customError;
+      // const customError = {
+      //   response: {
+      //     status: 404,
+      //     statusText: "The product is not available",
+      //   },
+      // };
+      // throw customError;
     });
 }
 

@@ -26,7 +26,7 @@ export async function getProductByType(req, res, next) {
   const productType = req.params.productType;
   try {
     const [product] = await database.query("select * from products where product_type = ?", [productType]);
-    if (product.length === 0) throw new Error("404 Error");
+    if (product.length === 0) res.send([]);
     else res.send(product);
   } catch (error) {
     next(error);

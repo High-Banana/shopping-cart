@@ -25,16 +25,20 @@ export default function ProductPage() {
       {isLoading ? (
         <Loading />
       ) : (
-        <div className="mx-[10px]">
-          <div className="flex flex-col gap-[40px]">
-            <div className="flex justify-between mt-[20px]">
-              <h1 className="font-[700] text-[20px]">
-                {products.length} items {filterType && `- ${filterType}`}
-              </h1>
-              <SortItems sortType={sortType} setSortType={setSortType} />
+        <div className="mx-[10px] min-h-screen">
+          {products.length > 0 ? (
+            <div className="flex flex-col gap-[40px]">
+              <div className="flex justify-between mt-[20px]">
+                <h1 className="font-[700] text-[20px]">
+                  {products.length} items {filterType && `- ${filterType}`}
+                </h1>
+                <SortItems sortType={sortType} setSortType={setSortType} />
+              </div>
+              <ProductsList products={products} sortType={sortType} />
             </div>
-            <ProductsList products={products} sortType={sortType} />
-          </div>
+          ) : (
+            <p className="text-4xl font-bold">No items found</p>
+          )}
         </div>
       )}
     </div>
