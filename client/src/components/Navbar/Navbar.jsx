@@ -1,16 +1,33 @@
+import React from "react";
 import { Link } from "react-router-dom";
 import { useCart } from "../../context/CartContext";
 import { CiShoppingCart } from "react-icons/ci";
-import { useFormContext } from "../../context/FormContext";
 import { useUserContext } from "../../context/UserContext";
 
 export default function Navbar() {
   const { getTotalItems, toggleOpenCart } = useCart();
-  // const { user } = useFormContext();
   const { user } = useUserContext();
+  const [isVisible, setIsVisible] = React.useState(true);
+  const [lastScrollPosition, setLastScrollPosition] = React.useState(0);
+
+  function handleNavbarScroll() {
+    const currentScrollPosition = window.scrollY;
+    if (currentScrollPosition > lastScrollPosition) setIsVisible(false);
+    else if (lastScrollPosition > currentScrollPosition) setIsVisible(true);
+
+    setLastScrollPosition(currentScrollPosition);
+  }
+
+  React.useEffect(() => {
+    window.addEventListener("scroll", handleNavbarScroll);
+    return () => window.removeEventListener("scroll", handleNavbarScroll);
+  }, [lastScrollPosition]);
 
   return (
-    <div className="flex justify-between bg-black/75 text-white py-[20px] px-[100px] backdrop-blur-lg">
+    <div
+      className={`flex justify-between bg-black/55 text-white py-[20px] px-[100px] backdrop-blur-lg shadow-[1px_5px_15px] shadow-black duration-200 ${
+        isVisible ? "translate-y-[0px]" : "translate-y-[-100px]"
+      }`}>
       <div className="flex gap-[30px] text-[20px] font-[500]">
         <Link to="/" className="navbar-link-hover">
           Home

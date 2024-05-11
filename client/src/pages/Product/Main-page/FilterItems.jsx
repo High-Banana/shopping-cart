@@ -31,7 +31,7 @@ export default function FilterItems({ filterType, setFilterType }) {
   });
 
   return (
-    <div className="min-w-[200px] border-r border-black hover:cur">
+    <div className="min-w-[200px] border-r border-black">
       <ul className="sticky top-20 mt-[20px] pb-[100px] space-y-5">
         <h1 className="font-bold text-[22px]">Categories</h1>
         <div className="flex flex-col gap-[6px]">{categoriesList}</div>
