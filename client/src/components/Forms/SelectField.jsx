@@ -6,6 +6,10 @@ import { setID } from "../../utils/helper";
 export default function SelectField({ label, type, className, options, attributes, setValue }) {
   const id = setID(label);
 
+  function capitalise(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
+
   React.useEffect(() => {
     setValue(options[0]);
   }, []);
@@ -14,7 +18,7 @@ export default function SelectField({ label, type, className, options, attribute
     <div className="flex flex-col gap-2 text-[#c9c9c9]">
       <label htmlFor={id}>{label}</label>
       <select
-        onChange={(event) => setValue(event.target.value)}
+        onChange={(event) => setValue(capitalise(event.target.value))}
         id={id}
         type={type}
         {...attributes}
