@@ -14,6 +14,7 @@ import { useUserContext } from "../../../context/UserContext";
 import { useUIContext } from "../../../context/UIContext";
 import { useProductFormProvider } from "../../../context/ProductFormContext";
 import Navigation from "./Navigation";
+import { productFetchType } from "../../../services/constants";
 
 export default function SingleProduct() {
   const { productID } = useParams();
@@ -31,7 +32,7 @@ export default function SingleProduct() {
   } = useProductAPI();
 
   React.useEffect(() => {
-    fetchItems(productID);
+    fetchItems({ productID: productID, fetchType: productFetchType.PRODUCT_ID });
     setIsFormOpen(false);
     setIsDeleteForm(false);
     setReFetchData(false);
@@ -40,7 +41,7 @@ export default function SingleProduct() {
   React.useEffect(() => {
     setTimeout(() => {
       if (reFetchData) {
-        fetchItems(productID);
+        fetchItems({ productID: productID, fetchType: productFetchType.PRODUCT_ID });
         setReFetchData(false);
       } else if (isProductDeleted) {
         navigate("/products");
@@ -49,7 +50,13 @@ export default function SingleProduct() {
     }, 200);
   }, [reFetchData, isProductDeleted]);
 
-  if (error !== null) return <Error errorDetail={error} onClickFunction={() => fetchItems(productID)} />;
+  if (error !== null)
+    return (
+      <Error
+        errorDetail={error}
+        onClickFunction={() => fetchItems({ productID: productID, fetchType: productFetchType.PRODUCT_ID })}
+      />
+    );
   if (isLoading) return <Loading />;
 
   return (

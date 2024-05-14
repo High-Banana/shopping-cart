@@ -6,6 +6,7 @@ import Error from "../../../components/Error";
 import SortItems from "./SortItems";
 import useProductAPI from "../../../hooks/useProductAPI";
 import FilterItems from "./FilterItems";
+import { productFetchType } from "../../../services/constants";
 
 export default function ProductPage() {
   const { items: products, isLoading, errorState: error, fetchItems } = useProductAPI();
@@ -13,11 +14,12 @@ export default function ProductPage() {
   const [filterType, setFilterType] = React.useState(null);
 
   React.useEffect(() => {
-    if (filterType !== null) fetchItems(null, filterType);
-    else fetchItems();
+    if (filterType !== null) fetchItems({ category: filterType, fetchType: productFetchType.PRODUCT_CATEGORY });
+    else fetchItems({ productID: null, fetchType: productFetchType.ALL });
   }, [sortType, filterType]);
 
-  if (error) return <Error errorDetail={error} onClickFunction={() => fetchItems()} />;
+  if (error)
+    return <Error errorDetail={error} onClickFunction={() => fetchItems({ productID: null, fetchType: productFetchType.ALL })} />;
 
   return (
     <div className="relative flex mx-[10px]">

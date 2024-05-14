@@ -22,6 +22,7 @@ export async function fetchProductByID(productID) {
 }
 
 export async function fetchFilteredProducts(productType) {
+  console.log(productType);
   return axios
     .get(`/api/products/${productType}`)
     .then((response) => {

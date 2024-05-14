@@ -8,22 +8,31 @@ import {
   fetchProductByID,
   updateProduct,
 } from "../services/api/ProductAPI";
+import { productFetchType } from "../services/constants";
 
 export default function useProductAPI() {
   const [items, setItems] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
   const [errorState, setErrorState] = React.useState(null);
 
-  async function fetchItems(productID, fetchType) {
+  async function fetchItems({ productID = null, category = null, fetchType }) {
     setErrorState(null);
     setIsLoading(true);
     try {
-      // const products = productID === undefined ? await fetchAllProducts() : await fetchProductByID(productID);
       let products;
-      if (productID === undefined && fetchType === undefined) products = await fetchAllProducts();
-      else if (productID === null && fetchType !== null) products = await fetchFilteredProducts(fetchType);
-      else if (productID && fetchType === undefined) products = await fetchProductByID(productID);
-      console.log(products);
+      switch (fetchType) {
+        case productFetchType.ALL:
+          products = await fetchAllProducts();
+          break;
+        case productFetchType.PRODUCT_ID:
+          products = await fetchProductByID(productID);
+          break;
+        case productFetchType.PRODUCT_CATEGORY:
+          products = await fetchFilteredProducts(category);
+          break;
+        default:
+          throw new Error(`Invalid fetch type: ${fetchType}`);
+      }
       setItems(products);
     } catch (error) {
       console.log(error);
