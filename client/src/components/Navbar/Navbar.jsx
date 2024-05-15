@@ -12,7 +12,7 @@ export default function Navbar() {
   const [isVisible, setIsVisible] = React.useState(true);
   const [lastScrollPosition, setLastScrollPosition] = React.useState(0);
   const [isSearchActive, setIsSearchActive] = React.useState(false);
-  const searchBarRef = React.useRef(null);
+  const searchInputRef = React.useRef(null);
 
   function handleNavbarScroll() {
     const currentScrollPosition = window.scrollY;
@@ -22,9 +22,7 @@ export default function Navbar() {
   }
 
   function handleSearchBar(event) {
-    if (searchBarRef.current && searchBarRef.current.contains(event.target))
-      // searchBarRef.current.style = "width:300px;box-shadow: 0 0 15px 4px black";
-      setIsSearchActive(true);
+    if (searchInputRef.current && searchInputRef.current.contains(event.target)) setIsSearchActive(true);
     else setIsSearchActive(false);
   }
 
@@ -51,11 +49,13 @@ export default function Navbar() {
         </Link>
       </div>
       <div
-        ref={searchBarRef}
         className={`flex bg-white px-2 rounded-lg justify-between gap-[5px] duration-300 transition-all ${
           isSearchActive ? "w-[350px] shadow-black shadow-[0_0_15px_4px]" : "w-[200px]"
         }`}>
-        <input placeholder="Search products" className="w-full text-black font-semibold outline-none"></input>
+        <input
+          ref={searchInputRef}
+          placeholder="Search products"
+          className="w-full text-black font-semibold outline-none"></input>
         <button className="text-black text-2xl">
           <IoSearchOutline />
         </button>
