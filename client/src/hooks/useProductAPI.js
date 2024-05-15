@@ -8,7 +8,7 @@ import {
   fetchProductByID,
   updateProduct,
 } from "../services/api/ProductAPI";
-import { productFetchType } from "../services/constants";
+import { productFetchType, productSubmitType } from "../services/constants";
 
 export default function useProductAPI() {
   const [items, setItems] = React.useState([]);
@@ -48,9 +48,19 @@ export default function useProductAPI() {
     console.log(submitType);
     console.log(productID);
     try {
-      if (submitType === "ADD") return await addProduct(formData);
-      else if (submitType === "EDIT") return await updateProduct(formData, productID);
-      else if (submitType === "DELETE") return await deleteProduct(productID);
+      // if (submitType === productSubmitType.ADD_PRODUCT) return await addProduct(formData);
+      // else if (submitType === productSubmitType.) return await updateProduct(formData, productID);
+      // else if (submitType === productSubmitType.ADD_PRODUCT) return await deleteProduct(productID);
+      switch (submitType) {
+        case productSubmitType.ADD_PRODUCT:
+          return await addProduct(formData);
+        case productSubmitType.UPDATE_PRODUCT:
+          return await updateProduct(formData, productID);
+        case productSubmitType.DELETE_PRODUCT:
+          return await deleteProduct(productID);
+        default:
+          throw new Error(`Invalid submit type : ${submitType}`);
+      }
     } catch (error) {
       console.log(error);
       setErrorState(error);

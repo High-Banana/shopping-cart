@@ -6,3 +6,16 @@ export const productFetchType = {
   PRODUCT_ID: "id",
   PRODUCT_CATEGORY: "category",
 };
+export const productSubmitType = {
+  ADD_PRODUCT: "add",
+  UPDATE_PRODUCT: "update",
+  DELETE_PRODUCT: "delete",
+};
+export const productFormFillup = {
+  SET_PRODUCT_NAME: "set-name",
+  SET_PRODUCT_IMAGE: "set-image",
+  SET_PRODUCT_PRICE: "set-price",
+  SET_PRODUCT_TYPE: "set-type",
+  SET_PRODUCT_DESCRIPTION: "set-description",
+  SET_PRODUCT_UUID: "set-uuid",
+};

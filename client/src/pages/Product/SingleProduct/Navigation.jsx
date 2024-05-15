@@ -5,6 +5,7 @@ import GoBackButton from "../../../components/ui/GoBackButton";
 import { useUserContext } from "../../../context/UserContext";
 import { useProductFormProvider } from "../../../context/ProductFormContext";
 import { useUIContext } from "../../../context/UIContext";
+import { productFormFillup, productSubmitType } from "../../../services/constants";
 
 export default function Navigation({ productID }) {
   const { user } = useUserContext();
@@ -19,10 +20,11 @@ export default function Navigation({ productID }) {
   }, []);
 
   function handleClick({ action }) {
-    action === "UPDATE_PRODUCT" ? handleFormOpen() : setIsDeleteForm(true);
+    action === productSubmitType.UPDATE_PRODUCT ? handleFormOpen() : setIsDeleteForm(true);
     dispatch({ type: action });
-    dispatch({ type: "SET_PRODUCT_UUID", payload: productID });
+    dispatch({ type: productFormFillup.SET_PRODUCT_UUID, payload: productID });
     setReFetchData(false);
+    console.log(action);
   }
 
   function handleClickOutside(event) {
@@ -43,13 +45,13 @@ export default function Navigation({ productID }) {
                 showOptions ? "flex flex-col gap-2" : "hidden"
               } absolute top-[1px] right-[35px] bg-[#212121] rounded-md text-white`}>
               <button
-                onClick={() => handleClick({ action: "UPDATE_PRODUCT" })}
+                onClick={() => handleClick({ action: productSubmitType.UPDATE_PRODUCT })}
                 className="font-semibold border-b py-2 px-4 hover:underline"
                 aria-label="edit">
                 Edit
               </button>
               <button
-                onClick={() => handleClick({ action: "DELETE_PRODUCT" })}
+                onClick={() => handleClick({ action: productSubmitType.DELETE_PRODUCT })}
                 className="font-semibold pb-2 px-4 hover:underline"
                 aria-label="delete">
                 Delete

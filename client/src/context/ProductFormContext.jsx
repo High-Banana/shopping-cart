@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import useForm from "../hooks/useForm";
 import useProductAPI from "../hooks/useProductAPI";
 import { useUIContext } from "./UIContext";
+import { productFormFillup, productSubmitType } from "../services/constants";
 
 const ProductContext = React.createContext();
 
@@ -19,24 +20,24 @@ const initialProductFormDetail = {
 
 function productReducer(state, action) {
   switch (action.type) {
-    case "SET_PRODUCT_NAME":
+    case productFormFillup.SET_PRODUCT_NAME:
       return { ...state, productName: action.payload };
-    case "SET_PRODUCT_IMAGE":
+    case productFormFillup.SET_PRODUCT_IMAGE:
       return { ...state, productImage: action.payload };
-    case "SET_PRODUCT_PRICE":
+    case productFormFillup.SET_PRODUCT_PRICE:
       return { ...state, productPrice: action.payload };
-    case "SET_PRODUCT_TYPE":
+    case productFormFillup.SET_PRODUCT_TYPE:
       return { ...state, productType: action.payload };
-    case "SET_PRODUCT_DESCRIPTION":
+    case productFormFillup.SET_PRODUCT_DESCRIPTION:
       return { ...state, productDescription: action.payload };
-    case "SET_PRODUCT_UUID":
+    case productFormFillup.SET_PRODUCT_UUID:
       return { ...state, productUUID: action.payload };
-    case "ADD_PRODUCT":
-      return { ...state, formSubmitType: "ADD" };
-    case "UPDATE_PRODUCT":
-      return { ...state, formSubmitType: "EDIT" };
-    case "DELETE_PRODUCT":
-      return { ...state, formSubmitType: "DELETE" };
+    case productSubmitType.ADD_PRODUCT:
+      return { ...state, formSubmitType: productSubmitType.ADD_PRODUCT };
+    case productSubmitType.UPDATE_PRODUCT:
+      return { ...state, formSubmitType: productSubmitType.UPDATE_PRODUCT };
+    case productSubmitType.DELETE_PRODUCT:
+      return { ...state, formSubmitType: productSubmitType.DELETE_PRODUCT };
   }
 }
 
