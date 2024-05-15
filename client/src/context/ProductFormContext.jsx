@@ -85,7 +85,9 @@ export function ProductFormProvider({ children }) {
     const isFormValid = validateProductForm(productFormDetail);
     console.log(isFormValid);
     const { formSubmitType, productUUID } = productFormDetail;
-    if (isFormValid !== true && formSubmitType !== "DELETE") return setProductFormError(isFormValid);
+    if (isFormValid !== true && formSubmitType !== productSubmitType.DELETE_PRODUCT) {
+      return setProductFormError(isFormValid);
+    }
     const formData = getFormDatas();
     setIsLoading(true);
     await submitProductForm(formData, formSubmitType, productUUID)
