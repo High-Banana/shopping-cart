@@ -29,7 +29,7 @@ export default function FilterItems({ filterType, setFilterType }) {
 
   const categoriesList = productTypes.map((type, index) => {
     const isSelected = index === selectedIndex;
-    const styles = `relative flex justify-between items-center max-w-[90%] px-[10px] py-[2px] font-semibold tracking-wide rounded-md hover:cursor-default ${
+    const styles = `relative flex justify-between items-center max-w-[90%] px-[10px] py-[2px] font-semibold tracking-wide rounded-md hover:cursor-default duration-300 transition-all ${
       isSelected ? "bg-black text-white py-[4px] text-[20px]" : "hover:bg-[#bbbbbb] text-[#363636] text-[18px]"
     }`;
     return (
