@@ -9,6 +9,7 @@ import Loading from "../../components/Loading/Loading";
 import { useUserContext } from "../../context/UserContext";
 import { useProductFormProvider } from "../../context/ProductFormContext";
 import { useUIContext } from "../../context/UIContext";
+import { productSubmitType } from "../../services/constants";
 
 export default function Profile() {
   const { user } = useUserContext();
@@ -68,7 +69,7 @@ export default function Profile() {
               className="bg-[rgb(0,128,0)] py-[5px] px-[5px] border-2 border-transparent rounded-[3px] font-semibold hover:scale-[none] hover:bg-[rgb(0,128,0,0.5)]"
               onClick={() => {
                 handleFormOpen();
-                dispatch({ type: "ADD_PRODUCT" });
+                dispatch({ type: productSubmitType.ADD_PRODUCT });
               }}
             />
           )}
