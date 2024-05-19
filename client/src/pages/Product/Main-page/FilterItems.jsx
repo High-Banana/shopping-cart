@@ -1,9 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { productTypes } from "../../../services/product";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export default function FilterItems({ filterType, setFilterType }) {
   const [selectedIndex, setSelectedIndex] = React.useState(null);
+  const location = useLocation();
+  const navigate = useNavigate();
   React.useEffect(() => {
     window.scrollTo({ behavior: "smooth", top: 0, left: 0 });
     if (filterType === null) setSelectedIndex(null);
@@ -17,6 +20,8 @@ export default function FilterItems({ filterType, setFilterType }) {
       setSelectedIndex(null);
       setFilterType(null);
     }
+
+    if (location.search !== "") navigate("/products");
   }
 
   const categoriesList = productTypes.map((type, index) => {
