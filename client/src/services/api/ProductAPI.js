@@ -42,6 +42,17 @@ export async function fetchFilteredProducts(productType) {
     });
 }
 
+export async function fetchSearchedProducts(searchValue) {
+  console.log(searchValue);
+  return axios
+    .get(`/api/products/search?query=${searchValue}`)
+    .then((response) => console.log(response))
+    .catch((error) => {
+      console.log(error);
+      Promise.reject(error);
+    });
+}
+
 export async function addProduct(formData) {
   console.log(formData);
   return axios

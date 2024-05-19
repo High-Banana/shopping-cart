@@ -6,6 +6,7 @@ import {
   fetchAllProducts,
   fetchFilteredProducts,
   fetchProductByID,
+  fetchSearchedProducts,
   updateProduct,
 } from "../services/api/ProductAPI";
 import { productFetchType, productSubmitType } from "../services/constants";
@@ -15,7 +16,7 @@ export default function useProductAPI() {
   const [isLoading, setIsLoading] = React.useState(true);
   const [errorState, setErrorState] = React.useState(null);
 
-  async function fetchItems({ productID = null, category = null, fetchType }) {
+  async function fetchItems({ productID = null, category = null, searchValue = null, fetchType }) {
     setErrorState(null);
     setIsLoading(true);
     try {
@@ -29,6 +30,9 @@ export default function useProductAPI() {
           break;
         case productFetchType.PRODUCT_CATEGORY:
           products = await fetchFilteredProducts(category);
+          break;
+        case productFetchType.SEARCH:
+          products = await fetchSearchedProducts(searchValue);
           break;
         default:
           throw new Error(`Invalid fetch type: ${fetchType}`);

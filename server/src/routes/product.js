@@ -16,9 +16,11 @@ router.get("/", tryCatch(getAllProducts));
 
 router.get("/:productType/:productID", tryCatch(getProductByID));
 
-router.get("/:productType", async (req, res, next) => {
-  //   res.send({ message: "product type" });
-  getProductByType(req, res, next);
+router.get("/:productType", tryCatch(getProductByType));
+
+router.get("/search", async (req, res) => {
+  console.log(req.query);
+  console.log("huh");
 });
 
 router.post("/add-product", upload.single("productImage"), tryCatch(addProduct));

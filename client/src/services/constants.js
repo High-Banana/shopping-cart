@@ -5,6 +5,7 @@ export const productFetchType = {
   ALL: "all",
   PRODUCT_ID: "id",
   PRODUCT_CATEGORY: "category",
+  SEARCH: "search",
 };
 export const productSubmitType = {
   ADD_PRODUCT: "add",

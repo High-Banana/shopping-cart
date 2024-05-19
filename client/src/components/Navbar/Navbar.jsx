@@ -5,10 +5,13 @@ import { useCart } from "../../context/CartContext";
 import { CiShoppingCart } from "react-icons/ci";
 import { useUserContext } from "../../context/UserContext";
 import { IoSearchOutline } from "react-icons/io5";
+import useProductAPI from "../../hooks/useProductAPI";
+import { productFetchType } from "../../services/constants";
 
 export default function Navbar() {
   const { getTotalItems, toggleOpenCart } = useCart();
   const { user } = useUserContext();
+  const { fetchItems } = useProductAPI();
   const [isVisible, setIsVisible] = React.useState(true);
   const [lastScrollPosition, setLastScrollPosition] = React.useState(0);
   const [isSearchActive, setIsSearchActive] = React.useState(false);
@@ -21,13 +24,18 @@ export default function Navbar() {
     setLastScrollPosition(currentScrollPosition);
   }
 
-  function handleSearchBar(event) {
+  function handleSearchBarStyle(event) {
     if (searchInputRef.current && searchInputRef.current.contains(event.target)) setIsSearchActive(true);
     else setIsSearchActive(false);
   }
 
+  function handleSearchSubmit() {
+    console.log(searchInputRef.current.value);
+    fetchItems({ searchValue: searchInputRef.current.value, fetchType: productFetchType.SEARCH });
+  }
+
   React.useEffect(() => {
-    document.addEventListener("click", handleSearchBar);
+    document.addEventListener("click", handleSearchBarStyle);
   }, []);
 
   React.useEffect(() => {
@@ -56,7 +64,7 @@ export default function Navbar() {
           ref={searchInputRef}
           placeholder="Search products"
           className="w-full text-black font-semibold outline-none"></input>
-        <button className="text-black text-2xl">
+        <button className="text-black text-2xl" onClick={handleSearchSubmit}>
           <IoSearchOutline />
         </button>
       </div>
