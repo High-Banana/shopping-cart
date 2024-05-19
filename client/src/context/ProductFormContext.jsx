@@ -15,7 +15,7 @@ const initialProductFormDetail = {
   productType: "",
   productDescription: "",
   productUUID: "",
-  formSubmitType: "",
+  formSubmitType: null,
 };
 
 function productReducer(state, action) {
@@ -33,6 +33,7 @@ function productReducer(state, action) {
     case productFormFillup.SET_PRODUCT_UUID:
       return { ...state, productUUID: action.payload };
     case productSubmitType.ADD_PRODUCT:
+      console.log("add");
       return { ...state, formSubmitType: productSubmitType.ADD_PRODUCT };
     case productSubmitType.UPDATE_PRODUCT:
       return { ...state, formSubmitType: productSubmitType.UPDATE_PRODUCT };
@@ -71,8 +72,8 @@ export function ProductFormProvider({ children }) {
       setIsProductDeleted(true);
     } else {
       if (response.data.message === "product-added") {
-        dispatch({ type: "SET_PRODUCT_UUID", payload: response.data.productUUID });
-        dispatch({ type: "SET_PRODUCT_TYPE", payload: response.data.productType });
+        dispatch({ type: productFormFillup.SET_PRODUCT_UUID, payload: response.data.productUUID });
+        dispatch({ type: productFormFillup.SET_PRODUCT_TYPE, payload: response.data.productType });
       }
       setTimeout(() => {
         setReFetchData(true);

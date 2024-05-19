@@ -1,4 +1,5 @@
 import React from "react";
+import { productSubmitType } from "../services/constants";
 
 export default function useForm() {
   const [isLoading, setIsLoading] = React.useState(false);
@@ -48,7 +49,8 @@ export default function useForm() {
     };
     if (formSubmitType !== "delete") {
       if (!inputValue.productName) errors.name = "Product name cannot be empty";
-      if (!inputValue.productImage && inputValue.formSubmitType === "ADD") errors.image = "Product image cannot be empty";
+      if (!inputValue.productImage && inputValue.formSubmitType === productSubmitType.ADD_PRODUCT)
+        errors.image = "Product image cannot be empty";
       if (!inputValue.productPrice) errors.price = "Product price cannot be empty";
       if (!inputValue.productDescription) errors.description = "Product description cannot be empty";
     }
