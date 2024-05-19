@@ -5,13 +5,10 @@ import { useCart } from "../../context/CartContext";
 import { CiShoppingCart } from "react-icons/ci";
 import { useUserContext } from "../../context/UserContext";
 import { IoSearchOutline } from "react-icons/io5";
-import useProductAPI from "../../hooks/useProductAPI";
-import { productFetchType } from "../../services/constants";
 
 export default function Navbar() {
   const { getTotalItems, toggleOpenCart } = useCart();
   const { user } = useUserContext();
-  const { fetchItems } = useProductAPI();
   const [isVisible, setIsVisible] = React.useState(true);
   const [lastScrollPosition, setLastScrollPosition] = React.useState(0);
   const [isSearchActive, setIsSearchActive] = React.useState(false);
@@ -32,12 +29,7 @@ export default function Navbar() {
 
   function handleSearchSubmit() {
     const searchValue = searchInputRef.current.value;
-    if (searchValue !== "") {
-      navigate(`/products?search=${searchValue}`);
-      // fetchItems({ searchValue: searchValue, fetchType: productFetchType.SEARCH });
-    }
-    // navigate(`/products/search?search_query=${searchValue}`);
-    // console.log(searchValue);
+    if (searchValue !== "") navigate(`/products?search=${searchValue}`);
   }
 
   React.useEffect(() => {

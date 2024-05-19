@@ -7,14 +7,13 @@ import SortItems from "./SortItems";
 import useProductAPI from "../../../hooks/useProductAPI";
 import FilterItems from "./FilterItems";
 import { productFetchType } from "../../../services/constants";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 export default function ProductPage() {
   const { items: products, isLoading, errorState: error, fetchItems } = useProductAPI();
   const [sortType, setSortType] = React.useState("ascendingPrice");
   const [filterType, setFilterType] = React.useState(null);
   const location = useLocation();
-  const navigate = useNavigate();
 
   function handleSearch() {
     const searchValue = location.search.substring(location.search.indexOf("=") + 1);
@@ -24,10 +23,7 @@ export default function ProductPage() {
 
   React.useEffect(() => {
     if (filterType === null && location.search === "") fetchItems({ fetchType: productFetchType.ALL });
-    else if (filterType !== null) {
-      // if (location.search !== "") navigate("/products");
-      fetchItems({ category: filterType, fetchType: productFetchType.PRODUCT_CATEGORY });
-    }
+    else if (filterType !== null) fetchItems({ category: filterType, fetchType: productFetchType.PRODUCT_CATEGORY });
 
     if (location.search !== "") handleSearch();
   }, [sortType, filterType, location.search]);

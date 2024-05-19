@@ -9,6 +9,8 @@ export default function FilterItems({ filterType, setFilterType }) {
   const navigate = useNavigate();
   React.useEffect(() => {
     window.scrollTo({ behavior: "smooth", top: 0, left: 0 });
+
+    // this part is only for UI purpose. If filterType is null, remove the styling that makes it look like a category is selected to filter. This is done when a product is searched while filter category is selected.
     if (filterType === null) setSelectedIndex(null);
   }, [filterType]);
 
@@ -21,6 +23,7 @@ export default function FilterItems({ filterType, setFilterType }) {
       setFilterType(null);
     }
 
+    // If the user searches for product then selects any category to filter, turn the searching off with this.
     if (location.search !== "") navigate("/products");
   }
 
