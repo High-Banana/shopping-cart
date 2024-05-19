@@ -15,9 +15,12 @@ export default function ProductPage() {
   const [filterType, setFilterType] = React.useState(null);
   const location = useLocation();
 
+  function getSearchedValue() {
+    return location.search.substring(location.search.indexOf("=") + 1);
+  }
+
   function handleSearch() {
-    const searchValue = location.search.substring(location.search.indexOf("=") + 1);
-    fetchItems({ searchValue: searchValue, fetchType: productFetchType.SEARCH });
+    fetchItems({ searchValue: getSearchedValue(), fetchType: productFetchType.SEARCH });
     setFilterType(null);
   }
 
@@ -43,6 +46,7 @@ export default function ProductPage() {
               <div className="flex justify-between mt-[20px]">
                 <h1 className="font-[700] text-[20px]">
                   {products.length} items {filterType && `- ${filterType}`}
+                  {location.search && `- ${getSearchedValue()}`}
                 </h1>
                 <SortItems sortType={sortType} setSortType={setSortType} />
               </div>
