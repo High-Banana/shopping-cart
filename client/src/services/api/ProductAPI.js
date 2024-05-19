@@ -24,7 +24,7 @@ export async function fetchProductByID(productID) {
 export async function fetchFilteredProducts(productType) {
   console.log(productType);
   return axios
-    .get(`/api/products/${productType}`)
+    .get(`/api/products/filter/${productType}`)
     .then((response) => {
       console.log(response);
       return response.data;
@@ -45,8 +45,11 @@ export async function fetchFilteredProducts(productType) {
 export async function fetchSearchedProducts(searchValue) {
   console.log(searchValue);
   return axios
-    .get(`/api/products/search?query=${searchValue}`)
-    .then((response) => console.log(response))
+    .get(`/api/products/search?searchValue=${searchValue}`)
+    .then((response) => {
+      console.log(response);
+      return response.data;
+    })
     .catch((error) => {
       console.log(error);
       Promise.reject(error);

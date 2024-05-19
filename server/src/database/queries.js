@@ -33,6 +33,20 @@ export async function getProductByType(req, res, next) {
   }
 }
 
+export async function getProductBySearch(req, res, next) {
+  const { searchValue } = req.query;
+  const query = "SELECT * FROM products WHERE product_name LIKE CONCAT('%', ?, '%') OR product_type = ?";
+  try {
+    const [products] = await database.query(query, [searchValue, searchValue]);
+    if (products.length === 0) res.send([]);
+    else res.send(products);
+    console.log(products);
+  } catch (error) {
+    next(error);
+  }
+  console.log(searchValue);
+}
+
 async function addProduct(req, res, next) {
   const { productName, productDescription, productPrice, productType } = req.body;
   const productImage = req.file.filename;

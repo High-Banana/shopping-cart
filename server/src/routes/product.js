@@ -4,6 +4,7 @@ import {
   deleteProduct,
   getAllProducts,
   getProductByID,
+  getProductBySearch,
   getProductByType,
   updateProduct,
 } from "../database/queries.js";
@@ -12,21 +13,18 @@ import upload from "../middleware/multerConfig.js";
 
 const router = express.Router();
 
-router.get("/", tryCatch(getAllProducts));
+router.get("/filter/:productType", tryCatch(getProductByType));
 
 router.get("/:productType/:productID", tryCatch(getProductByID));
 
-router.get("/:productType", tryCatch(getProductByType));
-
-router.get("/search", async (req, res) => {
-  console.log(req.query);
-  console.log("huh");
-});
+router.get("/search", tryCatch(getProductBySearch));
 
 router.post("/add-product", upload.single("productImage"), tryCatch(addProduct));
 
 router.put("/edit-product/:productID", upload.single("productImage"), tryCatch(updateProduct));
 
 router.delete("/delete-product/:productID", tryCatch(deleteProduct));
+
+router.get("/", tryCatch(getAllProducts));
 
 export default router;

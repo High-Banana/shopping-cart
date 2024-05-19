@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useCart } from "../../context/CartContext";
 import { CiShoppingCart } from "react-icons/ci";
 import { useUserContext } from "../../context/UserContext";
@@ -16,6 +16,7 @@ export default function Navbar() {
   const [lastScrollPosition, setLastScrollPosition] = React.useState(0);
   const [isSearchActive, setIsSearchActive] = React.useState(false);
   const searchInputRef = React.useRef(null);
+  const navigate = useNavigate();
 
   function handleNavbarScroll() {
     const currentScrollPosition = window.scrollY;
@@ -30,8 +31,13 @@ export default function Navbar() {
   }
 
   function handleSearchSubmit() {
-    console.log(searchInputRef.current.value);
-    fetchItems({ searchValue: searchInputRef.current.value, fetchType: productFetchType.SEARCH });
+    const searchValue = searchInputRef.current.value;
+    if (searchValue !== "") {
+      navigate(`/products?search=${searchValue}`);
+      // fetchItems({ searchValue: searchValue, fetchType: productFetchType.SEARCH });
+    }
+    // navigate(`/products/search?search_query=${searchValue}`);
+    // console.log(searchValue);
   }
 
   React.useEffect(() => {

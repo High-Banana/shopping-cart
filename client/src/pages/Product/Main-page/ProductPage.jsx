@@ -7,16 +7,30 @@ import SortItems from "./SortItems";
 import useProductAPI from "../../../hooks/useProductAPI";
 import FilterItems from "./FilterItems";
 import { productFetchType } from "../../../services/constants";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export default function ProductPage() {
   const { items: products, isLoading, errorState: error, fetchItems } = useProductAPI();
   const [sortType, setSortType] = React.useState("ascendingPrice");
   const [filterType, setFilterType] = React.useState(null);
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  function handleSearch() {
+    const searchValue = location.search.substring(location.search.indexOf("=") + 1);
+    fetchItems({ searchValue: searchValue, fetchType: productFetchType.SEARCH });
+    setFilterType(null);
+  }
 
   React.useEffect(() => {
-    if (filterType !== null) fetchItems({ category: filterType, fetchType: productFetchType.PRODUCT_CATEGORY });
-    else fetchItems({ productID: null, fetchType: productFetchType.ALL });
-  }, [sortType, filterType]);
+    if (filterType === null && location.search === "") fetchItems({ fetchType: productFetchType.ALL });
+    else if (filterType !== null) {
+      // if (location.search !== "") navigate("/products");
+      fetchItems({ category: filterType, fetchType: productFetchType.PRODUCT_CATEGORY });
+    }
+
+    if (location.search !== "") handleSearch();
+  }, [sortType, filterType, location.search]);
 
   if (error)
     return <Error errorDetail={error} onClickFunction={() => fetchItems({ productID: null, fetchType: productFetchType.ALL })} />;

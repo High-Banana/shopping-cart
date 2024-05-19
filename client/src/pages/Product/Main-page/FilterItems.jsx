@@ -6,6 +6,7 @@ export default function FilterItems({ filterType, setFilterType }) {
   const [selectedIndex, setSelectedIndex] = React.useState(null);
   React.useEffect(() => {
     window.scrollTo({ behavior: "smooth", top: 0, left: 0 });
+    if (filterType === null) setSelectedIndex(null);
   }, [filterType]);
 
   function handleFilterItems(index) {

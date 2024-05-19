@@ -33,6 +33,7 @@ export default function useProductAPI() {
           break;
         case productFetchType.SEARCH:
           products = await fetchSearchedProducts(searchValue);
+          console.log(products);
           break;
         default:
           throw new Error(`Invalid fetch type: ${fetchType}`);
