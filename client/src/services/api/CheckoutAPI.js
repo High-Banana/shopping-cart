@@ -1,5 +1,4 @@
 import axios from "axios";
-import { HEADERS } from "../constants";
 
 export async function checkoutUser(data) {
   //   const { userID, productID } = data;

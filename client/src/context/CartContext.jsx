@@ -44,11 +44,9 @@ export function CartProvider({ children }) {
   }
 
   function calculateTotalPrice() {
-    return cartItems
-      .reduce((total, currentValue) => {
-        return total + parseFloat(currentValue.product_price * currentValue.quantity);
-      }, 0)
-      .toLocaleString();
+    return cartItems.reduce((total, currentValue) => {
+      return total + parseFloat(currentValue.product_price * currentValue.quantity);
+    }, 0);
   }
 
   function handleInputValue(value, product) {

@@ -127,19 +127,21 @@ async function registerUser(req, res, next) {
 }
 
 export async function addUserAndProductID(req, res, next) {
-  const { userID, productDetails } = req.body;
+  const { userID, productDetails, totalPrice } = req.body;
+  console.log(totalPrice);
   try {
     for (let i = 0; i < productDetails.length; i++) {
-      await database.query("insert into users_products (user_id, product_id, quantity) values (?, ?, ?)", [
+      await database.query("insert into users_products (user_id, product_id, quantity, total_price) values (?, ?, ?, ?)", [
         userID,
         productDetails[i].id,
         productDetails[i].quantity,
+        totalPrice,
       ]);
     }
+    res.status(200).send("user and product id");
   } catch (error) {
     next(error);
   }
-  res.status(200).send("user and product id");
 }
 
 // select users.username, products.product_name, products.product_price
