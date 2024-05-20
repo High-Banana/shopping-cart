@@ -10,7 +10,7 @@ export default function HomePage() {
             <h1 className="text-5xl font-[400]">
               <span className="font-[500]">Welcome to</span>
               <br />
-              <span className="font-bold text-8xl ml-[30px]">Fake Store,</span>
+              <span className="font-bold text-8xl ml-[30px]">Electro Hub,</span>
               <br />
               <span className="">your complete electronics store.</span>
             </h1>
