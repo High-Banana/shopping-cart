@@ -14,18 +14,6 @@ export default function useForm() {
     type: "",
     description: "",
   });
-  // const [errorState, setErrorState] = React.useState({
-  //   // for user form
-  //   email: "",
-  //   password: "",
-  //   username: "",
-  //   // for product form
-  //   name: "",
-  //   image: "",
-  //   price: "",
-  //   type: "",
-  //   description: "",
-  // });
 
   function validateUserForm(inputValue) {
     const errors = {
@@ -34,7 +22,7 @@ export default function useForm() {
       username: "",
     };
     if (!inputValue.email) errors.email = "Please enter Email";
-    if (!inputValue.password) errors.password = "Please enter Password";
+    errors.password = validatePassword(inputValue.password);
     if (!inputValue.isLoginForm && !inputValue.username) errors.username = "Please enter a Username";
     return Object.values(errors).every((value) => value === "") ? true : errors;
   }
@@ -59,6 +47,16 @@ export default function useForm() {
 
   function handleFormClose() {
     setIsFormOpen(false);
+  }
+
+  function validatePassword(password) {
+    if (!password) return "Please enter Password";
+    else if (password.length < 8) return "Password should not be less than 8 characters";
+    else if (!password.match(/[A-Z]/)) return "Password should contain at least one upper case character";
+    else if (!password.match(/[a-z]/)) return "Password should contain at least one lower case character";
+    else if (!password.match(/[0-9]/)) return "Password should contain at least one number";
+    else if (!password.match(/[!@#$%^&*]/)) return "Password should contain at least one of these (!, @, #, $, %, ^, &, *)";
+    else return "";
   }
 
   return {
