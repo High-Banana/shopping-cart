@@ -41,9 +41,9 @@ export default function LoginPage() {
           />
         </form>
         <span className="text-[14px] text-white">
-          {isLoginForm ? "Already have an account? " : "Don't have an account? "}
+          {isLoginForm ? "Don't have an account? " : "Already have an account? "}
           <button onClick={() => setIsLoginForm(!isLoginForm)} className="text-[#4db4e7] font-semibold hover:underline">
-            {isLoginForm ? "Login here" : "Register here"}
+            {isLoginForm ? "Register here" : "Login here"}
           </button>
         </span>
       </div>
