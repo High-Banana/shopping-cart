@@ -3,6 +3,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import useForm from "../hooks/useForm";
 import useUserAPI from "../hooks/useUserAPI";
+import { userFormFillup, userFormType } from "../services/constants";
 
 const UserContext = React.createContext();
 
@@ -15,19 +16,22 @@ const initialUserFormDetail = {
 
 function userReducer(state, action) {
   switch (action.type) {
-    case "SET_EMAIL": {
+    case userFormFillup.SET_USER_EMAIL: {
       return { ...state, email: action.payload };
     }
-    case "SET_PASSWORD": {
+    case userFormFillup.SET_USER_PASSWORD: {
       return { ...state, password: action.payload };
     }
-    case "SET_USERNAME": {
+    case userFormFillup.SET_USER_NAME: {
       return { ...state, username: action.payload };
     }
-    case "LOGIN_FORM": {
+    case userFormFillup.SET_USER_PHONE_NUMBER: {
+      return { ...state, phoneNumber: action.payload };
+    }
+    case userFormType.LOGIN_FORM: {
       return { ...state, isLoginForm: true };
     }
-    case "SIGNUP_FORM": {
+    case userFormType.REGISTER_FORM: {
       return { ...state, isLoginForm: false };
     }
     default:

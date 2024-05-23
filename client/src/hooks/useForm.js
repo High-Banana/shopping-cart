@@ -6,7 +6,12 @@ export default function useForm() {
   const [isFormOpen, setIsFormOpen] = React.useState(false);
   const [isLoginForm, setIsLoginForm] = React.useState(true);
   const [showPassword, setShowPassword] = React.useState(false);
-  const [userFormError, setUserFormError] = React.useState({ email: "", password: "", username: "" });
+  const [userFormError, setUserFormError] = React.useState({
+    email: "",
+    password: "",
+    username: "",
+    phoneNumber: "",
+  });
   const [productFormError, setProductFormError] = React.useState({
     name: "",
     image: "",
@@ -20,10 +25,12 @@ export default function useForm() {
       email: "",
       password: "",
       username: "",
+      phoneNumber: "",
     };
     if (!inputValue.email) errors.email = "Please enter Email";
     errors.password = validatePassword(inputValue.password);
     if (!inputValue.isLoginForm && !inputValue.username) errors.username = "Please enter a Username";
+    if (!inputValue.isLoginForm && !inputValue.phoneNumber) errors.phoneNumber = "Please enter a Phone Number";
     return Object.values(errors).every((value) => value === "") ? true : errors;
   }
 

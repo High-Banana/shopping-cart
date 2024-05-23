@@ -4,13 +4,14 @@ import InputField from "../../components/Forms/InputField";
 import PasswordToggle from "../../components/ui/PasswordToggle";
 import { useEffect } from "react";
 import { useUserContext } from "../../context/UserContext";
+import { userFormFillup, userFormType } from "../../services/constants";
 
 export default function LoginForm() {
   const { dispatch, userFormError } = useUserContext();
   const { showPassword, setShowPassword } = useForm();
 
   useEffect(() => {
-    dispatch({ type: "LOGIN_FORM" });
+    dispatch({ type: userFormType.LOGIN_FORM });
   }, []);
 
   return (
@@ -20,14 +21,14 @@ export default function LoginForm() {
         type="email"
         attributes={{ autoComplete: "username", placeholder: "Enter your Email" }}
         errorState={userFormError.email}
-        setValue={(value) => dispatch({ type: "SET_EMAIL", payload: value })}
+        setValue={(value) => dispatch({ type: userFormFillup.SET_USER_EMAIL, payload: value })}
       />
       <InputField
         label="Password"
         type={showPassword ? "text" : "password"}
         attributes={{ autoComplete: "current-password", placeholder: "Enter your password" }}
         errorState={userFormError.password}
-        setValue={(value) => dispatch({ type: "SET_PASSWORD", payload: value })}
+        setValue={(value) => dispatch({ type: userFormFillup.SET_USER_PASSWORD, payload: value })}
       />
       <PasswordToggle showPassword={showPassword} setShowPassword={setShowPassword} />
     </>
