@@ -42,8 +42,7 @@ function userReducer(state, action) {
 export function UserProvider({ children }) {
   const [userFormDetail, dispatch] = React.useReducer(userReducer, initialUserFormDetail);
   const [user, setUser] = React.useState("");
-  const { validateUserForm, isLoading, setIsLoading, userFormError, setUserFormError, userFormMessage, setUserFormMessage } =
-    useForm();
+  const { validateUserForm, isLoading, setIsLoading, userFormError, setUserFormError } = useForm();
   const { submitUserForm } = useUserAPI();
 
   async function handleUserSubmit(event) {
@@ -55,9 +54,11 @@ export function UserProvider({ children }) {
     setIsLoading(true);
     await submitUserForm(userFormDetail)
       .then((response) => {
-        setUser(response);
+        console.log(response);
+        if (response[0].isVerified === 1) setUser(response);
         setUserFormError(userFormError);
-        if (!userFormDetail.isLoginForm) setUserFormMessage({ email: "Check your Email for confirmation" });
+        if (!userFormDetail.isLoginForm)
+          setUserFormError({ email: "Check your Email for confirmation", password: "", username: "", phoneNumber: "" });
       })
       .catch((error) => {
         console.log(error);
@@ -76,9 +77,9 @@ export function UserProvider({ children }) {
     handleUserSubmit,
     isLoading,
     user,
+    setUser,
     setUserFormError,
     userFormError,
-    userFormMessage,
   };
 
   return <UserContext.Provider value={ProviderValues}>{children}</UserContext.Provider>;

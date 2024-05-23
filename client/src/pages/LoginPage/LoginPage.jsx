@@ -14,9 +14,9 @@ export default function LoginPage() {
   const navigate = useNavigate();
   const [isLoginForm, setIsLoginForm] = React.useState(true);
 
-  // React.useEffect(() => {
-  //   if (user.length !== 0 && !isLoading) navigate(-1);
-  // }, [user, isLoading]);
+  React.useEffect(() => {
+    if (user.length !== 0 && !isLoading) navigate("/profile");
+  }, [user, isLoading]);
 
   React.useEffect(() => {
     setUserFormError(userFormError);

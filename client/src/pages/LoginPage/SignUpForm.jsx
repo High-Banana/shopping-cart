@@ -7,7 +7,7 @@ import React from "react";
 import { userFormFillup, userFormType } from "../../services/constants";
 
 export default function SignUpForm() {
-  const { dispatch, userFormError, userFormMessage } = useUserContext();
+  const { dispatch, userFormError } = useUserContext();
   const { showPassword, setShowPassword } = useForm();
 
   React.useEffect(() => {
@@ -21,7 +21,6 @@ export default function SignUpForm() {
         type="email"
         attributes={{ placeholder: "Enter your Email", autoComplete: "username" }}
         errorState={userFormError.email}
-        messageState={userFormMessage.email}
         setValue={(value) => dispatch({ type: userFormFillup.SET_USER_EMAIL, payload: value })}
       />
       <InputField

@@ -114,7 +114,11 @@ async function registerUser(req, res, next) {
   const { email, username, password, phoneNumber } = req.body;
   const emailToken = randomstring.generate();
   const [user] = await database.query("select * from users where email = ?", [email]);
-  if (user.length !== 0) return res.status(409).send("Email is already registered");
+  if (user.length !== 0) {
+    return user[0].isVerified === 1
+      ? res.status(409).send("Email is already registered")
+      : res.status(409).send("Please check your Email to verify");
+  }
   await sendEmail(email, username, emailToken);
   try {
     await database.query(
@@ -127,13 +131,14 @@ async function registerUser(req, res, next) {
   }
 }
 
-export async function verifyUser(req, res) {
+export async function verifyUser(req, res, next) {
   const { emailToken } = req.params;
   try {
     const [user] = await database.query("select * from users where emailToken = ?", [emailToken]);
     if (user.length > 0) {
       await database.query("update users set isVerified = true, emailToken = null where emailToken = ?", [emailToken]);
-      res.status(200).send(user);
+      const [verifiedUser] = await database.query("select * from users where userId = ?", [user[0].userId]);
+      res.status(200).send(verifiedUser);
     } else res.status(404).json("Email verification failed, invalid token");
   } catch (error) {
     next(error);

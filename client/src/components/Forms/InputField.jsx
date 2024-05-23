@@ -1,23 +1,20 @@
 import PropTypes from "prop-types";
 import { setID } from "../../utils/helper";
 
-export default function InputField({ label, type, className, attributes, errorState, messageState, setValue }) {
+export default function InputField({ label, type, className, attributes, errorState, setValue }) {
   const id = setID(label);
   return (
     <div className="flex flex-col gap-2 text-[#c9c9c9]">
       <label
-        className={`font-bold tracking-wider text-[12px] uppercase ${errorState ? "text-[#f14747]" : "text-white"} ${
-          messageState ? "text-[#259425]" : ""
-        }`}
+        className={`font-bold tracking-wider text-[12px] uppercase ${errorState ? "text-[#f14747]" : "text-white"}`}
         htmlFor={id}>
         {label}
-        {errorState ||
-          (messageState && (
-            <span className={`${errorState ? "text-[#f14747]" : "text-[#259425]"} font-semibold italic normal-case`}>
-              <span className="pr-1 pl-1">-</span>
-              {errorState ? errorState : messageState}
-            </span>
-          ))}
+        {errorState ? (
+          <span className="text-[#f14747] font-semibold italic normal-case">
+            <span className="pr-1 pl-1">-</span>
+            {errorState}
+          </span>
+        ) : null}
       </label>
       <input
         onChange={(event) => setValue(type === "file" ? event.target.files : event.target.value)}
@@ -42,7 +39,6 @@ InputField.propTypes = {
   type: PropTypes.string.isRequired,
   setValue: PropTypes.func.isRequired,
   errorState: PropTypes.string.isRequired,
-  messageState: PropTypes.string,
   className: PropTypes.string,
   attributes: PropTypes.object,
 };
