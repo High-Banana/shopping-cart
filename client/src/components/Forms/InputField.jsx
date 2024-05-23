@@ -42,6 +42,7 @@ InputField.propTypes = {
   type: PropTypes.string.isRequired,
   setValue: PropTypes.func.isRequired,
   errorState: PropTypes.string.isRequired,
+  messageState: PropTypes.string,
   className: PropTypes.string,
   attributes: PropTypes.object,
 };
