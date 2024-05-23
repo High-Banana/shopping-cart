@@ -104,23 +104,24 @@ async function getRegisteredUsers(req, res, next) {
   const { email, password } = req.body;
   const [user] = await database.query("select * from users where email = ? AND password = ? LIMIT 1", [email, password]);
   if (user.length === 0) res.status(401).send("Email or password is invalid.");
-  else res.send(user);
+  else res.status(200).send(user);
   return user;
 }
 
 async function registerUser(req, res, next) {
-  const { email, username, password } = req.body;
+  const { email, username, password, phoneNumber } = req.body;
+  console.log(phoneNumber);
   const [user] = await database.query("select * from users where email = ?", [email]);
   if (user.length !== 0) return res.status(409).send("Email is already registered");
   try {
-    await database.query("insert into users (username, email, password, isAdmin) VALUES (?,?,?,?)", [
+    await database.query("insert into users (username, email, password, phone_number, isAdmin) VALUES (?,?,?,?, ?)", [
       username,
       email,
       password,
+      phoneNumber,
       false,
     ]);
-    const registeredUser = await getRegisteredUsers(req, res);
-    res.status(200).send(registeredUser);
+    await getRegisteredUsers(req, res);
   } catch (error) {
     next(error);
   }

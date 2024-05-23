@@ -7,9 +7,10 @@ export async function loginUser(email, password) {
     .catch((error) => Promise.reject(error));
 }
 
-export async function registerUser(email, password, username) {
+export async function registerUser(email, password, username, phoneNumber) {
+  console.log(phoneNumber);
   return axios
-    .post("/api/users/register", { email, password, username })
+    .post("/api/users/register", { email, password, username, phoneNumber })
     .then((response) => response.data)
     .catch((error) => Promise.reject(error));
 }
