@@ -129,12 +129,10 @@ async function registerUser(req, res, next) {
 
 export async function verifyUser(req, res) {
   const { emailToken } = req.params;
-  console.log(emailToken);
   try {
     const [user] = await database.query("select * from users where emailToken = ?", [emailToken]);
     if (user.length > 0) {
       await database.query("update users set isVerified = true where emailToken = ?", [emailToken]);
-      console.log("verified");
       res.status(200).send(user);
     } else res.status(404).json("Email verification failed, invalid token");
   } catch (error) {

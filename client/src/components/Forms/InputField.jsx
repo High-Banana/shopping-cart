@@ -1,20 +1,23 @@
 import PropTypes from "prop-types";
 import { setID } from "../../utils/helper";
 
-export default function InputField({ label, type, className, attributes, errorState, setValue }) {
+export default function InputField({ label, type, className, attributes, errorState, messageState, setValue }) {
   const id = setID(label);
   return (
     <div className="flex flex-col gap-2 text-[#c9c9c9]">
       <label
-        className={`font-bold tracking-wider text-[12px] uppercase ${errorState ? "text-[#f14747]" : "text-white"}`}
+        className={`font-bold tracking-wider text-[12px] uppercase ${errorState ? "text-[#f14747]" : "text-white"} ${
+          messageState ? "text-[#259425]" : ""
+        }`}
         htmlFor={id}>
         {label}
-        {errorState && (
-          <span className="text-[#f14747] font-semibold italic normal-case">
-            <span className="pr-1 pl-1">-</span>
-            {errorState}
-          </span>
-        )}
+        {errorState ||
+          (messageState && (
+            <span className={`${errorState ? "text-[#f14747]" : "text-[#259425]"} font-semibold italic normal-case`}>
+              <span className="pr-1 pl-1">-</span>
+              {errorState ? errorState : messageState}
+            </span>
+          ))}
       </label>
       <input
         onChange={(event) => setValue(type === "file" ? event.target.files : event.target.value)}

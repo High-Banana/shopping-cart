@@ -6,6 +6,8 @@ export default function useForm() {
   const [isFormOpen, setIsFormOpen] = React.useState(false);
   const [isLoginForm, setIsLoginForm] = React.useState(true);
   const [showPassword, setShowPassword] = React.useState(false);
+  // userFormMessage is only used to show messages that are not related to any errors while userFormError are used to show errors only
+  const [userFormMessage, setUserFormMessage] = React.useState({ email: "" });
   const [userFormError, setUserFormError] = React.useState({
     email: "",
     password: "",
@@ -73,6 +75,7 @@ export default function useForm() {
     userFormError,
     productFormError,
     showPassword,
+    userFormMessage,
     setIsLoading,
     setIsFormOpen,
     setIsLoginForm,
@@ -82,5 +85,6 @@ export default function useForm() {
     handleFormClose,
     validateUserForm,
     validateProductForm,
+    setUserFormMessage,
   };
 }

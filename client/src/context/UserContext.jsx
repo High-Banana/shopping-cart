@@ -42,7 +42,8 @@ function userReducer(state, action) {
 export function UserProvider({ children }) {
   const [userFormDetail, dispatch] = React.useReducer(userReducer, initialUserFormDetail);
   const [user, setUser] = React.useState("");
-  const { validateUserForm, isLoading, setIsLoading, userFormError, setUserFormError } = useForm();
+  const { validateUserForm, isLoading, setIsLoading, userFormError, setUserFormError, userFormMessage, setUserFormMessage } =
+    useForm();
   const { submitUserForm } = useUserAPI();
 
   async function handleUserSubmit(event) {
@@ -56,13 +57,14 @@ export function UserProvider({ children }) {
       .then((response) => {
         setUser(response);
         setUserFormError(userFormError);
+        if (!userFormDetail.isLoginForm) setUserFormMessage({ email: "Check your Email for confirmation" });
       })
       .catch((error) => {
         console.log(error);
         if (error.response.status === 401) {
-          setUserFormError({ email: error.response.data, password: error.response.data, username: "" });
+          setUserFormError({ email: error.response.data, password: error.response.data, username: "", phoneNumber: "" });
         } else if (error.response.status === 409) {
-          setUserFormError({ email: error.response.data, password: "", username: "" });
+          setUserFormError({ email: error.response.data, password: "", username: "", phoneNumber: "" });
         }
       })
       .finally(setIsLoading(false));
@@ -76,6 +78,7 @@ export function UserProvider({ children }) {
     user,
     setUserFormError,
     userFormError,
+    userFormMessage,
   };
 
   return <UserContext.Provider value={ProviderValues}>{children}</UserContext.Provider>;
