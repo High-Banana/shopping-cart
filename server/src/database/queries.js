@@ -1,5 +1,7 @@
 import { v4 as uuidv4 } from "uuid";
 import database from "./db.js";
+import { sendEmail } from "../utils/verifyEmail.js";
+import randomstring from "randomstring";
 
 async function getAllProducts(req, res, next) {
   try {
@@ -110,17 +112,15 @@ async function getRegisteredUsers(req, res, next) {
 
 async function registerUser(req, res, next) {
   const { email, username, password, phoneNumber } = req.body;
-  console.log(phoneNumber);
+  const emailToken = randomstring.generate();
   const [user] = await database.query("select * from users where email = ?", [email]);
   if (user.length !== 0) return res.status(409).send("Email is already registered");
+  return sendEmail(email, username, emailToken);
   try {
-    await database.query("insert into users (username, email, password, phone_number, isAdmin) VALUES (?,?,?,?, ?)", [
-      username,
-      email,
-      password,
-      phoneNumber,
-      false,
-    ]);
+    await database.query(
+      "insert into users (username, email, password, phone_number, isVerified, isAdmin) VALUES (?,?,?,?,?,?)",
+      [username, email, password, phoneNumber, false, false]
+    );
     await getRegisteredUsers(req, res);
   } catch (error) {
     next(error);

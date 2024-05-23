@@ -7,6 +7,7 @@ import LoginPage from "../pages/LoginPage/LoginPage";
 import SingleProduct from "../pages/Product/SingleProduct/SingleProduct";
 import ContextProvider from "../context/ContextProvider";
 import Profile from "../pages/Profile/Profile";
+import Verification from "../pages/Verification";
 
 export default function Router() {
   const router = createBrowserRouter([
@@ -17,6 +18,7 @@ export default function Router() {
         { path: "products", element: <ProductPage /> },
         { path: "products/:productType/:productID", element: <SingleProduct /> },
         { path: "/profile", element: <Profile /> },
+        { path: "/email-confirmation/:emailToken", element: <Verification /> },
         { path: "*", element: <ErrorPage /> },
         {
           path: "login",
