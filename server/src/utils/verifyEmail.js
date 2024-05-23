@@ -13,8 +13,8 @@ const transporter = nodemailer.createTransport({
   requireTLS: true,
 });
 
-export function sendEmail(userEmail, username, emailToken) {
-  const url = `${process.env.HOST_URL}/email-confirmation/${emailToken}`;
+export async function sendEmail(userEmail, username, emailToken) {
+  const url = `${process.env.HOST_URL}/users/confirmation/${emailToken}`;
   const mailOptions = {
     from: process.env.EMAIL,
     to: userEmail,
@@ -24,13 +24,13 @@ export function sendEmail(userEmail, username, emailToken) {
     <a href=${url}>Click here to confirm your email</a>`,
   };
 
-  transporter.sendMail(mailOptions, (error, info) => {
-    if (error) {
-      console.log(error);
-    } else {
-      console.log("Email sent: " + info.response);
-    }
-  });
+  try {
+    await transporter.sendMail(mailOptions);
+    console.log("Email sent");
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
 
   console.log(userEmail);
 }

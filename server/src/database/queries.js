@@ -115,13 +115,28 @@ async function registerUser(req, res, next) {
   const emailToken = randomstring.generate();
   const [user] = await database.query("select * from users where email = ?", [email]);
   if (user.length !== 0) return res.status(409).send("Email is already registered");
-  return sendEmail(email, username, emailToken);
+  await sendEmail(email, username, emailToken);
   try {
     await database.query(
-      "insert into users (username, email, password, phone_number, isVerified, isAdmin) VALUES (?,?,?,?,?,?)",
-      [username, email, password, phoneNumber, false, false]
+      "insert into users (username, email, password, phone_number, emailToken, isVerified, isAdmin) VALUES (?,?,?,?,?,?,?)",
+      [username, email, password, phoneNumber, emailToken, false, false]
     );
     await getRegisteredUsers(req, res);
+  } catch (error) {
+    next(error);
+  }
+}
+
+export async function verifyUser(req, res) {
+  const { emailToken } = req.params;
+  console.log(emailToken);
+  try {
+    const [user] = await database.query("select * from users where emailToken = ?", [emailToken]);
+    if (user.length > 0) {
+      await database.query("update users set isVerified = true where emailToken = ?", [emailToken]);
+      console.log("verified");
+      res.status(200).send(user);
+    } else res.status(404).json("Email verification failed, invalid token");
   } catch (error) {
     next(error);
   }

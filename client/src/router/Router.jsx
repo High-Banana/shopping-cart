@@ -18,7 +18,7 @@ export default function Router() {
         { path: "products", element: <ProductPage /> },
         { path: "products/:productType/:productID", element: <SingleProduct /> },
         { path: "/profile", element: <Profile /> },
-        { path: "/email-confirmation/:emailToken", element: <Verification /> },
+        { path: "/users/confirmation/:emailToken", element: <Verification /> },
         { path: "*", element: <ErrorPage /> },
         {
           path: "login",

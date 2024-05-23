@@ -14,3 +14,7 @@ export async function registerUser(email, password, username, phoneNumber) {
     .then((response) => response.data)
     .catch((error) => Promise.reject(error));
 }
+
+// export async function checkUserVerification(emailToken) {
+//   return axios.get(`/api/users/confirmation/${emailToken}`)
+// }
