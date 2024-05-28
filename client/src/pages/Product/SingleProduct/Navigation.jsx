@@ -8,7 +8,7 @@ import { useUIContext } from "../../../context/UIContext";
 import { productFormFillup, productSubmitType } from "../../../services/constants";
 
 export default function Navigation({ productID }) {
-  const { user } = useUserContext();
+  const { userDetails } = useUserContext();
   const { dispatch, setReFetchData } = useProductFormProvider();
   const { handleFormOpen, setIsDeleteForm } = useUIContext();
   const [showOptions, setShowOptions] = React.useState(false);
@@ -34,7 +34,7 @@ export default function Navigation({ productID }) {
   return (
     <div className="flex justify-between items-center sticky top-[80px]">
       <GoBackButton />
-      {user.length !== 0 && user[0].isAdmin !== 0 && (
+      {userDetails.length !== 0 && userDetails.isAdmin !== 0 && (
         <div className="relative">
           <div className="relative flex items-center">
             <button ref={buttonRef} className="mx-[15px] text-2xl" onClick={() => setShowOptions(!showOptions)}>

@@ -60,8 +60,7 @@ export async function fetchStockProducts() {
   return axios
     .get(`/api/products/stock`)
     .then((response) => {
-      console.log(response);
-      return response;
+      return response.data;
     })
     .catch((error) => {
       console.log(error);
