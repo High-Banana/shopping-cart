@@ -19,7 +19,7 @@ import { productFetchType } from "../../../services/constants";
 export default function SingleProduct() {
   const { productID } = useParams();
   const { addToCart } = useCart();
-  const { user } = useUserContext();
+  const { userDetails } = useUserContext();
   const { isFormOpen, setIsFormOpen, isDeleteForm, setIsDeleteForm } = useUIContext();
   const { reFetchData, setReFetchData, isProductDeleted, handleProductSubmit, setIsProductDeleted } = useProductFormProvider();
   const navigate = useNavigate();
@@ -36,6 +36,7 @@ export default function SingleProduct() {
     setIsFormOpen(false);
     setIsDeleteForm(false);
     setReFetchData(false);
+    console.log(userDetails);
   }, []);
 
   React.useEffect(() => {
@@ -81,7 +82,7 @@ export default function SingleProduct() {
               <Button
                 title="Add to cart"
                 className="bg-[#E20D0D]"
-                onClick={() => (user.length !== 0 ? addToCart(product) : navigate("/login"))}
+                onClick={() => (userDetails.email === null ? navigate("/login") : addToCart(product))}
               />
             </div>
           </div>
