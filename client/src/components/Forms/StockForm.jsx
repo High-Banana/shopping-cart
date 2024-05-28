@@ -1,14 +1,23 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import React from "react";
+import propTypes from "prop-types";
 import { useProductFormProvider } from "../../context/ProductFormContext";
 import InputField from "./InputField";
 import { productFormFillup, productSubmitType } from "../../services/constants";
-import React from "react";
 
-export default function StockForm() {
+export default function StockForm({ productInfo }) {
   const { dispatch, productFormDetail, productFormError } = useProductFormProvider();
 
   React.useEffect(() => {
-    console.log(productFormDetail);
+    // if the form is opened to update the stock, the product's details will be set as initial value for form
+    if (productFormDetail.formSubmitType === productSubmitType.UPDATE_STOCK) {
+      dispatch({ type: productFormFillup.SET_PRODUCT_NAME, payload: productInfo.product_name });
+      //   dispatch({ type: productFormFillup.SET_PRODUCT_IMAGE, payload: productInfo.image });
+      dispatch({ type: productFormFillup.SET_PRODUCT_PRICE, payload: productInfo.product_price });
+      //   dispatch({ type: productFormFillup.SET_PRODUCT_TYPE, payload: productInfo.product_type });
+      //   dispatch({ type: productFormFillup.SET_PRODUCT_DESCRIPTION, payload: productInfo.product_description });
+      dispatch({ type: productFormFillup.SET_PRODUCT_QUANTITY, payload: productInfo.product_quantity });
+    }
   }, []);
 
   return (
@@ -19,7 +28,7 @@ export default function StockForm() {
         attributes={{
           placeholder: "ASUS Nitro 5",
           name: "productName",
-          // defaultValue: productFormDetail.formSubmitType === productSubmitType.UPDATE_PRODUCT ? productInfo.product_name : "",
+          defaultValue: productFormDetail.formSubmitType === productSubmitType.UPDATE_STOCK ? productInfo.product_name : "",
         }}
         setValue={(value) => dispatch({ type: productFormFillup.SET_PRODUCT_NAME, payload: value })}
         errorState={productFormError.name}
@@ -31,6 +40,7 @@ export default function StockForm() {
           placeholder: "Enter number only",
           name: "productPrice",
           product_price: "",
+          defaultValue: productFormDetail.formSubmitType === productSubmitType.UPDATE_STOCK ? productInfo.product_price : "",
         }}
         setValue={(value) => dispatch({ type: productFormFillup.SET_PRODUCT_PRICE, payload: value })}
         errorState={productFormError.price}
@@ -42,6 +52,7 @@ export default function StockForm() {
           placeholder: "Enter number only",
           name: "productQuantity",
           product_quantity: "",
+          defaultValue: productFormDetail.formSubmitType === productSubmitType.UPDATE_STOCK ? productInfo.product_quantity : "",
         }}
         setValue={(value) => dispatch({ type: productFormFillup.SET_PRODUCT_QUANTITY, payload: value })}
         errorState={productFormError.quantity}
@@ -49,3 +60,7 @@ export default function StockForm() {
     </>
   );
 }
+
+StockForm.propTypes = {
+  productInfo: propTypes.object,
+};

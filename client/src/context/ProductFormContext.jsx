@@ -43,6 +43,8 @@ function productReducer(state, action) {
       return { ...state, formSubmitType: productSubmitType.DELETE_PRODUCT };
     case productSubmitType.ADD_TO_STOCK:
       return { ...state, formSubmitType: productSubmitType.ADD_TO_STOCK };
+    case productSubmitType.UPDATE_STOCK:
+      return { ...state, formSubmitType: productSubmitType.UPDATE_STOCK };
     default:
       console.log(`Invalid action type: ${action.type}`);
   }
@@ -94,13 +96,11 @@ export function ProductFormProvider({ children }) {
     const isFormValid = validateProductForm(productFormDetail);
     console.log(isFormValid);
     const { formSubmitType, productUUID } = productFormDetail;
+    console.log(productFormDetail);
     if (isFormValid !== true && formSubmitType !== productSubmitType.DELETE_PRODUCT) {
       return setProductFormError(isFormValid);
     }
     const formData = getFormDatas();
-    for (let pair of formData.entries()) {
-      console.log(`${pair[0]}: ${pair[1]}`);
-    }
     setIsLoading(true);
     await submitProductForm(formData, formSubmitType, productUUID)
       .then((response) => {

@@ -71,6 +71,20 @@ export async function addProductToStock(req, res, next) {
     .catch((error) => next(error));
 }
 
+export async function updateStock(req, res, next) {
+  const { productName, productPrice, productQuantity } = req.body;
+  const productId = req.params.productID;
+  await database
+    .query("update stock set product_name = ?, product_price = ?, product_quantity = ? where id = ?", [
+      productName,
+      productPrice,
+      productQuantity,
+      productId,
+    ])
+    .then(() => res.status(200).json("stock-updated"))
+    .catch((error) => next(error));
+}
+
 async function addProduct(req, res, next) {
   const { productName, productDescription, productPrice, productType } = req.body;
   const productImage = req.file.filename;

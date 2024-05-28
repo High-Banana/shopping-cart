@@ -10,6 +10,7 @@ import {
   fetchSearchedProducts,
   fetchStockProducts,
   updateProduct,
+  updateStock,
 } from "../services/api/ProductAPI";
 import { productFetchType, productSubmitType } from "../services/constants";
 
@@ -72,6 +73,8 @@ export default function useProductAPI() {
           return await deleteProduct(productID);
         case productSubmitType.ADD_TO_STOCK:
           return await addToStock(formData);
+        case productSubmitType.UPDATE_STOCK:
+          return await updateStock(formData, productID);
         default:
           throw new Error(`Invalid submit type : ${submitType}`);
       }

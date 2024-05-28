@@ -114,11 +114,21 @@ export async function deleteProduct(productID) {
 }
 
 export async function addToStock(formData) {
-  for (let pair of formData.entries()) {
-    console.log(`${pair[0]}: ${pair[1]}`);
-  }
   return axios
     .post("/api/products/stock/add-stock", formData, HEADERS)
+    .then((response) => {
+      console.log(response);
+      return response;
+    })
+    .catch((error) => {
+      console.log(error);
+      Promise.reject(error);
+    });
+}
+
+export async function updateStock(formData, productID) {
+  return axios
+    .put(`/api/products/stock/update-stock/${productID}`, formData, HEADERS)
     .then((response) => {
       console.log(response);
       return response;

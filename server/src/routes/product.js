@@ -9,6 +9,7 @@ import {
   getProductByType,
   getStockProducts,
   updateProduct,
+  updateStock,
 } from "../database/queries.js";
 import { tryCatch } from "../helper/helper.js";
 import upload from "../middleware/multerConfig.js";
@@ -18,6 +19,8 @@ const router = express.Router();
 router.get("/stock", tryCatch(getStockProducts));
 
 router.post("/stock/add-stock", upload.any(), tryCatch(addProductToStock));
+
+router.put("/stock/update-stock/:productID", upload.any(), tryCatch(updateStock));
 
 router.get("/filter/:productType", tryCatch(getProductByType));
 

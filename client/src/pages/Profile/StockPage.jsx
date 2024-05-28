@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React from "react";
 import useProductAPI from "../../hooks/useProductAPI";
-import { productFetchType, productSubmitType } from "../../services/constants";
+import { productFetchType, productFormFillup, productSubmitType } from "../../services/constants";
 import Loading from "../../components/Loading/Loading";
 import Button from "../../components/ui/Button";
 import { useUIContext } from "../../context/UIContext";
@@ -14,6 +14,7 @@ export default function StockPage() {
   const { handleFormOpen, isFormOpen } = useUIContext();
   const { dispatch, handleProductSubmit } = useProductFormProvider();
   const [formTitle, setFormTitle] = React.useState("");
+  const [itemForProp, setItemForProp] = React.useState(null);
 
   React.useEffect(() => {
     fetchItems({ fetchType: productFetchType.STOCK });
@@ -25,10 +26,13 @@ export default function StockPage() {
     setFormTitle("Add To Stock");
   }
 
-  function handleUpdateStock() {
+  function handleUpdateStock(item) {
     handleFormOpen();
     dispatch({ type: productSubmitType.UPDATE_STOCK });
     setFormTitle("Update Stock");
+    console.log(item);
+    setItemForProp(item);
+    dispatch({ type: productFormFillup.SET_PRODUCT_UUID, payload: item.id });
   }
 
   if (isLoading) return <Loading />;
@@ -56,8 +60,13 @@ export default function StockPage() {
                 className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border-r border-black">
                 Stock Price
               </th>
-              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th
+                scope="col"
+                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border-r border-black">
                 Quantity
+              </th>
+              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Update Stock
               </th>
             </tr>
           </thead>
@@ -67,9 +76,11 @@ export default function StockPage() {
                 <td className="px-6 py-4 whitespace-nowrap border-r border-white w-1">{index + 1}</td>
                 <td className="px-6 py-4 whitespace-nowrap border-r border-white">{item.product_name}</td>
                 <td className="px-6 py-4 whitespace-nowrap border-r border-white">{item.product_price}</td>
-                <td className="px-6 py-4 whitespace-nowrap">{item.product_quantity}</td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <button className="bg-white text-black" onClick={handleUpdateStock}>
+                <td className="px-6 py-4 whitespace-nowrap border-r border-white">{item.product_quantity}</td>
+                <td className="px-6 py-4 whitespace-nowrap text-center">
+                  <button
+                    className="bg-white text-black px-[8px] py-1 rounded-sm hover:bg-[gray] hover:text-white transition-all duration-200"
+                    onClick={() => handleUpdateStock(item)}>
                     Update
                   </button>
                 </td>
@@ -80,7 +91,7 @@ export default function StockPage() {
       </div>
       {isFormOpen && (
         <Form values={{ title: formTitle, handleSubmit: handleProductSubmit }}>
-          <StockForm />
+          <StockForm productInfo={itemForProp} />
         </Form>
       )}
     </div>
