@@ -112,3 +112,16 @@ export async function deleteProduct(productID) {
       Promise.reject(error);
     });
 }
+
+export async function addToStock(formData) {
+  return axios
+    .post("/api/products/add-stock", formData, HEADERS)
+    .then((response) => {
+      console.log(response);
+      return response;
+    })
+    .catch((error) => {
+      console.log(error);
+      Promise.reject(error);
+    });
+}

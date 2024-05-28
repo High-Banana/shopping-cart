@@ -14,13 +14,12 @@ export default function ProductForm({ productInfo }) {
   React.useEffect(() => {
     // if the form is opened to update the product, the product's details will be set as initial value for form
     if (productFormDetail.formSubmitType === productSubmitType.UPDATE_PRODUCT) {
-      console.log("yes");
       dispatch({ type: productFormFillup.SET_PRODUCT_NAME, payload: productInfo.product_name });
       dispatch({ type: productFormFillup.SET_PRODUCT_IMAGE, payload: productInfo.image });
       dispatch({ type: productFormFillup.SET_PRODUCT_PRICE, payload: productInfo.product_price });
       dispatch({ type: productFormFillup.SET_PRODUCT_TYPE, payload: productInfo.product_type });
       dispatch({ type: productFormFillup.SET_PRODUCT_DESCRIPTION, payload: productInfo.product_description });
-    } else console.log("n");
+    }
     console.log(productFormDetail);
   }, []);
 

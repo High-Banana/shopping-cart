@@ -14,6 +14,7 @@ export const productSubmitType = {
   ADD_PRODUCT: "add",
   UPDATE_PRODUCT: "update",
   DELETE_PRODUCT: "delete",
+  ADD_TO_STOCK: "update-stock",
 };
 
 export const productFormFillup = {
@@ -22,6 +23,7 @@ export const productFormFillup = {
   SET_PRODUCT_PRICE: "set-price",
   SET_PRODUCT_TYPE: "set-type",
   SET_PRODUCT_DESCRIPTION: "set-description",
+  SET_PRODUCT_QUANTITY: "set-quantity",
   SET_PRODUCT_UUID: "set-uuid",
 };
 

@@ -18,6 +18,7 @@ export default function useForm() {
     price: "",
     type: "",
     description: "",
+    quantity: "",
   });
 
   function validateUserForm(inputValue) {
@@ -41,13 +42,16 @@ export default function useForm() {
       price: "",
       type: "",
       description: "",
+      quantity: "",
     };
-    if (formSubmitType !== "delete") {
+    console.log(inputValue);
+    if (formSubmitType !== productSubmitType.DELETE_PRODUCT) {
       if (!inputValue.productName) errors.name = "Product name cannot be empty";
       if (!inputValue.productImage && inputValue.formSubmitType === productSubmitType.ADD_PRODUCT)
         errors.image = "Product image cannot be empty";
       if (!inputValue.productPrice) errors.price = "Product price cannot be empty";
       if (!inputValue.productDescription) errors.description = "Product description cannot be empty";
+      if (!inputValue.productQuantity) errors.quantity = "Product quantity cannot be empty";
     }
     return Object.values(errors).every((value) => value === "") ? true : errors;
   }

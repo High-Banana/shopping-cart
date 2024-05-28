@@ -2,6 +2,7 @@
 import React from "react";
 import {
   addProduct,
+  addToStock,
   deleteProduct,
   fetchAllProducts,
   fetchFilteredProducts,
@@ -66,6 +67,8 @@ export default function useProductAPI() {
           return await updateProduct(formData, productID);
         case productSubmitType.DELETE_PRODUCT:
           return await deleteProduct(productID);
+        case productSubmitType.UPDATE_STOCK:
+          return await addToStock(formData);
         default:
           throw new Error(`Invalid submit type : ${submitType}`);
       }

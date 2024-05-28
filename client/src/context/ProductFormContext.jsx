@@ -14,6 +14,7 @@ const initialProductFormDetail = {
   productPrice: "",
   productType: "",
   productDescription: "",
+  productQuantity: "",
   productUUID: "",
   formSubmitType: null,
 };
@@ -30,15 +31,20 @@ function productReducer(state, action) {
       return { ...state, productType: action.payload };
     case productFormFillup.SET_PRODUCT_DESCRIPTION:
       return { ...state, productDescription: action.payload };
+    case productFormFillup.SET_PRODUCT_QUANTITY:
+      return { ...state, productDescription: action.payload };
     case productFormFillup.SET_PRODUCT_UUID:
       return { ...state, productUUID: action.payload };
     case productSubmitType.ADD_PRODUCT:
-      console.log("add");
       return { ...state, formSubmitType: productSubmitType.ADD_PRODUCT };
     case productSubmitType.UPDATE_PRODUCT:
       return { ...state, formSubmitType: productSubmitType.UPDATE_PRODUCT };
     case productSubmitType.DELETE_PRODUCT:
       return { ...state, formSubmitType: productSubmitType.DELETE_PRODUCT };
+    case productSubmitType.ADD_TO_STOCK:
+      return { ...state, formSubmitType: productSubmitType.ADD_TO_STOCK };
+    default:
+      console.log(`Invalid action type: ${action.type}`);
   }
 }
 
@@ -63,6 +69,7 @@ export function ProductFormProvider({ children }) {
     formData.append("productPrice", productFormDetail.productPrice);
     formData.append("productType", productFormDetail.productType);
     formData.append("productDescription", productFormDetail.productDescription);
+    formData.append("productQuantity", productFormDetail.productQuantity);
     return formData;
   }
 
@@ -101,7 +108,7 @@ export function ProductFormProvider({ children }) {
       })
       .finally(() => {
         setIsLoading(false);
-        setProductFormError({ name: "", image: "", price: "", type: "", description: "" });
+        setProductFormError({ name: "", image: "", price: "", type: "", description: "", quantity: "" });
       });
   }
 
