@@ -113,7 +113,7 @@ async function addProduct(req, res, next) {
 }
 
 async function updateProduct(req, res, next) {
-  const { productName, productDescription, productPrice, productType } = req.body;
+  const { productName, productDescription, productType } = req.body;
   const productId = req.params.productID;
   let productImage;
 
@@ -121,8 +121,8 @@ async function updateProduct(req, res, next) {
     productImage = req.file.filename;
   }
 
-  let sqlQuery = "update products set product_name = ? , product_description = ?, product_price = ?, product_type = ?";
-  const sqlValues = [productName, productDescription, productPrice, productType];
+  let sqlQuery = "update products set product_name = ? , product_description = ?, product_type = ?";
+  const sqlValues = [productName, productDescription, productType];
 
   if (productImage !== undefined) {
     sqlQuery += ", image = ?";
