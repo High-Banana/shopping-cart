@@ -39,21 +39,22 @@ function userReducer(state, action) {
   }
 }
 
-function setUserInSessionStorage(user) {
+function setUserInSessionStorage(user, setUserDetails) {
   if (user.length > 0) {
     window.sessionStorage.setItem("username", user[0].username);
     window.sessionStorage.setItem("email", user[0].email);
     window.sessionStorage.setItem("password", user[0].password);
-    window.sessionStorage.setItem("isAdmin", user[0].isAdmin);
   }
+  getDetailsFromSessionStorage(setUserDetails, user);
 }
 
-function getDetailsFromSessionStorage(setUserDetails) {
+function getDetailsFromSessionStorage(setUserDetails, user) {
   setUserDetails({
     username: window.sessionStorage.getItem("username"),
     email: window.sessionStorage.getItem("email"),
     password: window.sessionStorage.getItem("password"),
-    isAdmin: parseInt(window.sessionStorage.getItem("isAdmin")),
+    // if user exists, then set isAdmin as whatever the user[0].isAdmin value is
+    isAdmin: user && user[0].isAdmin,
   });
 }
 
@@ -67,11 +68,12 @@ export function UserProvider({ children }) {
     isAdmin: null,
   });
   const { validateUserForm, isLoading, setIsLoading, userFormError, setUserFormError } = useForm();
+  const [isLoggedOut, setIsLoggedOut] = React.useState(false);
   const { submitUserForm } = useUserAPI();
 
   React.useEffect(() => {
     getDetailsFromSessionStorage(setUserDetails);
-  }, []);
+  }, [isLoggedOut]);
 
   async function handleUserSubmit(event) {
     event.preventDefault();
@@ -83,10 +85,7 @@ export function UserProvider({ children }) {
     await submitUserForm(userFormDetail)
       .then((response) => {
         console.log(response);
-        if (response[0].isVerified === 1) {
-          setUserInSessionStorage(response);
-          getDetailsFromSessionStorage(setUserDetails);
-        }
+        if (response[0].isVerified === 1) setUserInSessionStorage(response, setUserDetails);
         setUserFormError(userFormError);
         if (!userFormDetail.isLoginForm)
           setUserFormError({ email: "Check your Email for confirmation", password: "", username: "", phoneNumber: "" });
@@ -113,6 +112,8 @@ export function UserProvider({ children }) {
     setUserDetails,
     setUserFormError,
     userFormError,
+    isLoggedOut,
+    setIsLoggedOut,
   };
 
   return <UserContext.Provider value={ProviderValues}>{children}</UserContext.Provider>;
