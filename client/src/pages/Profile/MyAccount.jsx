@@ -11,7 +11,7 @@ import { useProductFormProvider } from "../../context/ProductFormContext";
 import { useUIContext } from "../../context/UIContext";
 import { productSubmitType } from "../../services/constants";
 
-export default function Profile() {
+export default function MyAccount() {
   const { userDetails, setIsLoggedOut, isLoggedOut } = useUserContext();
   const { handleProductSubmit, setProductFormError, dispatch, reFetchData, productFormDetail } = useProductFormProvider();
   const { productFormError, isLoading } = useForm();
@@ -39,9 +39,9 @@ export default function Profile() {
   }, [isLoggedOut]);
 
   return (
-    <div className="min-h-[800px]">
-      <h1 className="font-semibold text-[22px] text-center">My Profile</h1>
-      <div className="flex flex-col gap-[30px] bg-[#434343] p-[20px] mr-[50px] mt-[100px] justify-center items-center">
+    <div className="min-h-[800px] mt-[20px]">
+      <h1 className="font-semibold text-[22px]">My Profile</h1>
+      <div className="flex flex-col gap-[30px] bg-[#434343] p-[20px] mr-[50px] mt-[30px] justify-center items-center">
         <div className="w-[400px] flex justify-between">
           <div>
             <h3 className="uppercase font-[700] text-[12px] tracking-widest text-[#c9c9c9]">Username</h3>
