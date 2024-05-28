@@ -114,8 +114,11 @@ export async function deleteProduct(productID) {
 }
 
 export async function addToStock(formData) {
+  for (let pair of formData.entries()) {
+    console.log(`${pair[0]}: ${pair[1]}`);
+  }
   return axios
-    .post("/api/products/add-stock", formData, HEADERS)
+    .post("/api/products/stock/add-stock", formData, HEADERS)
     .then((response) => {
       console.log(response);
       return response;

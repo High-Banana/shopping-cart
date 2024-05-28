@@ -14,7 +14,8 @@ export const productSubmitType = {
   ADD_PRODUCT: "add",
   UPDATE_PRODUCT: "update",
   DELETE_PRODUCT: "delete",
-  ADD_TO_STOCK: "update-stock",
+  ADD_TO_STOCK: "add-to-stock",
+  UPDATE_STOCK: "update-stock",
 };
 
 export const productFormFillup = {

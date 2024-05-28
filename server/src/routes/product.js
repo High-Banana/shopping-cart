@@ -1,6 +1,7 @@
 import express from "express";
 import {
   addProduct,
+  addProductToStock,
   deleteProduct,
   getAllProducts,
   getProductByID,
@@ -15,6 +16,8 @@ import upload from "../middleware/multerConfig.js";
 const router = express.Router();
 
 router.get("/stock", tryCatch(getStockProducts));
+
+router.post("/stock/add-stock", upload.any(), tryCatch(addProductToStock));
 
 router.get("/filter/:productType", tryCatch(getProductByType));
 

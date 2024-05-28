@@ -32,7 +32,7 @@ function productReducer(state, action) {
     case productFormFillup.SET_PRODUCT_DESCRIPTION:
       return { ...state, productDescription: action.payload };
     case productFormFillup.SET_PRODUCT_QUANTITY:
-      return { ...state, productDescription: action.payload };
+      return { ...state, productQuantity: action.payload };
     case productFormFillup.SET_PRODUCT_UUID:
       return { ...state, productUUID: action.payload };
     case productSubmitType.ADD_PRODUCT:
@@ -86,6 +86,7 @@ export function ProductFormProvider({ children }) {
         setReFetchData(true);
       }, 200);
     }
+    console.log(response);
   }
 
   async function handleProductSubmit(event) {
@@ -97,6 +98,9 @@ export function ProductFormProvider({ children }) {
       return setProductFormError(isFormValid);
     }
     const formData = getFormDatas();
+    for (let pair of formData.entries()) {
+      console.log(`${pair[0]}: ${pair[1]}`);
+    }
     setIsLoading(true);
     await submitProductForm(formData, formSubmitType, productUUID)
       .then((response) => {

@@ -59,6 +59,18 @@ export async function getStockProducts(req, res, next) {
   }
 }
 
+export async function addProductToStock(req, res, next) {
+  const { productName, productPrice, productQuantity } = req.body;
+  await database
+    .query("insert into stock (product_name, product_price, product_quantity) values(?, ?, ?)", [
+      productName,
+      productPrice,
+      productQuantity,
+    ])
+    .then(() => res.status(200).json("stock-added"))
+    .catch((error) => next(error));
+}
+
 async function addProduct(req, res, next) {
   const { productName, productDescription, productPrice, productType } = req.body;
   const productImage = req.file.filename;
