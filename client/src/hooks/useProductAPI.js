@@ -55,15 +55,12 @@ export default function useProductAPI() {
   async function submitProductForm(formData, submitType, productID) {
     setErrorState(null);
     setIsLoading(true);
-    console.log(submitType);
-    console.log(productID);
-    for (let pair of formData.entries()) {
-      console.log(`${pair[0]}: ${pair[1]}`);
-    }
+    // console.log(submitType);
+    // console.log(productID);
+    // for (let pair of formData.entries()) {
+    //   console.log(`${pair[0]}: ${pair[1]}`);
+    // }
     try {
-      // if (submitType === productSubmitType.ADD_PRODUCT) return await addProduct(formData);
-      // else if (submitType === productSubmitType.) return await updateProduct(formData, productID);
-      // else if (submitType === productSubmitType.ADD_PRODUCT) return await deleteProduct(productID);
       switch (submitType) {
         case productSubmitType.ADD_PRODUCT:
           return await addProduct(formData);

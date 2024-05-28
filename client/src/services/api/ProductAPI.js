@@ -82,6 +82,7 @@ export async function addProduct(formData) {
     .catch((error) => {
       console.log(error);
       Promise.reject(error);
+      return error.response;
     });
 }
 

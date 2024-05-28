@@ -86,18 +86,30 @@ export async function updateStock(req, res, next) {
 }
 
 async function addProduct(req, res, next) {
-  const { productName, productDescription, productPrice, productType } = req.body;
+  const { productName, productDescription, productType } = req.body;
   const productImage = req.file.filename;
-  const productUUID = uuidv4();
-  await database
-    .query(
-      "insert into products (product_name, product_description, product_price, image, product_type, uuid) values (?, ?, ?, ?, ?, ?)",
-      [productName, productDescription, productPrice, productImage, productType, productUUID]
-    )
-    .then(() => {
-      res.status(200).send({ productUUID, productType, message: "product-added" });
-    })
-    .catch((error) => next(error));
+
+  try {
+    // check if product is in the stock or not
+    const [stockProductCheck] = await database.query("select * from stock where product_name = ?", [productName]);
+    if (stockProductCheck.length === 0) return res.status(404).send("Product is not available in stock.");
+
+    const [product] = await database.query("select * from products where product_name = ?", [productName]);
+    if (product.length !== 0) return res.status(409).send("Product has already been added.");
+
+    // to sell at double price
+    const productPrice = parseFloat(stockProductCheck[0].product_price) * 2;
+    const productQuantity = parseInt(stockProductCheck[0].product_quantity);
+    const productUUID = uuidv4();
+
+    await database.query(
+      "insert into products (product_name, product_description, product_price, quantity, image, product_type, uuid) values (?, ?, ?, ?, ?, ?, ?)",
+      [productName, productDescription, productPrice, productQuantity, productImage, productType, productUUID]
+    );
+    res.status(200).send({ productUUID, productType, message: "product-added" });
+  } catch (error) {
+    next(error);
+  }
 }
 
 async function updateProduct(req, res, next) {

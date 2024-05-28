@@ -12,10 +12,7 @@ export default function StockForm({ productInfo }) {
     // if the form is opened to update the stock, the product's details will be set as initial value for form
     if (productFormDetail.formSubmitType === productSubmitType.UPDATE_STOCK) {
       dispatch({ type: productFormFillup.SET_PRODUCT_NAME, payload: productInfo.product_name });
-      //   dispatch({ type: productFormFillup.SET_PRODUCT_IMAGE, payload: productInfo.image });
       dispatch({ type: productFormFillup.SET_PRODUCT_PRICE, payload: productInfo.product_price });
-      //   dispatch({ type: productFormFillup.SET_PRODUCT_TYPE, payload: productInfo.product_type });
-      //   dispatch({ type: productFormFillup.SET_PRODUCT_DESCRIPTION, payload: productInfo.product_description });
       dispatch({ type: productFormFillup.SET_PRODUCT_QUANTITY, payload: productInfo.product_quantity });
     }
   }, []);

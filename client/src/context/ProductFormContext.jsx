@@ -104,15 +104,21 @@ export function ProductFormProvider({ children }) {
     setIsLoading(true);
     await submitProductForm(formData, formSubmitType, productUUID)
       .then((response) => {
+        console.log(response);
+        if (response.status !== 200) {
+          setProductFormError({ name: response.data, image: response.data, type: response.data, description: response.data });
+          throw new Error(response.data);
+        }
         handleResponse(response);
         handleFormClose(event);
+        setProductFormError({ name: "", image: "", price: "", type: "", description: "", quantity: "" });
       })
       .catch((error) => {
         console.log(error);
+        // return setProductFormError({ name: "piss", image: error, type: error, description: error });
       })
       .finally(() => {
         setIsLoading(false);
-        setProductFormError({ name: "", image: "", price: "", type: "", description: "", quantity: "" });
       });
   }
 

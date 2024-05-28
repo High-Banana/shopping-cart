@@ -46,16 +46,24 @@ export default function useForm() {
     };
     console.log(inputValue);
     if (formSubmitType !== productSubmitType.DELETE_PRODUCT) {
-      if (!inputValue.productName) errors.name = "Product name cannot be empty";
-      if (!inputValue.productImage && inputValue.formSubmitType === productSubmitType.ADD_PRODUCT)
+      if (!inputValue.productName) {
+        errors.name = "Product name cannot be empty";
+      }
+      if (!inputValue.productImage && inputValue.formSubmitType === productSubmitType.ADD_PRODUCT) {
         errors.image = "Product image cannot be empty";
-      if (!inputValue.productPrice) errors.price = "Product price cannot be empty";
+      }
+      if (!inputValue.productPrice && inputValue.formSubmitType === productSubmitType.ADD_TO_STOCK) {
+        errors.price = "Product price cannot be empty";
+      }
       if (
-        (!inputValue.productDescription && inputValue.formSubmitType === productSubmitType.ADD_TO_STOCK) ||
-        inputValue.formSubmitType === productSubmitType.UPDATE_PRODUCT
-      )
+        (!inputValue.productDescription && inputValue.formSubmitType === productSubmitType.ADD_PRODUCT) ||
+        (!inputValue.productDescription && inputValue.formSubmitType === productSubmitType.UPDATE_PRODUCT)
+      ) {
         errors.description = "Product description cannot be empty";
-      if (!inputValue.productQuantity) errors.quantity = "Product quantity cannot be empty";
+      }
+      if (!inputValue.productQuantity && inputValue.formSubmitType === productSubmitType.ADD_TO_STOCK) {
+        errors.quantity = "Product quantity cannot be empty";
+      }
     }
     return Object.values(errors).every((value) => value === "") ? true : errors;
   }
