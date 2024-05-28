@@ -21,9 +21,9 @@ export default function Verification() {
   }
 
   return (
-    <div>
-      <h1>Your email has been verified</h1>
-      <Button title="Go back to login" className="bg-[#18577e]" onClick={handleClick} />
+    <div className="flex flex-col justify-center items-center h-dvh gap-10">
+      <h1 className="text-4xl font-semibold">Your email has been verified</h1>
+      <Button title="Go back to login" className="bg-[#18577e] w-[30%]" onClick={handleClick} />
     </div>
   );
 }

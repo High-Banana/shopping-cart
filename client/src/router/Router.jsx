@@ -18,7 +18,6 @@ export default function Router() {
         { path: "products", element: <ProductPage /> },
         { path: "products/:productType/:productID", element: <SingleProduct /> },
         { path: "/profile", element: <Profile /> },
-        { path: "/users/confirmation/:emailToken", element: <Verification /> },
         { path: "*", element: <ErrorPage /> },
         {
           path: "login",
@@ -26,6 +25,7 @@ export default function Router() {
         },
       ],
     },
+    { path: "/users/confirmation/:emailToken", element: <Verification /> },
   ]);
 
   return (
