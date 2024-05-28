@@ -39,11 +39,39 @@ function userReducer(state, action) {
   }
 }
 
+function setUserInSessionStorage(user) {
+  if (user.length > 0) {
+    window.sessionStorage.setItem("username", user[0].username);
+    window.sessionStorage.setItem("email", user[0].email);
+    window.sessionStorage.setItem("password", user[0].password);
+    window.sessionStorage.setItem("isAdmin", user[0].isAdmin);
+  }
+}
+
+function getDetailsFromSessionStorage(setUserDetails) {
+  setUserDetails({
+    username: window.sessionStorage.getItem("username"),
+    email: window.sessionStorage.getItem("email"),
+    password: window.sessionStorage.getItem("password"),
+    isAdmin: parseInt(window.sessionStorage.getItem("isAdmin")),
+  });
+}
+
 export function UserProvider({ children }) {
   const [userFormDetail, dispatch] = React.useReducer(userReducer, initialUserFormDetail);
-  const [user, setUser] = React.useState("");
+  // const [user, setUser] = React.useState("");
+  const [userDetails, setUserDetails] = React.useState({
+    username: null,
+    email: null,
+    password: null,
+    isAdmin: null,
+  });
   const { validateUserForm, isLoading, setIsLoading, userFormError, setUserFormError } = useForm();
   const { submitUserForm } = useUserAPI();
+
+  React.useEffect(() => {
+    getDetailsFromSessionStorage(setUserDetails);
+  }, []);
 
   async function handleUserSubmit(event) {
     event.preventDefault();
@@ -55,7 +83,10 @@ export function UserProvider({ children }) {
     await submitUserForm(userFormDetail)
       .then((response) => {
         console.log(response);
-        if (response[0].isVerified === 1) setUser(response);
+        if (response[0].isVerified === 1) {
+          setUserInSessionStorage(response);
+          getDetailsFromSessionStorage(setUserDetails);
+        }
         setUserFormError(userFormError);
         if (!userFormDetail.isLoginForm)
           setUserFormError({ email: "Check your Email for confirmation", password: "", username: "", phoneNumber: "" });
@@ -76,8 +107,10 @@ export function UserProvider({ children }) {
     dispatch,
     handleUserSubmit,
     isLoading,
-    user,
-    setUser,
+    // user,
+    // setUser,
+    userDetails,
+    setUserDetails,
     setUserFormError,
     userFormError,
   };

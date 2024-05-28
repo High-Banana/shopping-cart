@@ -9,14 +9,15 @@ import { useNavigate } from "react-router-dom";
 import { useUserContext } from "../../context/UserContext";
 
 export default function LoginPage() {
-  const { handleUserSubmit, isLoading, user, setUserFormError } = useUserContext();
+  const { handleUserSubmit, isLoading, userDetails, setUserFormError } = useUserContext();
   const { userFormError } = useForm();
   const navigate = useNavigate();
   const [isLoginForm, setIsLoginForm] = React.useState(true);
 
   React.useEffect(() => {
-    if (user.length !== 0 && !isLoading) navigate("/profile");
-  }, [user, isLoading]);
+    if (userDetails.username !== null && !isLoading) navigate("/profile");
+    console.log(userDetails);
+  }, [userDetails, isLoading]);
 
   React.useEffect(() => {
     setUserFormError(userFormError);

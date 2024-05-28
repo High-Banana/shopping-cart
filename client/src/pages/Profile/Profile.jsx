@@ -12,7 +12,7 @@ import { useUIContext } from "../../context/UIContext";
 import { productSubmitType } from "../../services/constants";
 
 export default function Profile() {
-  const { user } = useUserContext();
+  const { userDetails } = useUserContext();
   const { handleProductSubmit, setProductFormError, dispatch, reFetchData, productFormDetail } = useProductFormProvider();
   const { productFormError, isLoading } = useForm();
   const { isFormOpen, handleFormOpen } = useUIContext();
@@ -27,6 +27,8 @@ export default function Profile() {
     setProductFormError(productFormError);
   }, [isFormOpen]);
 
+  React.useEffect(() => {}, []);
+
   // if (isLoading) return <Loading />;
 
   return (
@@ -36,21 +38,21 @@ export default function Profile() {
         <div className="w-[400px] flex justify-between">
           <div>
             <h3 className="uppercase font-[700] text-[12px] tracking-widest text-[#c9c9c9]">Username</h3>
-            <span className="text-white">{user[0].username}</span>
+            <span className="text-white">{userDetails.username}</span>
           </div>
           <Button title="Edit" className="py-[2px] px-[8px] h-[35px] bg-[gray] hover:scale-[none] hover:bg-[#b6b6b6]" />
         </div>
         <div className="w-[400px] flex justify-between">
           <div>
             <h3 className="uppercase font-[700] text-[12px] tracking-widest text-[#c9c9c9]">Email</h3>
-            <span className="text-white">{user[0].email}</span>
+            <span className="text-white">{userDetails.email}</span>
           </div>
           <Button title="Edit" className="py-[2px] px-[8px] h-[35px] bg-[gray] hover:scale-[none] hover:bg-[#b6b6b6]" />
         </div>
         <div className="w-[400px] flex justify-between">
           <div>
             <h3 className="uppercase font-[700] text-[12px] tracking-widest text-[#c9c9c9]">Password</h3>
-            <span className="text-white">{user[0].password}</span>
+            <span className="text-white">{userDetails.password}</span>
           </div>
           <Button title="Edit" className="py-[2px] px-[8px] h-[35px] bg-[gray] hover:scale-[none] hover:bg-[#b6b6b6]" />
         </div>
@@ -63,16 +65,19 @@ export default function Profile() {
             title="Delete Account"
             className="bg-transparent py-[5px] px-[5px] border-2 border-[red] rounded-[3px] font-semibold hover:scale-[none] hover:bg-[red]"
           />
-          {user[0].isAdmin !== 0 && (
-            <Button
-              title="Add product"
-              className="bg-[rgb(0,128,0)] py-[5px] px-[5px] border-2 border-transparent rounded-[3px] font-semibold hover:scale-[none] hover:bg-[rgb(0,128,0,0.5)]"
-              onClick={() => {
-                handleFormOpen();
-                dispatch({ type: productSubmitType.ADD_PRODUCT });
-              }}
-            />
-          )}
+          {
+            // Check if user is admin. 1 means true
+            userDetails.isAdmin === 1 && (
+              <Button
+                title="Add product"
+                className="bg-[rgb(0,128,0)] py-[5px] px-[5px] border-2 border-transparent rounded-[3px] font-semibold hover:scale-[none] hover:bg-[rgb(0,128,0,0.5)]"
+                onClick={() => {
+                  handleFormOpen();
+                  dispatch({ type: productSubmitType.ADD_PRODUCT });
+                }}
+              />
+            )
+          }
         </div>
       </div>
       {isFormOpen && (

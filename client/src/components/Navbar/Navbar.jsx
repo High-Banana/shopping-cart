@@ -8,7 +8,7 @@ import { IoSearchOutline } from "react-icons/io5";
 
 export default function Navbar() {
   const { getTotalItems, toggleOpenCart } = useCart();
-  const { user } = useUserContext();
+  const { userDetails } = useUserContext();
   const [isVisible, setIsVisible] = React.useState(true);
   const [lastScrollPosition, setLastScrollPosition] = React.useState(0);
   const [isSearchActive, setIsSearchActive] = React.useState(false);
@@ -34,6 +34,7 @@ export default function Navbar() {
 
   React.useEffect(() => {
     document.addEventListener("click", handleSearchBarStyle);
+    console.log(userDetails);
   }, []);
 
   React.useEffect(() => {
@@ -73,12 +74,12 @@ export default function Navbar() {
           </i>
           {getTotalItems() !== 0 ? <span className="text-[15px]">{getTotalItems()}</span> : null}
         </button>
-        {user.length === 0 ? (
+        {userDetails.username === null ? (
           <Link to="login" className="navbar-link-hover">
             Login
           </Link>
         ) : (
-          <Link to="profile">{user[0].username}</Link>
+          <Link to="profile">{userDetails.username}</Link>
         )}
       </div>
     </div>
