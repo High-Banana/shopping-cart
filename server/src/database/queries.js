@@ -49,6 +49,16 @@ export async function getProductBySearch(req, res, next) {
   console.log(searchValue);
 }
 
+export async function getStockProducts(req, res, next) {
+  try {
+    const [stockProducts] = await database.query("select * from stock");
+    if (stockProducts.length === 0) throw new Error("404 Error");
+    else res.status(200).send(stockProducts);
+  } catch (error) {
+    next(error);
+  }
+}
+
 async function addProduct(req, res, next) {
   const { productName, productDescription, productPrice, productType } = req.body;
   const productImage = req.file.filename;

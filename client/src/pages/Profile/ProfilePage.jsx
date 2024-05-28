@@ -8,14 +8,14 @@ export default function ProfilePage() {
   const activeStyles = {
     backgroundColor: "black",
     color: "white",
-    padding: "4px 0 4px 0",
+    padding: "4px 0 4px 10px",
     fontSize: "20px",
   };
 
   return (
     <div className="min-h-[800px] grid grid-cols-[0.5fr_2fr] gap-10">
-      <div className="border-r border-black">
-        <ul className="flex flex-col gap-[6px]">
+      <div className="border-r border-black mx-[10px]">
+        <ul className="flex flex-col gap-[6px] mt-[20px]">
           <NavLink to="/profile" end style={({ isActive }) => (isActive ? activeStyles : null)} className={styles}>
             My Profile
           </NavLink>

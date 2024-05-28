@@ -7,6 +7,7 @@ import {
   fetchFilteredProducts,
   fetchProductByID,
   fetchSearchedProducts,
+  fetchStockProducts,
   updateProduct,
 } from "../services/api/ProductAPI";
 import { productFetchType, productSubmitType } from "../services/constants";
@@ -33,7 +34,9 @@ export default function useProductAPI() {
           break;
         case productFetchType.SEARCH:
           products = await fetchSearchedProducts(searchValue);
-          console.log(products);
+          break;
+        case productFetchType.STOCK:
+          products = await fetchStockProducts();
           break;
         default:
           throw new Error(`Invalid fetch type: ${fetchType}`);
