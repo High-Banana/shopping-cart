@@ -39,22 +39,23 @@ function userReducer(state, action) {
   }
 }
 
-function setUserInSessionStorage(user, setUserDetails) {
+function setUserInSessionStorage(user) {
   if (user.length > 0) {
     window.sessionStorage.setItem("username", user[0].username);
     window.sessionStorage.setItem("email", user[0].email);
     window.sessionStorage.setItem("password", user[0].password);
+    window.sessionStorage.setItem("phone-number", user[0].phone_number);
+    window.sessionStorage.setItem("isAdmin", user[0].isAdmin);
   }
-  getDetailsFromSessionStorage(setUserDetails, user);
 }
 
-function getDetailsFromSessionStorage(setUserDetails, user) {
+function getDetailsFromSessionStorage(setUserDetails) {
   setUserDetails({
     username: window.sessionStorage.getItem("username"),
     email: window.sessionStorage.getItem("email"),
     password: window.sessionStorage.getItem("password"),
-    // if user exists, then set isAdmin as whatever the user[0].isAdmin value is
-    isAdmin: user && user[0].isAdmin,
+    phoneNumber: window.sessionStorage.getItem("phone-number"),
+    isAdmin: parseInt(window.sessionStorage.getItem("isAdmin")),
   });
 }
 
@@ -65,6 +66,7 @@ export function UserProvider({ children }) {
     username: null,
     email: null,
     password: null,
+    phoneNumber: null,
     isAdmin: null,
   });
   const { validateUserForm, isLoading, setIsLoading, userFormError, setUserFormError } = useForm();
@@ -85,7 +87,10 @@ export function UserProvider({ children }) {
     await submitUserForm(userFormDetail)
       .then((response) => {
         console.log(response);
-        if (response[0].isVerified === 1) setUserInSessionStorage(response, setUserDetails);
+        if (response[0].isVerified === 1) {
+          setUserInSessionStorage(response);
+          getDetailsFromSessionStorage(setUserDetails);
+        }
         setUserFormError(userFormError);
         if (!userFormDetail.isLoginForm)
           setUserFormError({ email: "Check your Email for confirmation", password: "", username: "", phoneNumber: "" });
