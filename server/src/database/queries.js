@@ -103,7 +103,7 @@ async function addProduct(req, res, next) {
     const productUUID = uuidv4();
 
     await database.query(
-      "insert into products (product_name, product_description, product_price, quantity, image, product_type, uuid) values (?, ?, ?, ?, ?, ?, ?)",
+      "insert into products (product_name, product_description, product_price, product_quantity, image, product_type, uuid) values (?, ?, ?, ?, ?, ?, ?)",
       [productName, productDescription, productPrice, productQuantity, productImage, productType, productUUID]
     );
     res.status(200).send({ productUUID, productType, message: "product-added" });

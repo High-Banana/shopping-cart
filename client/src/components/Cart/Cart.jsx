@@ -12,7 +12,7 @@ import { RxCross1 } from "react-icons/rx";
 /* eslint-disable react-hooks/exhaustive-deps */
 
 export default function Cart() {
-  const { toggleOpenCart, cartItems, addToCart, getTotalItems, removeFromCart, handleInputValue, calculateTotalPrice } =
+  const { toggleOpenCart, cartItems, addToCart, getTotalItems, removeFromCart, handleInputValue, calculateTotalPrice, message } =
     useCart();
   const [isVisible, setIsVisible] = React.useState(false);
   const { user } = useUserContext();
@@ -40,6 +40,8 @@ export default function Cart() {
     // window.open(url, "", "width=500, height=700");
     handleCartCheckout({ userID, productDetails, totalPrice });
   }
+
+  console.log(cartItems);
 
   return (
     <>
@@ -71,10 +73,10 @@ export default function Cart() {
                     return (
                       <div
                         key={item.id}
-                        className="flex items-center gap-[10px] bg-[#ececec] rounded-lg h-[120px] p-[7px] duration-300">
+                        className="relative flex items-center gap-[10px] bg-[#ececec] rounded-lg h-[120px] p-[7px] duration-300">
                         <img src={`${IMAGE_SRC_PATH}/${item.image}`} className="w-[100px] max-h-full" />
                         <div className="grid grid-cols-[200px_1fr] grid-rows-2 gap-[20px]">
-                          <Link to={`products/${item.product_type}/${item.id}`} onClick={() => handleClosingTransition()}>
+                          <Link to={`products/${item.product_type}/${item.uuid}`} onClick={() => handleClosingTransition()}>
                             <span className="font-semibold col-start-1">{item.product_name}</span>
                           </Link>
                           <button
@@ -103,6 +105,7 @@ export default function Cart() {
                             </button>
                           </span>
                         </div>
+                        <span className="absolute bottom-0 text-xs width-full right-1 text-[red]">{message && message}</span>
                       </div>
                     );
                   })}

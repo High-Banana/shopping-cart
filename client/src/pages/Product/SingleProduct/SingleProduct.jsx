@@ -77,6 +77,7 @@ export default function SingleProduct() {
             <p className="text-[#3e3e3e] text-[15px] whitespace-pre-wrap break-words max-w-[480px] max-h-[230px] overflow-y-auto custom-scrollbar">
               {product.product_description}
             </p>
+            <h3 className="font-semibold">Quantity Available: {product.product_quantity}</h3>
             <div className="flex justify-between items-center">
               <span className="font-[700] text-2xl">NPR {parseFloat(product.product_price).toLocaleString()}</span>
               <Button

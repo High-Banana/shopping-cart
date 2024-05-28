@@ -7,6 +7,7 @@ const CartContext = React.createContext();
 export function CartProvider({ children }) {
   const [cartItems, setCartItems] = React.useState([]);
   const [openCart, setOpenCart] = React.useState(false);
+  const [message, setMessage] = React.useState(null);
 
   function addToCart(newItem) {
     let isItemInCart = false;
@@ -14,6 +15,10 @@ export function CartProvider({ children }) {
       if (item.id === newItem.id) {
         isItemInCart = true;
         item.quantity += 1;
+      }
+      if (newItem.quantity > item.product_quantity) {
+        item.quantity = item.product_quantity;
+        setMessage("No more quantity available");
       }
       return item;
     });
@@ -35,6 +40,9 @@ export function CartProvider({ children }) {
       });
       setCartItems(updatedItems);
     } else if (type === "deleteItem") setCartItems(cartItems.filter((item) => item.id !== itemToRemove.id));
+    // set message to null if there was any message/error while adding to cart.
+    // for example, if user tries to add more quantity than available, message will be set. Then if the user tries to decrease the quantity, the message will be gone.
+    setMessage(null);
   }
 
   function getTotalItems() {
@@ -50,10 +58,11 @@ export function CartProvider({ children }) {
   }
 
   function handleInputValue(value, product) {
-    if (value.length > 3) return console.log("Cannot enter more than 3 digits");
+    // if (parseInt(value > )) return console.log("Cannot enter more than 3 digits");
     const productArray = cartItems.map((item) => {
       if (item.id === product.id) {
         item.quantity = Number(value) === 0 ? 1 : Number(value);
+        item.quantity = product.quantity > item.product_quantity ? item.product_quantity : Number(value);
       }
       return item;
     });
@@ -67,6 +76,7 @@ export function CartProvider({ children }) {
   const providerValues = {
     cartItems,
     openCart,
+    message,
     addToCart,
     toggleOpenCart,
     getTotalItems,
