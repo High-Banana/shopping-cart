@@ -15,7 +15,7 @@ export default function LoginPage() {
   const [isLoginForm, setIsLoginForm] = React.useState(true);
 
   React.useEffect(() => {
-    if (userDetails.username !== null && userDetails && !isLoading) navigate("/profile");
+    if (userDetails.username !== null && userDetails && !isLoading) navigate(-1);
     console.log(userDetails);
   }, [userDetails, isLoading]);
 
