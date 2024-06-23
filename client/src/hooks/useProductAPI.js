@@ -43,6 +43,7 @@ export default function useProductAPI() {
           break;
         case productFetchType.ADDED_PRODUCTS:
           products = await fetchAddedProducts();
+          console.log(products);
           break;
         default:
           throw new Error(`Invalid fetch type: ${fetchType}`);
