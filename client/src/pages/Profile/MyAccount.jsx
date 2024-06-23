@@ -1,21 +1,21 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React from "react";
 import Button from "../../components/ui/Button";
-import Form from "../../components/Forms/Form";
 import useForm from "../../hooks/useForm";
-import ProductForm from "../../components/Forms/ProductForm";
 import { useNavigate } from "react-router-dom";
 import Loading from "../../components/Loading/Loading";
 import { useUserContext } from "../../context/UserContext";
 import { useProductFormProvider } from "../../context/ProductFormContext";
 import { useUIContext } from "../../context/UIContext";
-import { productSubmitType } from "../../services/constants";
+// import Form from "../../components/Forms/Form";
+// import ProductForm from "../../components/Forms/ProductForm";
+// import { productSubmitType } from "../../services/constants";
 
 export default function MyAccount() {
   const { userDetails, setIsLoggedOut, isLoggedOut } = useUserContext();
-  const { handleProductSubmit, setProductFormError, dispatch, reFetchData, productFormDetail } = useProductFormProvider();
+  const { setProductFormError, reFetchData, productFormDetail } = useProductFormProvider();
   const { productFormError, isLoading } = useForm();
-  const { isFormOpen, handleFormOpen } = useUIContext();
+  const { isFormOpen } = useUIContext();
   const navigate = useNavigate();
 
   function handleLogOut() {
@@ -73,7 +73,7 @@ export default function MyAccount() {
             title="Delete Account"
             className="bg-transparent py-[5px] px-[5px] border-2 border-[red] rounded-[3px] font-semibold hover:scale-[none] hover:bg-[red]"
           /> */}
-          {
+          {/* {
             // Check if user is admin. 1 means true
             userDetails.isAdmin === 1 && (
               <Button
@@ -85,10 +85,10 @@ export default function MyAccount() {
                 }}
               />
             )
-          }
+          } */}
         </div>
       </div>
-      {isFormOpen && (
+      {/* {isFormOpen && (
         <Form
           values={{
             title: "Add Product",
@@ -96,7 +96,7 @@ export default function MyAccount() {
           }}>
           <ProductForm />
         </Form>
-      )}
+      )} */}
       {isLoading && <Loading />}
     </div>
   );

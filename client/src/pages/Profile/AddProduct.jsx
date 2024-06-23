@@ -1,16 +1,30 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React from "react";
 import useProductAPI from "../../hooks/useProductAPI";
-import { productFetchType } from "../../services/constants";
+import { productFetchType, productSubmitType } from "../../services/constants";
 import Loading from "../../components/Loading/Loading";
+import { useUIContext } from "../../context/UIContext";
+import { useProductFormProvider } from "../../context/ProductFormContext";
+import Form from "../../components/Forms/Form";
+import ProductForm from "../../components/Forms/ProductForm";
 
 export default function AddProduct() {
   const { fetchItems, items, isLoading } = useProductAPI();
+  const { isFormOpen, handleFormOpen } = useUIContext();
+  const { dispatch, handleProductSubmit } = useProductFormProvider();
+  const [productFormProp, setProductFormProp] = React.useState(null);
 
   React.useEffect(() => {
     fetchItems({ fetchType: productFetchType.ADDED_PRODUCTS });
     console.log(items);
   }, []);
+
+  function handleAddProduct(item) {
+    handleFormOpen();
+    dispatch({ type: productSubmitType.ADD_PRODUCT });
+    console.log(item);
+    setProductFormProp(item);
+  }
 
   if (isLoading) return <Loading />;
 
@@ -75,13 +89,17 @@ export default function AddProduct() {
                   }`}>
                   {item.isProductAdded === 1 ? "True" : "False"}
                 </td>
-                {/* <td className="px-6 py-4 whitespace-nowrap border-r border-white text-center">
-                  <button
-                  className="bg-white text-black px-[8px] py-1 rounded-sm hover:bg-[gray] hover:text-white transition-all duration-200"
-                  onClick={() => handleUpdateStock(item)}>
-                  Add Product
-                  </button>
-                  </td> */}
+                <td className="px-6 py-4 whitespace-nowrap border-r border-white text-center">
+                  {item.isProductAdded === 1 ? (
+                    "Already Added"
+                  ) : (
+                    <button
+                      className="bg-white text-black px-[8px] py-1 rounded-sm hover:bg-[gray] hover:text-white transition-all duration-200"
+                      onClick={() => handleAddProduct(item)}>
+                      Add Product
+                    </button>
+                  )}
+                </td>
                 {/* <td className="px-6 py-4 whitespace-nowrap border-r border-white text-center">
                 <button
                   className="bg-white text-black px-[8px] py-1 rounded-sm hover:bg-[gray] hover:text-white transition-all duration-200"
@@ -101,6 +119,15 @@ export default function AddProduct() {
           </tbody>
         </table>
       </div>
+      {isFormOpen && (
+        <Form
+          values={{
+            title: "Add Product",
+            handleSubmit: handleProductSubmit,
+          }}>
+          <ProductForm productInfo={productFormProp} />
+        </Form>
+      )}
     </div>
   );
 }
