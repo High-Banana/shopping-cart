@@ -60,11 +60,12 @@ export async function getStockProducts(req, res, next) {
 }
 
 export async function addProductToStock(req, res, next) {
-  const { productName, productPrice, productQuantity } = req.body;
+  const { productName, productPrice, productQuantity, productType } = req.body;
   await database
-    .query("insert into stock (product_name, product_price, product_quantity) values(?, ?, ?)", [
+    .query("insert into stock (product_name, product_price, product_type, product_quantity) values(?, ?, ?, ?)", [
       productName,
       productPrice,
+      productType,
       productQuantity,
     ])
     .then(() => res.status(200).json("stock-added"))
@@ -72,12 +73,13 @@ export async function addProductToStock(req, res, next) {
 }
 
 export async function updateStock(req, res, next) {
-  const { productName, productPrice, productQuantity } = req.body;
+  const { productName, productPrice, productQuantity, productType } = req.body;
   const productId = req.params.productID;
   await database
-    .query("update stock set product_name = ?, product_price = ?, product_quantity = ? where id = ?", [
+    .query("update stock set product_name = ?, product_price = ?, product_type=?, product_quantity = ? where id = ?", [
       productName,
       productPrice,
+      productType,
       productQuantity,
       productId,
     ])

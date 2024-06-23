@@ -58,6 +58,11 @@ export default function StockPage() {
               <th
                 scope="col"
                 className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border-r border-black">
+                Category
+              </th>
+              <th
+                scope="col"
+                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border-r border-black">
                 Stock Price
               </th>
               <th
@@ -65,11 +70,11 @@ export default function StockPage() {
                 className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border-r border-black">
                 Quantity
               </th>
-              <th
+              {/* <th
                 scope="col"
                 className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border-r border-black">
                 Add Product
-              </th>
+              </th> */}
               <th
                 scope="col"
                 className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border-r border-black">
@@ -85,15 +90,16 @@ export default function StockPage() {
               <tr key={index}>
                 <td className="px-6 py-4 whitespace-nowrap border-r border-white w-1">{index + 1}</td>
                 <td className="px-6 py-4 whitespace-nowrap border-r border-white">{item.product_name}</td>
+                <td className="px-6 py-4 whitespace-nowrap border-r border-white">{item.product_type}</td>
                 <td className="px-6 py-4 whitespace-nowrap border-r border-white">{item.product_price}</td>
                 <td className="px-6 py-4 whitespace-nowrap border-r border-white">{item.product_quantity}</td>
-                <td className="px-6 py-4 whitespace-nowrap border-r border-white text-center">
+                {/* <td className="px-6 py-4 whitespace-nowrap border-r border-white text-center">
                   <button
                     className="bg-white text-black px-[8px] py-1 rounded-sm hover:bg-[gray] hover:text-white transition-all duration-200"
                     onClick={() => handleUpdateStock(item)}>
                     Add Product
                   </button>
-                </td>
+                </td> */}
                 <td className="px-6 py-4 whitespace-nowrap border-r border-white text-center">
                   <button
                     className="bg-white text-black px-[8px] py-1 rounded-sm hover:bg-[gray] hover:text-white transition-all duration-200"
