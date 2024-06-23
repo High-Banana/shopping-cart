@@ -20,9 +20,14 @@ export default function ProfilePage() {
             My Profile
           </NavLink>
           {userDetails.isAdmin === 1 && (
-            <NavLink to="stock" style={({ isActive }) => (isActive ? activeStyles : null)} className={styles}>
-              Stock
-            </NavLink>
+            <>
+              <NavLink to="stock" style={({ isActive }) => (isActive ? activeStyles : null)} className={styles}>
+                Stock
+              </NavLink>
+              <NavLink to="add-product" style={({ isActive }) => (isActive ? activeStyles : null)} className={styles}>
+                Add Product
+              </NavLink>
+            </>
           )}
         </ul>
       </div>

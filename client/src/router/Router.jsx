@@ -10,6 +10,7 @@ import Verification from "../pages/Verification";
 import ProfilePage from "../pages/Profile/ProfilePage";
 import MyAccount from "../pages/Profile/MyAccount";
 import StockPage from "../pages/Profile/StockPage";
+import AddProduct from "../pages/Profile/AddProduct";
 
 export default function Router() {
   const router = createBrowserRouter([
@@ -25,6 +26,7 @@ export default function Router() {
           children: [
             { index: true, element: <MyAccount /> },
             { path: "stock", element: <StockPage /> },
+            { path: "add-product", element: <AddProduct /> },
           ],
         },
         { path: "*", element: <ErrorPage /> },
