@@ -8,17 +8,23 @@ import { useUIContext } from "../../context/UIContext";
 import Form from "../../components/Forms/Form";
 import StockForm from "../../components/Forms/StockForm";
 import { useProductFormProvider } from "../../context/ProductFormContext";
+import useForm from "../../hooks/useForm";
 
 export default function StockPage() {
+  const { productFormError } = useForm();
   const { fetchItems, items, isLoading } = useProductAPI();
   const { handleFormOpen, isFormOpen } = useUIContext();
-  const { dispatch, handleProductSubmit } = useProductFormProvider();
+  const { dispatch, handleProductSubmit, setProductFormError } = useProductFormProvider();
   const [formTitle, setFormTitle] = React.useState("");
   const [itemForProp, setItemForProp] = React.useState(null);
 
   React.useEffect(() => {
     fetchItems({ fetchType: productFetchType.STOCK });
   }, []);
+
+  React.useEffect(() => {
+    setProductFormError(productFormError);
+  }, [isFormOpen]);
 
   function handleAddToStock() {
     handleFormOpen();

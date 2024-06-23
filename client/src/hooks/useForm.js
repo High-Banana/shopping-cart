@@ -49,6 +49,9 @@ export default function useForm() {
       if (!inputValue.productName) {
         errors.name = "Product name cannot be empty";
       }
+      if (!inputValue.productType && inputValue.formSubmitType === productSubmitType.ADD_TO_STOCK) {
+        errors.type = "Product category cannot be emtpy";
+      }
       if (!inputValue.productImage && inputValue.formSubmitType === productSubmitType.ADD_PRODUCT) {
         errors.image = "Product image cannot be empty";
       }
