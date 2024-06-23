@@ -4,6 +4,7 @@ import {
   addProduct,
   addToStock,
   deleteProduct,
+  fetchAddedProducts,
   fetchAllProducts,
   fetchFilteredProducts,
   fetchProductByID,
@@ -39,6 +40,9 @@ export default function useProductAPI() {
           break;
         case productFetchType.STOCK:
           products = await fetchStockProducts();
+          break;
+        case productFetchType.ADDED_PRODUCTS:
+          products = await fetchAddedProducts();
           break;
         default:
           throw new Error(`Invalid fetch type: ${fetchType}`);

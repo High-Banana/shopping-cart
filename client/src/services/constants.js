@@ -8,6 +8,7 @@ export const productFetchType = {
   PRODUCT_CATEGORY: "category",
   SEARCH: "search",
   STOCK: "stock",
+  ADDED_PRODUCTS: "added-products",
 };
 
 export const productSubmitType = {

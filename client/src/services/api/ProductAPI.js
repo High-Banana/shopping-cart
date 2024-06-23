@@ -139,3 +139,13 @@ export async function updateStock(formData, productID) {
       Promise.reject(error);
     });
 }
+
+export async function fetchAddedProducts() {
+  return axios
+    .get("/api/products/added-products")
+    .then((response) => response.data)
+    .catch((error) => {
+      console.log(error);
+      Promise.reject(error);
+    });
+}

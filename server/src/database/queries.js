@@ -213,6 +213,20 @@ export async function addUserAndProductID(req, res, next) {
   }
 }
 
+export async function getAddedProduct(req, res, next) {
+  try {
+    const [products] = await database.query(
+      "select products.product_name, products.product_type, products.product_price, products.product_quantity from products join stock on products.product_name=stock.product_name"
+    );
+    console.log(products);
+    res.status(200).send(products);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+// getAddedProduct();
+
 // select users.username, products.product_name, products.product_price
 // from users_products
 // join users on users_products.user_id = users.userId
