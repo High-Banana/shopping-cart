@@ -53,7 +53,7 @@ export default function AddProduct() {
               <th
                 scope="col"
                 className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border-r border-black">
-                Price
+                Selling Price
               </th>
               <th
                 scope="col"
@@ -67,7 +67,7 @@ export default function AddProduct() {
                 </th> */}
               <th
                 scope="col"
-                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border-r border-black">
+                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border-r border-black w-6">
                 Is Product Added
               </th>
               <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
