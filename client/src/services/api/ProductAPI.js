@@ -13,7 +13,10 @@ export async function fetchProductByID(productID) {
     .get(`/api/products/product/${productID}`)
     .then((response) => {
       if (response.data.length === 0) throw new Error("No data was found");
-      else return response.data;
+      else {
+        console.log(response.data);
+        return response.data;
+      }
     })
     .catch((error) => {
       console.log(error);

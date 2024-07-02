@@ -4,6 +4,7 @@ import {
   addProduct,
   deleteProduct,
   getAllProducts,
+  getProductByID,
   getProductBySearch,
   getProductByType,
   updateProduct,
@@ -21,6 +22,8 @@ product.delete("/delete-product/:productID", tryCatch(deleteProduct));
 product.get("/filter/:productType", tryCatch(getProductByType));
 
 product.get("/search", tryCatch(getProductBySearch));
+
+product.get("/product/:productID", tryCatch(getProductByID));
 
 product.get("/", tryCatch(getAllProducts));
 
