@@ -36,26 +36,28 @@ export default function ProductPage() {
 
   return (
     <div className="relative flex mx-[10px]">
-      <FilterItems filterType={filterType} setFilterType={setFilterType} />
       {isLoading ? (
         <Loading />
       ) : (
-        <div className="mx-[10px] min-h-screen">
-          {products.length > 0 ? (
-            <div className="flex flex-col gap-[40px]">
-              <div className="flex justify-between mt-[20px]">
-                <h1 className="font-[700] text-[20px]">
-                  {products.length} items {filterType && `- ${filterType}`}
-                  {location.search && `- ${getSearchedValue()}`}
-                </h1>
-                <SortItems sortType={sortType} setSortType={setSortType} />
+        <>
+          <FilterItems filterType={filterType} setFilterType={setFilterType} />
+          <div className="mx-[10px] min-h-screen">
+            {products.length > 0 ? (
+              <div className="flex flex-col gap-[40px]">
+                <div className="flex justify-between mt-[20px]">
+                  <h1 className="font-[700] text-[20px]">
+                    {products.length} items {filterType && `- ${filterType}`}
+                    {location.search && `- ${getSearchedValue()}`}
+                  </h1>
+                  <SortItems sortType={sortType} setSortType={setSortType} />
+                </div>
+                <ProductsList products={products} sortType={sortType} />
               </div>
-              <ProductsList products={products} sortType={sortType} />
-            </div>
-          ) : (
-            <p className="text-4xl font-bold mt-[20px]">No items found</p>
-          )}
-        </div>
+            ) : (
+              <p className="text-4xl font-bold mt-[20px]">No items found</p>
+            )}
+          </div>
+        </>
       )}
     </div>
   );
