@@ -1,6 +1,6 @@
 import express from "express";
 import imageRouter from "./routes/imageRoute.js";
-import productRouter from "./routes/product.js";
+import productRouter from "./routes/productRoute.js";
 import errorHandler from "./middleware/errorHandler.js";
 import userRouter from "./routes/user.js";
 import orderRouter from "./routes/orderRoute.js";
