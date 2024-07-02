@@ -58,8 +58,9 @@ export async function fetchSearchedProducts(searchValue) {
 
 export async function fetchStockProducts() {
   return axios
-    .get(`/api/products/stock`)
+    .get(`/api/stock`)
     .then((response) => {
+      console.log(response);
       return response.data;
     })
     .catch((error) => {
@@ -116,7 +117,7 @@ export async function deleteProduct(productID) {
 
 export async function addToStock(formData) {
   return axios
-    .post("/api/products/stock/add-stock", formData, HEADERS)
+    .post("/api/stock/add-stock", formData, HEADERS)
     .then((response) => {
       console.log(response);
       return response;
@@ -129,7 +130,7 @@ export async function addToStock(formData) {
 
 export async function updateStock(formData, productID) {
   return axios
-    .put(`/api/products/stock/update-stock/${productID}`, formData, HEADERS)
+    .put(`/api/stock/update-stock/${productID}`, formData, HEADERS)
     .then((response) => {
       console.log(response);
       return response;
@@ -142,7 +143,7 @@ export async function updateStock(formData, productID) {
 
 export async function fetchAddedProducts() {
   return axios
-    .get("/api/products/added-products")
+    .get("/api/stock/added-products")
     .then((response) => response.data)
     .catch((error) => {
       console.log(error);
