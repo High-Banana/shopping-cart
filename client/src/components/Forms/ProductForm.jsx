@@ -39,7 +39,8 @@ export default function ProductForm({ productInfo }) {
             productFormDetail.formSubmitType === productSubmitType.UPDATE_PRODUCT || productSubmitType.ADD_PRODUCT
               ? productInfo.product_name
               : "",
-          disabled: productFormDetail.formSubmitType === productSubmitType.ADD_PRODUCT ? true : false,
+          disabled:
+            productFormDetail.formSubmitType === productSubmitType.ADD_PRODUCT || productSubmitType.UPDATE_PRODUCT ? true : false,
         }}
         setValue={(value) => dispatch({ type: productFormFillup.SET_PRODUCT_NAME, payload: value })}
         errorState={productFormError.name}
@@ -62,7 +63,8 @@ export default function ProductForm({ productInfo }) {
             productFormDetail.formSubmitType === productSubmitType.UPDATE_STOCK || productSubmitType.ADD_PRODUCT
               ? productInfo.product_type
               : "",
-          disabled: productFormDetail.formSubmitType === productSubmitType.ADD_PRODUCT ? true : false,
+          disabled:
+            productFormDetail.formSubmitType === productSubmitType.ADD_PRODUCT || productSubmitType.UPDATE_PRODUCT ? true : false,
         }}
         setValue={(value) => dispatch({ type: productFormFillup.SET_PRODUCT_TYPE, payload: value })}
         errorState={productFormError.type}
@@ -78,7 +80,8 @@ export default function ProductForm({ productInfo }) {
             productFormDetail.formSubmitType === productSubmitType.UPDATE_STOCK || productSubmitType.ADD_PRODUCT
               ? productInfo.product_price
               : "",
-          disabled: productFormDetail.formSubmitType === productSubmitType.ADD_PRODUCT ? true : false,
+          disabled:
+            productFormDetail.formSubmitType === productSubmitType.ADD_PRODUCT || productSubmitType.UPDATE_PRODUCT ? true : false,
         }}
         setValue={(value) => dispatch({ type: productFormFillup.SET_PRODUCT_PRICE, payload: value })}
         errorState={productFormError.price}

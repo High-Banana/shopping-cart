@@ -18,6 +18,9 @@ export default {
         ".background-overlay": {
           "@apply bg-black bg-opacity-35 backdrop-blur-sm": {},
         },
+        "[disabled]": {
+          "@apply hover:cursor-not-allowed": {},
+        },
       };
 
       addComponents(newComponents);
