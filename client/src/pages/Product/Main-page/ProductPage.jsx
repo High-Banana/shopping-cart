@@ -10,7 +10,7 @@ import { productFetchType } from "../../../services/constants";
 import { useLocation } from "react-router-dom";
 
 export default function ProductPage() {
-  const { items: products, isLoading, errorState: error, fetchItems } = useProductAPI();
+  const { items: products, isLoading, errorState: error, fetchItems, productCategory } = useProductAPI();
   const [sortType, setSortType] = React.useState("ascendingPrice");
   const [filterType, setFilterType] = React.useState(null);
   const location = useLocation();
@@ -29,6 +29,9 @@ export default function ProductPage() {
     else if (filterType !== null) fetchItems({ category: filterType, fetchType: productFetchType.PRODUCT_CATEGORY });
 
     if (location.search !== "") handleSearch();
+    // products.map((product) => {
+    //   console.log(product.product_type);
+    // });
   }, [sortType, filterType, location.search]);
 
   if (error)
@@ -36,28 +39,26 @@ export default function ProductPage() {
 
   return (
     <div className="relative flex mx-[10px]">
+      <FilterItems filterType={filterType} setFilterType={setFilterType} productCategory={productCategory} />
       {isLoading ? (
         <Loading />
       ) : (
-        <>
-          <FilterItems filterType={filterType} setFilterType={setFilterType} />
-          <div className="mx-[10px] min-h-screen">
-            {products.length > 0 ? (
-              <div className="flex flex-col gap-[40px]">
-                <div className="flex justify-between mt-[20px]">
-                  <h1 className="font-[700] text-[20px]">
-                    {products.length} items {filterType && `- ${filterType}`}
-                    {location.search && `- ${getSearchedValue()}`}
-                  </h1>
-                  <SortItems sortType={sortType} setSortType={setSortType} />
-                </div>
-                <ProductsList products={products} sortType={sortType} />
+        <div className="mx-[10px] min-h-screen">
+          {products.length > 0 ? (
+            <div className="flex flex-col gap-[40px]">
+              <div className="flex justify-between mt-[20px]">
+                <h1 className="font-[700] text-[20px]">
+                  {products.length} items {filterType && `- ${filterType}`}
+                  {location.search && `- ${getSearchedValue()}`}
+                </h1>
+                <SortItems sortType={sortType} setSortType={setSortType} />
               </div>
-            ) : (
-              <p className="text-4xl font-bold mt-[20px]">No items found</p>
-            )}
-          </div>
-        </>
+              <ProductsList products={products} sortType={sortType} />
+            </div>
+          ) : (
+            <p className="text-4xl font-bold mt-[20px]">No items found</p>
+          )}
+        </div>
       )}
     </div>
   );

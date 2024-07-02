@@ -19,6 +19,13 @@ export default function useProductAPI() {
   const [items, setItems] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
   const [errorState, setErrorState] = React.useState(null);
+  const [productCategory, setProductCategory] = React.useState([]);
+  let productTypes;
+
+  async function fetchProductCategories() {
+    let products = await fetchAllProducts();
+    productTypes = Array.from(new Set(products.map((product) => product.product_type)));
+  }
 
   async function fetchItems({ productID = null, category = null, searchValue = null, fetchType }) {
     setErrorState(null);
@@ -48,7 +55,10 @@ export default function useProductAPI() {
         default:
           throw new Error(`Invalid fetch type: ${fetchType}`);
       }
+      await fetchProductCategories();
       setItems(products);
+      setProductCategory(productTypes);
+      console.log(productTypes);
     } catch (error) {
       console.log(error);
       setErrorState(error);
@@ -87,5 +97,5 @@ export default function useProductAPI() {
       setIsLoading(false);
     }
   }
-  return { items, isLoading, errorState, fetchItems, submitProductForm };
+  return { items, isLoading, errorState, productCategory, fetchItems, submitProductForm };
 }
