@@ -2,18 +2,19 @@
 import React from "react";
 import {
   addProduct,
-  addToStock,
+  // addToStock,
   deleteProduct,
-  fetchAddedProducts,
+  // fetchAddedProducts,
   fetchAllProducts,
   fetchFilteredProducts,
   fetchProductByID,
   fetchSearchedProducts,
-  fetchStockProducts,
+  // fetchStockProducts,
   updateProduct,
-  updateStock,
+  // updateStock,
 } from "../services/api/ProductAPI";
 import { productFetchType, productSubmitType } from "../services/constants";
+import { addToStock, fetchAddedProducts, fetchStockProducts, updateStock } from "../services/api/StockAPI";
 
 export default function useProductAPI() {
   const [items, setItems] = React.useState([]);
