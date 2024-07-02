@@ -3,12 +3,12 @@ import express from "express";
 import { tryCatch } from "../helper/helper.js";
 import { getRegisteredUsers, registerUser, verifyUser } from "../database/userController.js";
 
-const router = express.Router();
+const user = express.Router();
 
-router.post("/login", tryCatch(getRegisteredUsers));
+user.post("/login", tryCatch(getRegisteredUsers));
 
-router.post("/register", tryCatch(registerUser));
+user.post("/register", tryCatch(registerUser));
 
-router.get("/confirmation/:emailToken", tryCatch(verifyUser));
+user.get("/confirmation/:emailToken", tryCatch(verifyUser));
 
-export default router;
+export default user;
