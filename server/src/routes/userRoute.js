@@ -1,6 +1,7 @@
 import express from "express";
-import { getRegisteredUsers, registerUser, verifyUser } from "../database/queries.js";
+// import { getRegisteredUsers, registerUser, verifyUser } from "../database/queries.js";
 import { tryCatch } from "../helper/helper.js";
+import { getRegisteredUsers, registerUser, verifyUser } from "../database/userController.js";
 
 const router = express.Router();
 
