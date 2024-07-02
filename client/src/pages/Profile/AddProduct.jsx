@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React from "react";
 import useProductAPI from "../../hooks/useProductAPI";
-import { productFetchType, productSubmitType } from "../../services/constants";
+import { productFetchType, productFormFillup, productSubmitType } from "../../services/constants";
 import Loading from "../../components/Loading/Loading";
 import { useUIContext } from "../../context/UIContext";
 import { useProductFormProvider } from "../../context/ProductFormContext";
@@ -22,8 +22,10 @@ export default function AddProduct() {
   function handleAddProduct(item) {
     handleFormOpen();
     dispatch({ type: productSubmitType.ADD_PRODUCT });
+    dispatch({ type: productFormFillup.SET_PRODUCT_UUID, payload: item.id });
     console.log(item);
     setProductFormProp(item);
+    console.log(items);
   }
 
   if (isLoading) return <Loading />;

@@ -21,7 +21,7 @@ export async function addUserAndProductID(req, res, next) {
 export async function getAddedProduct(req, res, next) {
   try {
     const [products] = await database.query(
-      "select stock.product_name, stock.product_price * 2 as product_price, stock.product_quantity, stock.product_type, case when products.product_name is not null then true else false end as isProductAdded from stock left join products on stock.product_name=products.product_name"
+      "select stock.id, stock.product_name, stock.product_price * 2 as product_price, stock.product_quantity, stock.product_type, case when products.product_name is not null then true else false end as isProductAdded from stock left join products on stock.product_name=products.product_name"
     );
     res.status(200).send(products);
   } catch (error) {

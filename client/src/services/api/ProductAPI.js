@@ -59,10 +59,10 @@ export async function fetchSearchedProducts(searchValue) {
     });
 }
 
-export async function addProduct(formData) {
+export async function addProduct(formData, stockID) {
   console.log(formData);
   return axios
-    .post("/api/products/add-product", formData, HEADERS)
+    .post(`/api/products/add-product/${stockID}`, formData, HEADERS)
     .then((response) => {
       if (response.status === 200) {
         console.log("product added");

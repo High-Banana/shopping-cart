@@ -13,7 +13,7 @@ import upload from "../middleware/multerConfig.js";
 
 const product = express.Router();
 
-product.post("/add-product", upload.single("productImage"), tryCatch(addProduct));
+product.post("/add-product/:stockID", upload.single("productImage"), tryCatch(addProduct));
 
 product.put("/edit-product/:productID", upload.single("productImage"), tryCatch(updateProduct));
 

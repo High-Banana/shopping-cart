@@ -49,7 +49,8 @@ export async function getProductBySearch(req, res, next) {
 export async function addProduct(req, res, next) {
   const { productName, productDescription, productType } = req.body;
   const productImage = req.file.filename;
-
+  const stockID = req.params.stockID;
+  console.log(stockID);
   try {
     // check if product is in the stock or not
     const [stockProductCheck] = await database.query("select * from stock where product_name = ?", [productName]);
@@ -64,8 +65,8 @@ export async function addProduct(req, res, next) {
     const productUUID = uuidv4();
 
     await database.query(
-      "insert into products (product_name, product_description, product_price, product_quantity, image, product_type, uuid) values (?, ?, ?, ?, ?, ?, ?)",
-      [productName, productDescription, productPrice, productQuantity, productImage, productType, productUUID]
+      "insert into products (product_name, product_description, product_price, product_quantity, image, product_type, uuid, stock_id) values (?, ?, ?, ?, ?, ?, ?, ?)",
+      [productName, productDescription, productPrice, productQuantity, productImage, productType, productUUID, stockID]
     );
     res.status(200).send({ productUUID, productType, message: "product-added" });
   } catch (error) {

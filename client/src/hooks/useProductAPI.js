@@ -79,7 +79,7 @@ export default function useProductAPI() {
     try {
       switch (submitType) {
         case productSubmitType.ADD_PRODUCT:
-          return await addProduct(formData);
+          return await addProduct(formData, productID);
         case productSubmitType.UPDATE_PRODUCT:
           return await updateProduct(formData, productID);
         case productSubmitType.DELETE_PRODUCT:
