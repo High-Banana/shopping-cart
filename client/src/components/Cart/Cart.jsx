@@ -9,17 +9,22 @@ import { FaMinus } from "react-icons/fa";
 import { FaPlus } from "react-icons/fa";
 import { FaTrash } from "react-icons/fa";
 import { RxCross1 } from "react-icons/rx";
+// import Checkout from "../../pages/Checkout/Checkout";
+import { useNavigate } from "react-router-dom";
 /* eslint-disable react-hooks/exhaustive-deps */
 
 export default function Cart() {
   const { toggleOpenCart, cartItems, addToCart, getTotalItems, removeFromCart, handleInputValue, calculateTotalPrice, message } =
     useCart();
   const [isVisible, setIsVisible] = React.useState(false);
-  const { user } = useUserContext();
+  // const [hasCheckedout, setHasCheckedout] = React.useState(false);
+  const { userDetails } = useUserContext();
+  const navigate = useNavigate();
 
   React.useEffect(() => {
     document.body.style.overflow = "hidden";
     setTimeout(() => setIsVisible(true), 0);
+    // setHasCheckedout(false);
   }, []);
 
   function handleClosingTransition() {
@@ -29,16 +34,19 @@ export default function Cart() {
   }
 
   function handleClick() {
-    console.log(user);
-    const userID = user[0].userId;
+    console.log(userDetails);
+    const userID = userDetails.userId;
     const productDetails = cartItems.map((item) => {
       const id = item.id;
       const quantity = item.quantity;
       return { id, quantity };
     });
     const totalPrice = calculateTotalPrice();
+    navigate("/checkout");
+    handleClosingTransition();
+    // setHasCheckedout(true);
     // window.open(url, "", "width=500, height=700");
-    handleCartCheckout({ userID, productDetails, totalPrice });
+    // handleCartCheckout({ userID, productDetails, totalPrice });
   }
 
   console.log(cartItems);
@@ -134,6 +142,7 @@ export default function Cart() {
           </div>
         )}
       </div>
+      {/* {hasCheckedout && <Checkout />} */}
     </>
   );
 }

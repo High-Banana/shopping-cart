@@ -11,6 +11,7 @@ import ProfilePage from "../pages/Profile/ProfilePage";
 import MyAccount from "../pages/Profile/MyAccount";
 import StockPage from "../pages/Profile/StockPage";
 import AddProduct from "../pages/Profile/AddProduct";
+import Checkout from "../pages/Checkout/Checkout";
 
 export default function Router() {
   const router = createBrowserRouter([
@@ -31,6 +32,7 @@ export default function Router() {
         },
         { path: "*", element: <ErrorPage /> },
         { path: "login", element: <LoginPage /> },
+        { path: "checkout", element: <Checkout /> },
       ],
     },
     { path: "/users/confirmation/:emailToken", element: <Verification /> },
