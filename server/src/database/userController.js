@@ -5,6 +5,7 @@ import randomstring from "randomstring";
 export async function getRegisteredUsers(req, res, next) {
   const { email, password } = req.body;
   const [user] = await database.query("select * from users where email = ? AND password = ? LIMIT 1", [email, password]);
+  console.log(user);
   if (user.length === 0) res.status(401).send("Email or password is invalid.");
   else res.status(200).send(user);
   return user;

@@ -39,7 +39,7 @@ export default function Checkout() {
               })}
             </tbody>
           </table>
-          <h1 className="font-bold text-2xl mt-4"> Total Price: {calculateTotalPrice()}</h1>
+          <h1 className="font-bold text-2xl mt-4"> Total Price: {calculateTotalPrice().toLocaleString()}</h1>
         </div>
       ) : (
         <div>No products has been bought</div>

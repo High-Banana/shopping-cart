@@ -17,14 +17,12 @@ export default function Cart() {
   const { toggleOpenCart, cartItems, addToCart, getTotalItems, removeFromCart, handleInputValue, calculateTotalPrice, message } =
     useCart();
   const [isVisible, setIsVisible] = React.useState(false);
-  // const [hasCheckedout, setHasCheckedout] = React.useState(false);
   const { userDetails } = useUserContext();
   const navigate = useNavigate();
 
   React.useEffect(() => {
     document.body.style.overflow = "hidden";
     setTimeout(() => setIsVisible(true), 0);
-    // setHasCheckedout(false);
   }, []);
 
   function handleClosingTransition() {
@@ -35,7 +33,7 @@ export default function Cart() {
 
   function handleClick() {
     console.log(userDetails);
-    const userID = userDetails.userId;
+    const userID = userDetails.userID;
     const productDetails = cartItems.map((item) => {
       const id = item.id;
       const quantity = item.quantity;
@@ -44,9 +42,8 @@ export default function Cart() {
     const totalPrice = calculateTotalPrice();
     navigate("/checkout");
     handleClosingTransition();
-    // setHasCheckedout(true);
     // window.open(url, "", "width=500, height=700");
-    // handleCartCheckout({ userID, productDetails, totalPrice });
+    handleCartCheckout({ userID, productDetails, totalPrice });
   }
 
   console.log(cartItems);

@@ -2,10 +2,10 @@ import database from "./db.js";
 
 export async function addUserAndProductID(req, res, next) {
   const { userID, productDetails, totalPrice } = req.body;
-  console.log(totalPrice);
+  console.log(totalPrice, userID, productDetails);
   try {
     for (let i = 0; i < productDetails.length; i++) {
-      await database.query("insert into users_products (user_id, product_id, quantity, total_price) values (?, ?, ?, ?)", [
+      await database.query("insert into transaction (user_id, product_id, quantity, total_price) values (?, ?, ?, ?)", [
         userID,
         productDetails[i].id,
         productDetails[i].quantity,

@@ -41,6 +41,7 @@ function userReducer(state, action) {
 
 function setUserInSessionStorage(user) {
   if (user.length > 0) {
+    window.sessionStorage.setItem("userID", user[0].userId);
     window.sessionStorage.setItem("username", user[0].username);
     window.sessionStorage.setItem("email", user[0].email);
     window.sessionStorage.setItem("password", user[0].password);
@@ -51,6 +52,7 @@ function setUserInSessionStorage(user) {
 
 function getDetailsFromSessionStorage(setUserDetails) {
   setUserDetails({
+    userID: window.sessionStorage.getItem("userID"),
     username: window.sessionStorage.getItem("username"),
     email: window.sessionStorage.getItem("email"),
     password: window.sessionStorage.getItem("password"),
@@ -63,6 +65,7 @@ export function UserProvider({ children }) {
   const [userFormDetail, dispatch] = React.useReducer(userReducer, initialUserFormDetail);
   // const [user, setUser] = React.useState("");
   const [userDetails, setUserDetails] = React.useState({
+    userID: null,
     username: null,
     email: null,
     password: null,

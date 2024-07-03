@@ -2,7 +2,7 @@ import { checkoutUser } from "../services/api/CheckoutAPI";
 
 export async function handleCartCheckout(data) {
   const { userID, productDetails, totalPrice } = data;
-  console.log(userID, productDetails);
+  console.log(userID, productDetails, totalPrice);
   try {
     checkoutUser({ userID, productDetails, totalPrice });
   } catch (error) {
