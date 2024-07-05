@@ -88,6 +88,8 @@ export default function useProductAPI() {
           return await addToStock(formData);
         case productSubmitType.UPDATE_STOCK:
           return await updateStock(formData, productID);
+        case productSubmitType.DELETE_STOCK:
+          return await updateStock(formData, productID);
         default:
           throw new Error(`Invalid submit type : ${submitType}`);
       }

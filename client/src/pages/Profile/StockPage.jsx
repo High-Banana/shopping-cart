@@ -13,7 +13,7 @@ import useForm from "../../hooks/useForm";
 export default function StockPage() {
   const { productFormError } = useForm();
   const { fetchItems, items, isLoading } = useProductAPI();
-  const { handleFormOpen, isFormOpen } = useUIContext();
+  const { handleFormOpen, isFormOpen, isDeleteForm, setIsDeleteForm } = useUIContext();
   const { dispatch, handleProductSubmit, setProductFormError } = useProductFormProvider();
   const [formTitle, setFormTitle] = React.useState("");
   const [itemForProp, setItemForProp] = React.useState(null);
@@ -39,6 +39,15 @@ export default function StockPage() {
     console.log(item);
     setItemForProp(item);
     dispatch({ type: productFormFillup.SET_PRODUCT_UUID, payload: item.id });
+    //todo: delete stock
+  }
+
+  function handleDeleteStock(item) {
+    setIsDeleteForm(true);
+    dispatch({ type: productSubmitType.DELETE_STOCK });
+    dispatch({ type: productFormFillup.SET_PRODUCT_UUID, payload: item.id });
+    setFormTitle("Delete Stock");
+    console.log(item);
   }
 
   if (isLoading) return <Loading />;
@@ -116,7 +125,7 @@ export default function StockPage() {
                 <td className="px-6 py-4 whitespace-nowrap border-white text-center">
                   <button
                     className="bg-white text-black px-[8px] py-1 rounded-sm hover:bg-[gray] hover:text-white transition-all duration-200"
-                    onClick={() => handleUpdateStock(item)}>
+                    onClick={() => handleDeleteStock(item)}>
                     Delete
                   </button>
                 </td>
@@ -129,6 +138,13 @@ export default function StockPage() {
         <Form values={{ title: formTitle, handleSubmit: handleProductSubmit }}>
           <StockForm productInfo={itemForProp} />
         </Form>
+      )}
+      {isDeleteForm && (
+        <>
+          <Form values={{ title: "Delete Product", handleSubmit: handleProductSubmit }}>
+            <h2 className="text-white text-1xl font-bold">Are you sure you want to delete this product from stock?</h2>
+          </Form>
+        </>
       )}
     </div>
   );

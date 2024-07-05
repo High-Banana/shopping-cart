@@ -53,11 +53,11 @@ export async function addProduct(req, res, next) {
   console.log(stockID);
   try {
     // check if product is in the stock or not
-    const [stockProductCheck] = await database.query("select * from stock where product_name = ?", [productName]);
+    const [stockProductCheck] = await database.query("select * from stock where id = ?", [stockID]);
     if (stockProductCheck.length === 0) return res.status(404).send("Product is not available in stock.");
 
-    const [product] = await database.query("select * from products where product_name = ?", [productName]);
-    if (product.length !== 0) return res.status(409).send("Product has already been added.");
+    // const [product] = await database.query("select * from products where id = ?", [stockID]);
+    // if (product.length !== 0) return res.status(409).send("Product has already been added.");
 
     // to sell at double price
     const productPrice = parseFloat(stockProductCheck[0].product_price) * 2;
@@ -82,6 +82,7 @@ export async function updateProduct(req, res, next) {
   if (req.file !== undefined) {
     productImage = req.file.filename;
   }
+  console.log(productImage);
 
   let sqlQuery = "update products set product_name = ? , product_description = ?, product_type = ?";
   const sqlValues = [productName, productDescription, productType];
@@ -94,9 +95,12 @@ export async function updateProduct(req, res, next) {
   sqlQuery += "where uuid = ?";
   sqlValues.push(productId);
 
+  console.log(productDescription, productId, productImage, productType);
+
   await database
     .query(sqlQuery, sqlValues)
-    .then(() => {
+    .then((response) => {
+      console.log(response);
       res.status(200).send({ message: "product-updated" });
     })
     .catch((error) => next(error));
@@ -105,7 +109,7 @@ export async function updateProduct(req, res, next) {
 export async function deleteProduct(req, res, next) {
   const productId = req.params.productID;
   database
-    .query("delete from products where uuid = ?", productId)
+    .query("delete from products where uuid = ?", [productId])
     .then(() => {
       res.send({ message: "product-deleted" });
     })

@@ -41,7 +41,7 @@ export default function SignUpForm() {
       <InputField
         label="Phone number"
         type="text"
-        attributes={{ placeholder: "977 9876543210", pattern: "[0-9]{3} [0-9]{10}" }}
+        attributes={{ placeholder: "9876543210", pattern: "[0-9]{10}" }}
         errorState={userFormError.phoneNumber}
         setValue={(value) => dispatch({ type: userFormFillup.SET_USER_PHONE_NUMBER, payload: value })}
       />

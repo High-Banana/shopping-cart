@@ -17,6 +17,7 @@ export const productSubmitType = {
   DELETE_PRODUCT: "delete",
   ADD_TO_STOCK: "add-to-stock",
   UPDATE_STOCK: "update-stock",
+  DELETE_STOCK: "delete-stock",
 };
 
 export const productFormFillup = {

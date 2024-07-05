@@ -45,6 +45,8 @@ function productReducer(state, action) {
       return { ...state, formSubmitType: productSubmitType.ADD_TO_STOCK };
     case productSubmitType.UPDATE_STOCK:
       return { ...state, formSubmitType: productSubmitType.UPDATE_STOCK };
+    case productSubmitType.DELETE_STOCK:
+      return { ...state, formSubmitType: productSubmitType.DELETE_STOCK };
     default:
       console.log(`Invalid action type: ${action.type}`);
   }

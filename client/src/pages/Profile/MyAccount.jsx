@@ -7,6 +7,7 @@ import Loading from "../../components/Loading/Loading";
 import { useUserContext } from "../../context/UserContext";
 import { useProductFormProvider } from "../../context/ProductFormContext";
 import { useUIContext } from "../../context/UIContext";
+import { useCart } from "../../context/CartContext";
 // import Form from "../../components/Forms/Form";
 // import ProductForm from "../../components/Forms/ProductForm";
 // import { productSubmitType } from "../../services/constants";
@@ -17,10 +18,12 @@ export default function MyAccount() {
   const { productFormError, isLoading } = useForm();
   const { isFormOpen } = useUIContext();
   const navigate = useNavigate();
+  useCart();
 
   function handleLogOut() {
     window.sessionStorage.clear();
     setIsLoggedOut(true);
+    // window.location.reload();
   }
 
   React.useEffect(() => {

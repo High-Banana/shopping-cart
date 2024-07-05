@@ -21,9 +21,25 @@ export async function addUserAndProductID(req, res, next) {
 export async function getAddedProduct(req, res, next) {
   try {
     const [products] = await database.query(
-      "select stock.id, stock.product_name, stock.product_price * 2 as product_price, stock.product_quantity, stock.product_type, case when products.stock_id is not null then true else false end as isProductAdded from stock left join products on stock.product_name=products.product_name"
+      "select stock.id, stock.product_name, stock.product_price * 2 as product_price, stock.product_quantity, stock.product_type, case when products.stock_id is not null then true else false end as isProductAdded from stock left join products on stock.id=products.stock_id;"
     );
     res.status(200).send(products);
+  } catch (error) {
+    next(error);
+  }
+}
+
+export async function manageQuantity(req, res, next) {
+  const { id, quantity } = req.body[0];
+  console.log(id, quantity);
+
+  try {
+    await database.query(
+      "UPDATE stock SET product_quantity = product_quantity - ? WHERE id = ?; " +
+        "UPDATE products SET product_quantity = product_quantity - ? WHERE stock_id = ?",
+      [parseFloat(quantity), id, parseFloat(quantity), id]
+    );
+    res.status(200).json({ message: "Quantity updated successfully" });
   } catch (error) {
     next(error);
   }

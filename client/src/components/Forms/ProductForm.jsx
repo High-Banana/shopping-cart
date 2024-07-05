@@ -20,11 +20,15 @@ export default function ProductForm({ productInfo }) {
     ) {
       dispatch({ type: productFormFillup.SET_PRODUCT_NAME, payload: productInfo.product_name });
       dispatch({ type: productFormFillup.SET_PRODUCT_IMAGE, payload: productInfo.image });
-      // dispatch({ type: productFormFillup.SET_PRODUCT_PRICE, payload: productInfo.product_price });
+      dispatch({ type: productFormFillup.SET_PRODUCT_PRICE, payload: productInfo.product_price });
       dispatch({ type: productFormFillup.SET_PRODUCT_TYPE, payload: productInfo.product_type });
       dispatch({ type: productFormFillup.SET_PRODUCT_DESCRIPTION, payload: productInfo.product_description });
     }
+    if (productFormDetail.formSubmitType === productSubmitType.ADD_PRODUCT) {
+      dispatch({ type: productFormFillup.SET_PRODUCT_UUID, payload: productInfo.id });
+    }
     console.log(productFormDetail);
+    console.log(productInfo);
   }, []);
 
   return (
@@ -70,7 +74,7 @@ export default function ProductForm({ productInfo }) {
         errorState={productFormError.type}
       />
       <InputField
-        label="Stock Price"
+        label="Product Price"
         type="number"
         attributes={{
           placeholder: "Enter number only",

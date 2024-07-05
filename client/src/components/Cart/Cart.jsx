@@ -1,7 +1,7 @@
 import React from "react";
 import Button from "../ui/Button";
-import { useUserContext } from "../../context/UserContext";
-import { handleCartCheckout } from "../../hooks/useCheckoutAPI";
+// import { useUserContext } from "../../context/UserContext";
+// import { handleCartCheckout } from "../../hooks/useCheckoutAPI";
 import { Link } from "react-router-dom";
 import { useCart } from "../../context/CartContext";
 import { IMAGE_SRC_PATH } from "../../services/constants";
@@ -11,13 +11,14 @@ import { FaTrash } from "react-icons/fa";
 import { RxCross1 } from "react-icons/rx";
 // import Checkout from "../../pages/Checkout/Checkout";
 import { useNavigate } from "react-router-dom";
+// import { reduceQuantity } from "../../hooks/useCheckoutAPI";
 /* eslint-disable react-hooks/exhaustive-deps */
 
 export default function Cart() {
   const { toggleOpenCart, cartItems, addToCart, getTotalItems, removeFromCart, handleInputValue, calculateTotalPrice, message } =
     useCart();
   const [isVisible, setIsVisible] = React.useState(false);
-  const { userDetails } = useUserContext();
+  // const { userDetails } = useUserContext();
   const navigate = useNavigate();
 
   React.useEffect(() => {
@@ -32,18 +33,19 @@ export default function Cart() {
   }
 
   function handleClick() {
-    console.log(userDetails);
-    const userID = userDetails.userID;
+    // console.log(userDetails);
+    // const userID = userDetails.userID;
     const productDetails = cartItems.map((item) => {
       const id = item.id;
       const quantity = item.quantity;
       return { id, quantity };
     });
-    const totalPrice = calculateTotalPrice();
-    navigate("/checkout");
+    // const totalPrice = calculateTotalPrice();
+    // // window.open(url, "", "width=500, height=700");
+    // // handleCartCheckout({ userID, productDetails, totalPrice });
     handleClosingTransition();
-    // window.open(url, "", "width=500, height=700");
-    handleCartCheckout({ userID, productDetails, totalPrice });
+    navigate("/checkout");
+    // reduceQuantity(productDetails);
   }
 
   console.log(cartItems);
